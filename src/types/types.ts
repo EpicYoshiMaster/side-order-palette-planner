@@ -41,8 +41,11 @@ export type OnClickToneProps = (group: ColorGroup, tone: ColorTone) => void;
 export type Palette = {
     index: number;
     name: string;
+    icon: string;
     pixel: string;
     firstTone: string;
     secondTone: string;
     mainWeapon: string;
+    subWeapon: string;
+    specialWeapon: string;
 }

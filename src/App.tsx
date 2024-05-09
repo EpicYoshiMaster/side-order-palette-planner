@@ -50,10 +50,13 @@ const palettes: Palette[] = Object.values(PaletteList.Table).map((value) => {
 	return {
 		index: value.OrderForChangeUI,
 		name: value.PaletteName,
+		icon: value.NPCIconPath,
 		pixel: value.PixelName,
 		firstTone: value.FreqFirstColorGroupType,
 		secondTone: value.FreqSecondColorGroupType,
-		mainWeapon: value.MainWeapon
+		mainWeapon: value.MainWeapon,
+		subWeapon: value.SubWeapon,
+		specialWeapon: value.SpecialWeapon
 	}
 }).sort(sortPalettes);
 
@@ -117,9 +120,18 @@ function App() {
 			<Content>
 				<ColorChipList chipDatabase={chipDatabase} onClickChip={onClickChipName} onClickTone={onClickToneName} />
 				<PaletteSpace>
-					<PlaceholderText>Side Order Palette Planner</PlaceholderText>
+					<Header>Side Order Palette Planner</Header>
 					<ButtonRow>
 						<ItemSelectionRow items={["Playing Mode", "Drawing Mode"]} selected={paletteMode} setSelected={setPaletteMode} />
+						<GlowButton onClick={() => { resetPalette(); }}>
+							Reset
+						</GlowButton>
+						<GlowButton onClick={() => { downloadImage(); }}>
+							Download Image
+						</GlowButton>
+					</ButtonRow>
+					<ButtonRow>
+						<PaletteIconBackground src={require(`assets/npcs/${palettes[paletteIndex].icon}`)} />
 						<GlowSelect id="palette-index" value={paletteIndex} onChange={(event) => { setPaletteIndex(Number(event.target.value)); }}>
 							{
 							palettes.map((value, index) => {
@@ -129,12 +141,14 @@ function App() {
 							})
 							}
 						</GlowSelect>
-						<GlowButton onClick={() => { resetPalette(); }}>
-							Reset
-						</GlowButton>
-						<GlowButton onClick={() => { downloadImage(); }}>
-							Download Image
-						</GlowButton>
+						<PaletteIconBackground src={require(`assets/weapons/${palettes[paletteIndex].mainWeapon}`)} />
+						<PaletteIcon src={require(`assets/subs/${palettes[paletteIndex].subWeapon}`)} />
+						<PaletteIcon src={require(`assets/specials/${palettes[paletteIndex].specialWeapon}`)} />
+						<div>Common Tones</div>
+						<Tones>
+							<PaletteIcon src={require(`assets/tones/Category_${palettes[paletteIndex].firstTone}.png`)} />
+							<SecondaryTone src={require(`assets/tones/Category_${palettes[paletteIndex].secondTone}.png`)} />
+						</Tones>
 					</ButtonRow>
 					<PrintComponent ref={paletteRef}>
 						<ChipPalette palette={palettes[paletteIndex]} chipIndex={chipIndex} chips={placedChips} onClickChip={onClickChip} />
@@ -172,7 +186,7 @@ const Content = styled.div`
 	overflow: hidden;
 `;
 
-const PlaceholderText = styled.h1`
+const Header = styled.h1`
 	position: relative;
 	width: 100%;
 	margin: 0;
@@ -185,12 +199,35 @@ const ButtonRow = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 100%;
+	align-items: center;
 	justify-content: flex-start;
 	margin: 10px 0;
 
 	& > div, & > button {
 		margin: 0 5px;
 	}
+`;
+
+const PaletteIcon = styled.img`
+	margin-right: 10px;
+	height: 4rem;
+	object-fit: contain;
+`;
+
+const Tones = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: top;
+	justify-content: flex-start;	
+`;
+
+const SecondaryTone = styled(PaletteIcon)`
+	height: 3.25rem;
+`;
+
+const PaletteIconBackground = styled(PaletteIcon)`
+	height: 5rem;
+	background: radial-gradient(circle, #fffefe34 0% 40%, transparent 70%);
 `;
 
 const PaletteSpace = styled.div`
