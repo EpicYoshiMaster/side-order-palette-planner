@@ -14,4 +14,5 @@ export const PrintComponent = React.forwardRef<HTMLDivElement, PrintComponentPro
 });
 
 const Wrapper = styled.div`
+	position: relative;
 `;

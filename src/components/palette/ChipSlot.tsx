@@ -53,8 +53,6 @@ const Background = styled.div<{ $placed: boolean, $image: string, $selected: boo
 		z-index: 1000;
 	` : css``}
 
-	width: 100%;
-	height: 100%;
 	aspect-ratio: 1;
 	border-radius: 0.25rem;
 

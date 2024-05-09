@@ -33,8 +33,9 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, pale
 
 const Background = styled.div`
 	position: relative;
-	width: 100%;
 	border-radius: 0.25rem;
+
+	width: 105rem;
 
 	display: grid;
 	grid-template-rows: max-content 1fr;

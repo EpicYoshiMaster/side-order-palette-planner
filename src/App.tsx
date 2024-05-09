@@ -5,7 +5,7 @@ import ColorChips from './data/colorchips.json'
 import PaletteList from './data/palettes.json'
 import { ColorChipJson, ColorGroupJson, ColorGroup, PlacedChip, ColorTone, ColorChip, Palette } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
-import { createChipDatabase } from './utils/utils';
+import { createChipDatabase, randRange } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
 import { Theme } from 'components/Theme';
 import { GlowButton, textGlow, Dots, GlowSelect, GlowOption } from 'components/Layout';
@@ -16,15 +16,10 @@ import { ItemSelectionRow } from 'components/ItemSelectionRow';
 //
 // Palette Planner:
 //
-// - Select between specific chips or Tones
-// - Add/remove chips to the palette
 // - Import palettes from others to share them
 // - Play palette sounds for doing music-themed runs
-
-// Drawing Mode - Click / Click and drag to draw on the palette
-// 
-
-// Optional
+// - Eraser
+// - Drawing Mode: Click / Click and drag to draw on the palette
 // - Play/Tracking mode where you progress through the palette as you play and can reset it
 
 const NUM_PALETTE_SLOTS = 36;
@@ -84,6 +79,21 @@ function App() {
 		setChipIndex(0);
 	}, []);
 
+	const randomizePalette = useCallback(() => {
+		resetPalette();
+
+		let randomChips = placedChips.map(() => {
+			let randomTone: string = colorGroups[randRange(0, colorGroups.length - 1)].tones[randRange(0, 2)];
+
+			return {
+				placed: true,
+				image: randomTone
+			}
+		})
+
+		setPlacedChips(randomChips);
+	}, [placedChips, resetPalette]);
+
 	const downloadImage = useCallback(() => {
 		exportComponentAsPNG(paletteRef, { fileName: "Palette", html2CanvasOptions: { backgroundColor: null }});
 	}, []);
@@ -125,6 +135,9 @@ function App() {
 						<ItemSelectionRow items={["Playing Mode", "Drawing Mode"]} selected={paletteMode} setSelected={setPaletteMode} />
 						<GlowButton onClick={() => { resetPalette(); }}>
 							Reset
+						</GlowButton>
+						<GlowButton onClick={() => { randomizePalette(); }}>
+							Randomize
 						</GlowButton>
 						<GlowButton onClick={() => { downloadImage(); }}>
 							Download Image
@@ -233,10 +246,8 @@ const PaletteIconBackground = styled(PaletteIcon)`
 const PaletteSpace = styled.div`
 	position: relative;
 	padding: 0px 25px;
+	height: 100vh;
 
-	display: flex;
-	flex-direction: column;
-	text-align: center;	
-
-	overflow: auto;
+	display: grid;
+	grid-template-rows: max-content max-content max-content 1fr;
 `;
