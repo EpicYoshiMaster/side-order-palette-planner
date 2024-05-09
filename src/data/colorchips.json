@@ -1,0 +1,1446 @@
+{
+	"Table": {
+	  "BlastBrushAwayUp": {
+		"Name": "Explosion Knockback",
+		"Color": "Support", 
+		"Tone": 1,
+		"Index": 2,
+		"DisplayValue": [
+		  100,
+		  117,
+		  133,
+		  167,
+		  200,
+		  300
+		],
+		"DisplayValueUnit": "Percent",
+		"MaxNum": 5,
+		"FetchDisplayValueFromParam": false
+	  },
+	  "BlastDamageUp": {
+		"Name": "Splash Damage",
+		"Color": "Power", 
+		"Tone": 0,
+		"Index": 1,
+		"DisplayValue": [
+		  100,
+		  130,
+		  160,
+		  190,
+		  210,
+		  300,
+		  330,
+		  360,
+		  390,
+		  500
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 9
+	  },
+	  "BlastSizeUp": {
+		"Name": "Splash Radius",
+		"Color": "Range", 
+		"Tone": 0,
+		"Index": 1,
+		"DisplayValue": [
+		  100,
+		  130,
+		  145,
+		  160,
+		  170,
+		  200
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "BulletCorePaintUp": {
+		"Name": "Rush Ink Coverage",
+		"Color": "Range", 
+		"Tone": 1,
+		"Index": 1,
+		"DisplayValue": [
+		  100,
+		  130,
+		  145,
+		  160,
+		  170,
+		  200
+		],
+		"DisplayValueOverwriteArray": [
+		  {
+			"DisplayValue": [
+			  100,
+			  115,
+			  122,
+			  129,
+			  135,
+			  150
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Roller_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  115,
+			  122,
+			  129,
+			  135,
+			  150
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Brush_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  130,
+			  145,
+			  160,
+			  170,
+			  200
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Shelter_Sdodr.spl__WeaponInfoMain.gyml"
+		  }
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "BulletSizeUp": {
+		"Name": "Ink Attack Size",
+		"Color": "Range", 
+		"Tone": 0,
+		"Index": 3,
+		"DisplayValue": [
+		  100,
+		  190,
+		  235,
+		  280,
+		  310,
+		  400
+		],
+		"DisplayValueOverwriteArray": [],
+		"DisplayValueUnit": "Percent",
+		"MaxNum": 5,
+		"FetchDisplayValueFromParam": false
+	  },
+	  "ChargeKeepTimeUp": {
+		"Name": "Charge Storage",
+		"Color": "Mobility", 
+		"Tone": 0,
+		"Index": 4,
+		"DisplayValue": [
+		  0,
+		  1.25,
+		  2.5,
+		  3.75,
+		  5,
+		  7.5
+		],
+		"DisplayValueUnit": "Second",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "ChargeTimeSave": {
+		"Name": "Quick Charge",
+		"Color": "Support", 
+		"Tone": 2,
+		"Index": 2,
+		"DisplayValue": [
+		  1.25,
+		  0.92,
+		  0.75,
+		  0.58,
+		  0.33,
+		  0.16
+		],
+		"DisplayValueOverwriteArray": [
+		  {
+			"DisplayValue": [
+			  100,
+			  69,
+			  60,
+			  47,
+			  31,
+			  5
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Charger_ExtraOne_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  88,
+			  80,
+			  71,
+			  59,
+			  35
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Spinner_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  80,
+			  67,
+			  60,
+			  53,
+			  33
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Stringer_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  90,
+			  75,
+			  62,
+			  50,
+			  37
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Saber_Sdodr.spl__WeaponInfoMain.gyml"
+		  }
+		],
+		"DisplayValueUnit": "Second",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "ComboGraceTimeUp": {
+		"Name": "Lucky Chain Window",
+		"Color": "Lucky", 
+		"Tone": 2,
+		"Index": 0,
+		"DisplayValue": [
+		  3,
+		  5,
+		  7,
+		  9,
+		  11,
+		  20
+		],
+		"DisplayValueUnit": "Second",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "ComboItemDropUp": {
+		"Name": "Max Lucky Chain",
+		"Color": "Lucky", 
+		"Tone": 2,
+		"Index": 1,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "None",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DefeatEnemyBlastFreqUp": {
+		"Name": "Lucky Bomb Drop",
+		"Color": "Lucky", 
+		"Tone": 1,
+		"Index": 1,
+		"DisplayValue": [
+		  0,
+		  15,
+		  30,
+		  45,
+		  60,
+		  90
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "DefeatEnemyInkRecover": {
+		"Name": "Splat Ink Recovery",
+		"Color": "Support", 
+		"Tone": 0,
+		"Index": 3,
+		"DisplayValue": [
+		  0,
+		  2,
+		  4,
+		  6,
+		  10,
+		  20
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "DefeatEnemyItemDropArmor": {
+		"Name": "Armor Drop",
+		"Color": "Lucky", 
+		"Tone": 0,
+		"Index": 0,
+		"DisplayValue": [
+		  0.5,
+		  1,
+		  1.5,
+		  2,
+		  2.5,
+		  3
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "DefeatEnemyItemDropDroneActiveUp": {
+		"Name": "Drone-Battery Drop",
+		"Color": "Lucky", 
+		"Tone": 1,
+		"Index": 0,
+		"DisplayValue": [
+		  0,
+		  4,
+		  7,
+		  10,
+		  13,
+		  20
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "DefeatEnemyItemDropInkUp": {
+		"Name": "Ink-Bottle Drop",
+		"Color": "Lucky", 
+		"Tone": 0,
+		"Index": 1,
+		"DisplayValue": [
+		  1,
+		  4,
+		  7,
+		  10,
+		  13,
+		  20
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "DefeatEnemyItemDropSpecialUp": {
+		"Name": "Canned-Special Drop",
+		"Color": "Lucky", 
+		"Tone": 0,
+		"Index": 2,
+		"DisplayValue": [
+		  1,
+		  4,
+		  7,
+		  10,
+		  13,
+		  20
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "DefeatEnemyItemStunBomb": {
+		"Name": "Disc-Piece Drop",
+		"Color": "Lucky", 
+		"Tone": 1,
+		"Index": 2,
+		"DisplayValue": [
+		  1,
+		  2,
+		  3,
+		  4,
+		  5,
+		  6
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "DirectAttackBrushAwayUp": {
+		"Name": "Rush Knockback",
+		"Color": "Mobility", 
+		"Tone": 1,
+		"Index": 1,
+		"DisplayValue": [
+		  100,
+		  117,
+		  133,
+		  167,
+		  200,
+		  300
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "DirectAttackUp": {
+		"Name": "Rush Attack",
+		"Color": "Mobility", 
+		"Tone": 1,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  130,
+		  160,
+		  190,
+		  210,
+		  300,
+		  330,
+		  360,
+		  390,
+		  500
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 9
+	  },
+	  "DisableCanopyShot": {
+		"Name": "No-Launch Brella",
+		"Color": "Support", 
+		"Tone": 2,
+		"Index": 3,
+		"DisplayValue": [
+		  0,
+		  1
+		],
+		"DisplayValueUnit": "Bool",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 1
+	  },
+	  "DroneActionBombQuick": {
+		"Name": "Drone Burst Bomb",
+		"Color": "Drone", 
+		"Tone": 0,
+		"Index": 1,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneActionBombSplash": {
+		"Name": "Drone Splat Bomb",
+		"Color": "Drone", 
+		"Tone": 0,
+		"Index": 0,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneActionItemDrop": {
+		"Name": "Drone Items",
+		"Color": "Drone", 
+		"Tone": 1,
+		"Index": 2,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneActionSprinkler": {
+		"Name": "Drone Sprinkler",
+		"Color": "Drone", 
+		"Tone": 1,
+		"Index": 1,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneActionSuperLaser": {
+		"Name": "Drone Killer Wail",
+		"Color": "Drone", 
+		"Tone": 0,
+		"Index": 2,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneActionTornado": {
+		"Name": "Drone Inkstrike",
+		"Color": "Drone", 
+		"Tone": 0,
+		"Index": 3,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneActionTrap": {
+		"Name": "Drone Ink Mine",
+		"Color": "Drone", 
+		"Tone": 1,
+		"Index": 0,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneCadenceDefeatEnemyUp": {
+		"Name": "Splat Drone Gauge",
+		"Color": "Drone", 
+		"Tone": 2,
+		"Index": 1,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneCadenceMoveUp": {
+		"Name": "Mobile Drone Gauge",
+		"Color": "Mobility", 
+		"Tone": 2,
+		"Index": 1,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneCadencePaintUp": {
+		"Name": "Turf Drone Gauge",
+		"Color": "Range", 
+		"Tone": 2,
+		"Index": 1,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "DroneCadenceTimeUp": {
+		"Name": "Drone-Gauge Charge",
+		"Color": "Drone", 
+		"Tone": 2,
+		"Index": 0,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "EnemySinkUp": {
+		"Name": "Sticky Ink",
+		"Color": "Support", 
+		"Tone": 1,
+		"Index": 0,
+		"DisplayValue": [
+		  70,
+		  45,
+		  30,
+		  20,
+		  10,
+		  1
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "FarDamageRatioUp": {
+		"Name": "Main Damage (Distant)",
+		"Color": "Power", 
+		"Tone": 2,
+		"Index": 1,
+		"DisplayValue": [
+		  100,
+		  115,
+		  130,
+		  145,
+		  160,
+		  200
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "HomingShot": {
+		"Name": "Homing Shots",
+		"Color": "Support", 
+		"Tone": 2,
+		"Index": 1,
+		"DisplayValue": [
+		  0,
+		  12,
+		  25,
+		  33,
+		  50,
+		  100
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "HumanMoveUp": {
+		"Name": "Run Speed Up",
+		"Color": "Mobility", 
+		"Tone": 0,
+		"Index": 1,
+		"DisplayValue": [
+		  100,
+		  122,
+		  131,
+		  140,
+		  148,
+		  166
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "InkRecoveryUp": {
+		"Name": "Ink-Recovery Rate",
+		"Color": "Support", 
+		"Tone": 0,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  125,
+		  150,
+		  175,
+		  200,
+		  300
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "KnockBackUp": {
+		"Name": "Knockback",
+		"Color": "Support", 
+		"Tone": 1,
+		"Index": 1,
+		"DisplayValue": [
+		  0,
+		  100,
+		  200,
+		  600,
+		  1000,
+		  2000
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "LoadingBulletUp": {
+		"Name": "Splatling Barrage",
+		"Color": "Power", 
+		"Tone": 1,
+		"Index": 2,
+		"DisplayValue": [
+		  100,
+		  121,
+		  133,
+		  145,
+		  154,
+		  200
+		],
+		"DisplayValueOverwriteArray": [],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "MainInkSave": {
+		"Name": "Ink Saver (Main)",
+		"Color": "Support", 
+		"Tone": 0,
+		"Index": 1,
+		"DisplayValue": [
+		  100,
+		  80,
+		  70,
+		  60,
+		  50,
+		  25
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "MainPaintUp": {
+		"Name": "Main Ink Coverage",
+		"Color": "Range", 
+		"Tone": 1,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  140,
+		  160,
+		  190,
+		  210,
+		  270
+		],
+		"DisplayValueOverwriteArray": [
+		  {
+			"DisplayValue": [
+			  100,
+			  140,
+			  160,
+			  180,
+			  195,
+			  240
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Roller_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  150,
+			  180,
+			  210,
+			  240,
+			  310
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Charger_ExtraOne_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  150,
+			  170,
+			  190,
+			  210,
+			  260
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Shelter_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  125,
+			  140,
+			  155,
+			  165,
+			  200
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Stringer_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  145,
+			  170,
+			  195,
+			  210,
+			  265
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Saber_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  150,
+			  180,
+			  210,
+			  235,
+			  310
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Slosher_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  165,
+			  200,
+			  230,
+			  250,
+			  320
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Brush_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  140,
+			  170,
+			  200,
+			  220,
+			  280
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Maneuver_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  150,
+			  180,
+			  220,
+			  240,
+			  330
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Spinner_Sdodr.spl__WeaponInfoMain.gyml"
+		  }
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "MainShotRangeUp": {
+		"Name": "Main Range",
+		"Color": "Range", 
+		"Tone": 0,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  125,
+		  145,
+		  165,
+		  185,
+		  230
+		],
+		"DisplayValueOverwriteArray": [
+		  {
+			"DisplayValue": [
+			  100,
+			  130,
+			  160,
+			  190,
+			  220,
+			  250
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Maneuver_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  135,
+			  145,
+			  165,
+			  180,
+			  210
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Blaster_ExtraOne_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  135,
+			  160,
+			  190,
+			  220,
+			  250
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Roller_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  140,
+			  150,
+			  160,
+			  170,
+			  200
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Charger_ExtraOne_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  125,
+			  150,
+			  180,
+			  200,
+			  240
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Saber_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  140,
+			  165,
+			  175,
+			  190,
+			  250
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Slosher_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  145,
+			  180,
+			  210,
+			  240,
+			  300
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Brush_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  140,
+			  170,
+			  195,
+			  230,
+			  280
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Shelter_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  130,
+			  140,
+			  150,
+			  160,
+			  180
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Stringer_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  115,
+			  120,
+			  130,
+			  135,
+			  150
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Spinner_Sdodr.spl__WeaponInfoMain.gyml"
+		  }
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "MainShotRateUp": {
+		"Name": "Main Firing Speed",
+		"Color": "Power", 
+		"Tone": 1,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  114,
+		  133,
+		  160,
+		  200,
+		  266
+		],
+		"DisplayValueOverwriteArray": [
+		  {
+			"DisplayValue": [
+			  100,
+			  117,
+			  126,
+			  136,
+			  148,
+			  200
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Shelter_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  117,
+			  131,
+			  148,
+			  170,
+			  227
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Slosher_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  150,
+			  200,
+			  273,
+			  375,
+			  1000
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Blaster_ExtraOne_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  117,
+			  140,
+			  175,
+			  233,
+			  350
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Maneuver_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  121,
+			  144,
+			  177,
+			  209,
+			  328
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Roller_Sdodr.spl__WeaponInfoMain.gyml"
+		  },
+		  {
+			"DisplayValue": [
+			  100,
+			  125,
+			  136,
+			  150,
+			  167,
+			  250
+			],
+			"DisplayValueUnit": "Percent",
+			"MainWeapon": "Work/Gyml/Brush_Sdodr.spl__WeaponInfoMain.gyml"
+		  }
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "ManeuverSlideAttack": {
+		"Name": "Dodge Roll Attack",
+		"Color": "Mobility", 
+		"Tone": 1,
+		"Index": 3,
+		"DisplayValue": [
+		  0,
+		  1
+		],
+		"DisplayValueUnit": "Bool",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 1
+	  },
+	  "ManeuverSlideUp": {
+		"Name": "Extra Dodge Roll",
+		"Color": "Mobility", 
+		"Tone": 0,
+		"Index": 3,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "None",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "MoveInkRecoverUp": {
+		"Name": "Mobile Ink Recovery",
+		"Color": "Mobility", 
+		"Tone": 2,
+		"Index": 2,
+		"DisplayValue": [
+		  0,
+		  0.5,
+		  1,
+		  1.5,
+		  3,
+		  8
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "MoveSpecialIncreaseUp": {
+		"Name": "Mobile Special Charge",
+		"Color": "Mobility", 
+		"Tone": 2,
+		"Index": 0,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  5
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "NearDamageRatioUp": {
+		"Name": "Main Damage (Close)",
+		"Color": "Power", 
+		"Tone": 2,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  115,
+		  130,
+		  145,
+		  160,
+		  200
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "PaintCombo": {
+		"Name": "Turf Lucky Chain",
+		"Color": "Range", 
+		"Tone": 2,
+		"Index": 2,
+		"DisplayValue": [
+		  0,
+		  12,
+		  17,
+		  25,
+		  50,
+		  100
+		],
+		"DisplayValueUnit": "Point",
+		"FetchDisplayValueFromParam": true,
+		"MaxNum": 5
+	  },
+	  "PenetrateNumUp": {
+		"Name": "Main Piercing",
+		"Color": "Range", 
+		"Tone": 0,
+		"Index": 2,
+		"DisplayValue": [
+		  0,
+		  1,
+		  2,
+		  3,
+		  4,
+		  8
+		],
+		"DisplayValueUnit": "None",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "PoisonInk": {
+		"Name": "Poison Ink",
+		"Color": "Power", 
+		"Tone": 2,
+		"Index": 2,
+		"DisplayValue": [
+		  100,
+		  300,
+		  400,
+		  500,
+		  600,
+		  800
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "Recharge": {
+		"Name": "Midfire Charge",
+		"Color": "Support", 
+		"Tone": 2,
+		"Index": 5,
+		"DisplayValue": [
+		  0,
+		  1
+		],
+		"DisplayValueUnit": "Bool",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 1
+	  },
+	  "RollerDashUp": {
+		"Name": "Moving Ink Speed",
+		"Color": "Mobility", 
+		"Tone": 0,
+		"Index": 2,
+		"DisplayValue": [
+		  100,
+		  130,
+		  145,
+		  160,
+		  170,
+		  200
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "SaberStepAttack": {
+		"Name": "Lunge Attack",
+		"Color": "Mobility", 
+		"Tone": 1,
+		"Index": 4,
+		"DisplayValue": [
+		  0,
+		  1
+		],
+		"DisplayValueUnit": "Bool",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 1
+	  },
+	  "ShelterNakedTimeSave": {
+		"Name": "Brella Cooldown",
+		"Color": "Support", 
+		"Tone": 2,
+		"Index": 4,
+		"DisplayValue": [
+		  5,
+		  3.5,
+		  3,
+		  2.5,
+		  2,
+		  0.5
+		],
+		"DisplayValueUnit": "Second",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "ShotBiasRatio": {
+		"Name": "Shot-Spread Reduction",
+		"Color": "Support", 
+		"Tone": 2,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  80,
+		  60,
+		  40,
+		  20,
+		  0
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "ShotDamageUp": {
+		"Name": "Ink Damage",
+		"Color": "Power", 
+		"Tone": 0,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  105,
+		  110,
+		  115,
+		  120,
+		  150,
+		  155,
+		  160,
+		  165,
+		  200
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 9
+	  },
+	  "SpecialIncreaseUp": {
+		"Name": "Special Charge Up",
+		"Color": "Range", 
+		"Tone": 2,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  125,
+		  150,
+		  175,
+		  200,
+		  300
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "SquidMoveUp": {
+		"Name": "Swim Speed Up",
+		"Color": "Mobility", 
+		"Tone": 0,
+		"Index": 0,
+		"DisplayValue": [
+		  100,
+		  122,
+		  131,
+		  140,
+		  148,
+		  166
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "SquidSomersaultAttack": {
+		"Name": "Squid Attack",
+		"Color": "Mobility", 
+		"Tone": 1,
+		"Index": 2,
+		"DisplayValue": [
+		  0,
+		  1
+		],
+		"DisplayValueUnit": "Bool",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 1
+	  },
+	  "SubInkSave": {
+		"Name": "Ink Saver (Sub)",
+		"Color": "Support", 
+		"Tone": 0,
+		"Index": 2,
+		"DisplayValue": [
+		  100,
+		  80,
+		  70,
+		  60,
+		  50,
+		  25
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "WaveDamageUp": {
+		"Name": "Sound-Wave Damage",
+		"Color": "Power", 
+		"Tone": 0,
+		"Index": 2,
+		"DisplayValue": [
+		  100,
+		  150,
+		  200,
+		  250,
+		  300,
+		  500
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "WeakSwingRateUp": {
+		"Name": "Horizontal-Slash Speed",
+		"Color": "Power", 
+		"Tone": 1,
+		"Index": 1,
+		"DisplayValue": [
+		  100,
+		  118,
+		  137,
+		  162,
+		  200,
+		  260
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  },
+	  "WeakenEnemyDamageRateUp": {
+		"Name": "Hindrance Damage",
+		"Color": "Range", 
+		"Tone": 2,
+		"Index": 3,
+		"DisplayValue": [
+		  100,
+		  130,
+		  145,
+		  160,
+		  170,
+		  200
+		],
+		"DisplayValueUnit": "Percent",
+		"FetchDisplayValueFromParam": false,
+		"MaxNum": 5
+	  }
+	}
+  }

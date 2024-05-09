@@ -1,0 +1,246 @@
+{
+	"BeginningRewardPaletteKey": "Iida",
+	"DefaultPaletteKey": "Hime",
+	"LimitedPaletteParam": {
+	  "DecreaseTipPerHackingLevel": 6,
+	  "MinTipNum": 6
+	},
+	"Table": {
+	  "Agent4": {
+		"DevName": "４号のパレット",
+		"PaletteName": "Agent 4's Palette",
+		"PixelName": "Agent4",
+		"FreqFirstColorGroupType": "Range",
+		"FreqSecondColorGroupType": "Mobility",
+		"MainWeapon": "OrderShooter.png",
+		"NPCIconPath": "IconNPCYongouSdodr.png",
+		"OrderForChangeUI": 2,
+		"SpecialWeapon": "Work/Gyml/SpUltraShotSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Bomb_Splash_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "MainShotRateUp",
+		  "ShotBiasRatio",
+		  "PenetrateNumUp",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Agent8": {
+		"DevName": "ハチのパレット",
+		"PaletteName": "Eight's Palette",
+		"PixelName": "Agent8",
+		"FreqFirstColorGroupType": "Power",
+		"FreqSecondColorGroupType": "Mobility",
+		"IsApplyLimit": true,
+		"MainWeapon": "Octoshot.png",
+		"NPCIconPath": "IconNPCHachigouSdodr.png",
+		"OrderForChangeUI": 11,
+		"SpecialWeapon": "Work/Gyml/SpPogoSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Bomb_Splash_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "MainShotRateUp",
+		  "ShotBiasRatio",
+		  "PenetrateNumUp",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Aori": {
+		"DevName": "アオリのパレット",
+		"PaletteName": "Callie's Palette",
+		"PixelName": "Callie",
+		"FreqFirstColorGroupType": "Power",
+		"FreqSecondColorGroupType": "Lucky",
+		"MainWeapon": "OrderRoller.png",
+		"NPCIconPath": "IconNPCAoriSdodr.png",
+		"OrderForChangeUI": 3,
+		"SpecialWeapon": "Work/Gyml/SpCastleSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Bomb_Quick_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "BulletCorePaintUp",
+		  "RollerDashUp",
+		  "MainShotRateUp",
+		  "PenetrateNumUp",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Bukichi": {
+		"DevName": "ブキチのパレット",
+		"PaletteName": "Sheldon's Palette",
+		"PixelName": "Sheldon",
+		"FreqFirstColorGroupType": "Mobility",
+		"FreqSecondColorGroupType": "Lucky",
+		"MainWeapon": "OrderBrush.png",
+		"NPCIconPath": "IconNPCWeaponShopSdodr.png",
+		"OrderForChangeUI": 9,
+		"SpecialWeapon": "Work/Gyml/SpUltraStampSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Trap_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "RollerDashUp",
+		  "BulletCorePaintUp",
+		  "PenetrateNumUp",
+		  "MainPaintUp",
+		  "MainShotRateUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Fuuka": {
+		"DevName": "フウカのパレット",
+		"PaletteName": "Shiver's Palette",
+		"PixelName": "Shiver",
+		"FreqFirstColorGroupType": "Mobility",
+		"FreqSecondColorGroupType": "Range",
+		"MainWeapon": "OrderStringer.png",
+		"NPCIconPath": "IconNPCIdolASdodr.png",
+		"OrderForChangeUI": 5,
+		"SpecialWeapon": "Work/Gyml/SpMicroLaserSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/PoisonMist_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "ChargeTimeSave",
+		  "ChargeKeepTimeUp",
+		  "PenetrateNumUp",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Hime": {
+		"DevName": "ヒメのパレット",
+		"PaletteName": "Pearl's Palette",
+		"PixelName": "Pearl",
+		"FreqFirstColorGroupType": "Lucky",
+		"FreqSecondColorGroupType": "Support",
+		"MainWeapon": "OrderDualies.png",
+		"NPCIconPath": "IconNPCHimeSdodr.png",
+		"OrderForChangeUI": 0,
+		"SpecialWeapon": "Work/Gyml/SpSkewerSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Bomb_Curling_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "ManeuverSlideAttack",
+		  "ManeuverSlideUp",
+		  "MainShotRateUp",
+		  "ShotBiasRatio",
+		  "PenetrateNumUp",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Hotaru": {
+		"DevName": "ホタルのパレット",
+		"PaletteName": "Marie's Palette",
+		"PixelName": "Marie",
+		"FreqFirstColorGroupType": "Support",
+		"FreqSecondColorGroupType": "Range",
+		"MainWeapon": "OrderCharger.png",
+		"NPCIconPath": "IconNPCHotaruSdodr.png",
+		"OrderForChangeUI": 4,
+		"SpecialWeapon": "Work/Gyml/SpTripleTornadoSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Trap_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "ChargeTimeSave",
+		  "ChargeKeepTimeUp",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Iida": {
+		"DevName": "イイダのパレット",
+		"PaletteName": "Marina's Palette",
+		"PixelName": "Marina",
+		"FreqFirstColorGroupType": "Drone",
+		"FreqSecondColorGroupType": "Power",
+		"MainWeapon": "OrderBrella.png",
+		"NPCIconPath": "IconNPCIidaSdodr.png",
+		"OrderForChangeUI": 1,
+		"SpecialWeapon": "Work/Gyml/SpInkStormSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Sprinkler_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "DisableCanopyShot",
+		  "ShelterNakedTimeSave",
+		  "BulletCorePaintUp",
+		  "MainShotRateUp",
+		  "ShotBiasRatio",
+		  "PenetrateNumUp",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Mantarou": {
+		"DevName": "マンタローのパレット",
+		"PaletteName": "Big Man's Palette",
+		"PixelName": "BigMan",
+		"FreqFirstColorGroupType": "Support",
+		"FreqSecondColorGroupType": "Drone",
+		"MainWeapon": "OrderSlosher.png",
+		"NPCIconPath": "IconNPCIdolCSdodr.png",
+		"OrderForChangeUI": 7,
+		"SpecialWeapon": "Work/Gyml/SpTripleTornadoSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Bomb_Suction_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "MainShotRateUp",
+		  "PenetrateNumUp",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Murch": {
+		"DevName": "スパイキーのパレット",
+		"PaletteName": "Murch's Palette",
+		"PixelName": "Murch",
+		"FreqFirstColorGroupType": "Range",
+		"FreqSecondColorGroupType": "Power",
+		"MainWeapon": "OrderBlaster.png",
+		"NPCIconPath": "IconNPCVendorSdodr.png",
+		"OrderForChangeUI": 8,
+		"SpecialWeapon": "Work/Gyml/SpShockSonarSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Bomb_Curling_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "MainShotRateUp",
+		  "ShotBiasRatio",
+		  "PenetrateNumUp"
+		]
+	  },
+	  "Takowasa": {
+		"DevName": "タコワサ将軍のパレット",
+		"PaletteName": "DJ Octavio's Palette",
+		"PixelName": "DJOctavio",
+		"FreqFirstColorGroupType": "Drone",
+		"FreqSecondColorGroupType": "Support",
+		"MainWeapon": "OrderSplatling.png",
+		"NPCIconPath": "IconNPCTakowasaSdodr.png",
+		"OrderForChangeUI": 10,
+		"SpecialWeapon": "Work/Gyml/SpNiceBallSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Shield_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "Recharge",
+		  "ChargeTimeSave",
+		  "ChargeKeepTimeUp",
+		  "LoadingBulletUp",
+		  "ShotBiasRatio",
+		  "PenetrateNumUp",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  },
+	  "Utsuho": {
+		"DevName": "ウツホのパレット",
+		"PaletteName": "Frye's Palette",
+		"PixelName": "Frye",
+		"FreqFirstColorGroupType": "Lucky",
+		"FreqSecondColorGroupType": "Drone",
+		"MainWeapon": "OrderSplatana.png",
+		"NPCIconPath": "IconNPCIdolBSdodr.png",
+		"OrderForChangeUI": 6,
+		"SpecialWeapon": "Work/Gyml/SpChariotSdodr.spl__WeaponInfoSpecial.gyml",
+		"SubWeapon": "Work/Gyml/Bomb_Fizzy_Sdodr.spl__WeaponInfoSub.gyml",
+		"UnlockTip": [
+		  "WeakSwingRateUp",
+		  "SaberStepAttack",
+		  "PenetrateNumUp",
+		  "ChargeTimeSave",
+		  "MainPaintUp",
+		  "KnockBackUp"
+		]
+	  }
+	}
+}
