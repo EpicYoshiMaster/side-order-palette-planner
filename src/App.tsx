@@ -17,10 +17,10 @@ import { ItemSelectionRow } from 'components/ItemSelectionRow';
 // Palette Planner:
 //
 // - Import palettes from others to share them
-// - Play palette sounds for doing music-themed runs
 // - Eraser
 // - Drawing Mode: Click / Click and drag to draw on the palette
 // - Play/Tracking mode where you progress through the palette as you play and can reset it
+// - Option to restrict the palette to only what's possible (ex. exclusive palette chips, chip # limits, etc.)
 
 const NUM_PALETTE_SLOTS = 36;
 const DEFAULT_PALETTE: PlacedChip[] = (new Array(NUM_PALETTE_SLOTS)).fill({ placed: false, color: "", pattern: "" });
@@ -83,10 +83,14 @@ function App() {
 		resetPalette();
 
 		let randomChips = placedChips.map(() => {
-			let randomTone: string = colorGroups[randRange(0, colorGroups.length - 1)].tones[randRange(0, 2)];
+			let randomGroup = colorGroups[randRange(0, colorGroups.length - 1)];
+			let randomToneIndex = randRange(0, 2);
+			let randomTone: string = randomGroup.tones[randomToneIndex];
 
 			return {
 				placed: true,
+				group: randomGroup.name,
+				tone: randomToneIndex,
 				image: randomTone
 			}
 		})
@@ -100,7 +104,7 @@ function App() {
 
 	const onClickChipName = useCallback((group: ColorGroup, tone: ColorTone, chip: ColorChip) => {
 		
-		setPlacedChips((chips) => chips.map((value, index) => index === chipIndex ? {placed: true, image: tone.image} : value))
+		setPlacedChips((chips) => chips.map((value, index) => index === chipIndex ? {placed: true, group: group.name, tone: tone.index, image: tone.image} : value))
 
 		setChipIndex((chip) => { 
 			return (chip + 1) % NUM_PALETTE_SLOTS;
@@ -115,8 +119,7 @@ function App() {
 	}, []);
 
 	const onClickToneName = useCallback((group: ColorGroup, tone: ColorTone) => {
-
-		setPlacedChips((chips) => chips.map((value, index) => index === chipIndex ? {placed: true, image: tone.image} : value))
+		setPlacedChips((chips) => chips.map((value, index) => index === chipIndex ? {placed: true, group: group.name, tone: tone.index, image: tone.image} : value))
 
 		setChipIndex((chip) => { 
 			return (chip + 1) % NUM_PALETTE_SLOTS;

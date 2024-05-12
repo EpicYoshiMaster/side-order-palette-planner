@@ -19,6 +19,7 @@ export type ColorChip = {
 };
 
 export type ColorTone = {
+    index: number;
     image: string;
     chips: ColorChip[];
 }
@@ -29,8 +30,12 @@ export type ColorGroup = {
     tones: ColorTone[];
 }
 
+//This is a placed Power Chip of Tone 1 called Splash Damage which has a maximum of 9 chips
+
 export type PlacedChip = {
     placed: boolean;
+    group: string;    
+    tone: number;
     image: string;
 }
 

@@ -11,8 +11,8 @@ export const createChipDatabase = (colorGroups: ColorGroupJson[], chips: ColorCh
 		return { 
 			name: group.name, 
 			image: group.image,
-			tones: group.tones.map((tone) => { 
-				return {image: tone, chips: []}; 
+			tones: group.tones.map((tone, index) => { 
+				return {image: tone, index: index, chips: []}; 
 			}) 
 		};
 	})

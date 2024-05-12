@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { PlacedChip } from "../../types/types";
 
@@ -23,8 +23,36 @@ interface ChipSlotProps {
 
 export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, onClickChip }) => {
 
+	const [ placed, setPlaced ] = useState(false);
+	const [ clicked, setClicked ] = useState(false);
+
+	let onClick = useCallback(() => {
+		if(chip.placed) {
+			const chipAudio = new Audio(require(`assets/sounds/UI_Sdodr_MyPalette_00_PushTip_${chip.group}_${chip.tone}.wav`));
+
+			chipAudio.play();
+		}
+
+		setClicked(true);
+
+		onClickChip(index);
+	}, [index, chip, onClickChip]);
+
+	useEffect(() => {
+		if(chip.placed) {
+			setPlaced(true);
+		}
+	}, [chip.placed]);
+
 	return (
-		<Background onClick={() => { onClickChip(index); }} $placed={chip.placed} $image={chip.image} $selected={selected}>
+		<Background 
+		onClick={() => { onClick(); }} 
+		onAnimationEnd={(event) => { event.animationName === Place.getName() ? setPlaced(false) : setClicked(false); }}
+		$placed={chip.placed}
+		$image={chip.image} 
+		$selected={selected}
+		$clickAnim={clicked}
+		$placeAnim={placed}>
 			<ChipSlotAttachment $placed={chip.placed} />
 		</Background>
 	)
@@ -40,14 +68,25 @@ const Place = keyframes`
 	}
 `;
 
-const Background = styled.div<{ $placed: boolean, $image: string, $selected: boolean } >`
+const Click = keyframes`
+	50% {
+		transform: scale(1, 1);
+	}
+`;
+
+const Background = styled.div<{ $placed: boolean, $image: string, $selected: boolean, $clickAnim: boolean, $placeAnim: boolean }>`
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-end;
 
-	${({$placed}) => $placed ? 
+	${({$clickAnim}) => $clickAnim ? 
+	css`
+		animation: ${Click} 0.1s;
+	` : css``}
+
+	${({$placeAnim}) => $placeAnim ? 
 	css`
 		animation: ${Place} 0.75s;
 		z-index: 1000;
@@ -59,6 +98,12 @@ const Background = styled.div<{ $placed: boolean, $image: string, $selected: boo
 	background: ${({ $placed, $image, theme }) => getFullBackground($placed, $image, theme.chipslot.background)};
 	background-repeat: no-repeat;
 	background-size: contain;
+
+	transition: transform 0.1s linear;
+
+	&:hover {
+		transform: scale(1.1, 1.1);
+	}
 `;
 
 const ChipSlotAttachment = styled.div<{ $placed: boolean }>`
