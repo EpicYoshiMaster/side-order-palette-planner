@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Dashboard } from "./Dashboard";
 import { ChipSlot } from "./ChipSlot";
@@ -8,10 +8,11 @@ interface ChipPaletteProps {
 	chips: PlacedChip[];
 	chipIndex: number;
 	palette: Palette;
-	onClickChip: (index: number) => void;
+	playSound: (sound: string) => void;
+	onClickChip: (chip: PlacedChip, index: number) => void;
 }
 
-export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, palette, onClickChip }) => {
+export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, palette, playSound, onClickChip }) => {
 
 	return (
 		<Background>
@@ -22,7 +23,7 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, pale
 			{
 			chips.map((value, index) => {
 				return (
-					<ChipSlot chip={value} index={index} key={index} selected={index === chipIndex} onClickChip={onClickChip} />
+					<ChipSlot chip={value} index={index} key={index} selected={index === chipIndex} playSound={playSound} onClickChip={onClickChip} />
 				)
 			})
 			}

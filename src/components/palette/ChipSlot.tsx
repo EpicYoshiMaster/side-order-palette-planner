@@ -18,36 +18,40 @@ interface ChipSlotProps {
 	chip: PlacedChip;
 	index: number;
 	selected: boolean;
-	onClickChip: (index: number) => void;
+	playSound: (sound: string) => void;
+	onClickChip: (chip: PlacedChip, index: number) => void;
 }
 
-export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, onClickChip }) => {
+export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, playSound, onClickChip }) => {
 
 	const [ placed, setPlaced ] = useState(false);
 	const [ clicked, setClicked ] = useState(false);
 
 	let onClick = useCallback(() => {
-		if(chip.placed) {
-			const chipAudio = new Audio(require(`assets/sounds/UI_Sdodr_MyPalette_00_PushTip_${chip.group}_${chip.tone}.wav`));
+		setClicked(true);
+		onClickChip(chip, index);
+	}, [index, chip, onClickChip]);
 
-			chipAudio.play();
+	let onAnimEnd = useCallback((animName: string) => {
+		if(animName === Place.getName()) {
+			setPlaced(false);
+		}
+		else if(animName === Click.getName()) {
+			setClicked(false);
 		}
 
-		setClicked(true);
-
-		onClickChip(index);
-	}, [index, chip, onClickChip]);
+	}, []);
 
 	useEffect(() => {
 		if(chip.placed) {
 			setPlaced(true);
 		}
-	}, [chip.placed]);
+	}, [chip]);
 
 	return (
 		<Background 
 		onClick={() => { onClick(); }} 
-		onAnimationEnd={(event) => { event.animationName === Place.getName() ? setPlaced(false) : setClicked(false); }}
+		onAnimationEnd={(event) => { onAnimEnd(event.animationName); }}
 		$placed={chip.placed}
 		$image={chip.image} 
 		$selected={selected}
@@ -60,17 +64,25 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, onCli
 
 const Place = keyframes`
 	from {
-		transform: scale(1.3, 1.3);
+		transform: scale(130%, 130%);
+	}
+
+	70% {
+		transform: scale(100%, 100%);
+	}
+
+	85% {
+		transform: scale(80%, 80%);
 	}
 
 	to {
-		transform: scale(1, 1);
+		transform: scale(100%, 100%);
 	}
 `;
 
 const Click = keyframes`
 	50% {
-		transform: scale(1, 1);
+		transform: scale(90%, 90%);
 	}
 `;
 
@@ -88,7 +100,7 @@ const Background = styled.div<{ $placed: boolean, $image: string, $selected: boo
 
 	${({$placeAnim}) => $placeAnim ? 
 	css`
-		animation: ${Place} 0.75s;
+		animation: ${Place} 0.35s;
 		z-index: 1000;
 	` : css``}
 

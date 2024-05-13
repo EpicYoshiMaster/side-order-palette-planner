@@ -21,6 +21,7 @@ import { ItemSelectionRow } from 'components/ItemSelectionRow';
 // - Drawing Mode: Click / Click and drag to draw on the palette
 // - Play/Tracking mode where you progress through the palette as you play and can reset it
 // - Option to restrict the palette to only what's possible (ex. exclusive palette chips, chip # limits, etc.)
+// - Disabled Slots for Eight's Palette
 
 const NUM_PALETTE_SLOTS = 36;
 const DEFAULT_PALETTE: PlacedChip[] = (new Array(NUM_PALETTE_SLOTS)).fill({ placed: false, color: "", pattern: "" });
@@ -56,8 +57,19 @@ const palettes: Palette[] = Object.values(PaletteList.Table).map((value) => {
 }).sort(sortPalettes);
 
 enum PaletteMode {
-	PM_Playing,
-	PM_Drawing
+	Palette_Draw,
+	Palette_Erase,
+	Palette_Sound
+};
+
+enum SoundSetting {
+	Sound_On,
+	Sound_Off
+};
+
+enum ColorChipMode {
+	Chips_Limited,
+	Chips_Any
 };
 
 //--color-so-text-shadow: 0px 0px 4px rgba(137,39,17,.3)
@@ -68,19 +80,34 @@ function App() {
 
 	const [ placedChips, setPlacedChips ] = useState<PlacedChip[]>(DEFAULT_PALETTE);
 	const [ chipIndex, setChipIndex ] = useState(0);
-	const [ paletteMode, setPaletteMode ] = useState(PaletteMode.PM_Playing);
-
+	const [ paletteMode, setPaletteMode ] = useState(PaletteMode.Palette_Draw);
+	const [ soundSetting, setSoundSetting ] = useState(SoundSetting.Sound_On);
+	const [ colorChipMode, setColorChipMode ] = useState(ColorChipMode.Chips_Limited);
 	const [ paletteIndex, setPaletteIndex ] = useState(0);
 
+	//Selected Chip
+	//Selected Tone
+
 	const paletteRef = useRef(null);
+
+	const playSound = useCallback((sound: string | undefined) => {
+		if(soundSetting !== SoundSetting.Sound_On || !sound) return;
+
+		const audio = new Audio(sound);
+
+		audio.play();
+	}, [soundSetting]);
 
 	const resetPalette = useCallback(() => {
 		setPlacedChips(DEFAULT_PALETTE);
 		setChipIndex(0);
-	}, []);
+
+		playSound(require(`assets/sounds/ChipBeamVanish.wav`));
+	}, [playSound]);
 
 	const randomizePalette = useCallback(() => {
-		resetPalette();
+		setPlacedChips(DEFAULT_PALETTE);
+		setChipIndex(0);
 
 		let randomChips = placedChips.map(() => {
 			let randomGroup = colorGroups[randRange(0, colorGroups.length - 1)];
@@ -96,7 +123,9 @@ function App() {
 		})
 
 		setPlacedChips(randomChips);
-	}, [placedChips, resetPalette]);
+
+		playSound(require(`assets/sounds/PlaceColorChip.wav`));
+	}, [placedChips, resetPalette, playSound]);
 
 	const downloadImage = useCallback(() => {
 		exportComponentAsPNG(paletteRef, { fileName: "Palette", html2CanvasOptions: { backgroundColor: null }});
@@ -109,14 +138,9 @@ function App() {
 		setChipIndex((chip) => { 
 			return (chip + 1) % NUM_PALETTE_SLOTS;
 		});	
-	}, [chipIndex]);
 
-	const onClickChip = useCallback((index: number) => {
-
-		setChipIndex(index);
-
-		//setPlacedChips((chips) => chips.map((value, idx) => idx === index ? {placed: false, image: ""} : value));		
-	}, []);
+		playSound(require(`assets/sounds/PlaceColorChip.wav`));
+	}, [chipIndex, playSound]);
 
 	const onClickToneName = useCallback((group: ColorGroup, tone: ColorTone) => {
 		setPlacedChips((chips) => chips.map((value, index) => index === chipIndex ? {placed: true, group: group.name, tone: tone.index, image: tone.image} : value))
@@ -124,7 +148,30 @@ function App() {
 		setChipIndex((chip) => { 
 			return (chip + 1) % NUM_PALETTE_SLOTS;
 		});	
-	}, [chipIndex]);
+
+		playSound(require(`assets/sounds/PlaceColorChip.wav`));
+	}, [chipIndex, playSound]);
+
+	const onClickChip = useCallback((chip: PlacedChip, index: number) => {
+		switch(paletteMode) {
+			case PaletteMode.Palette_Draw:
+				setChipIndex(index);
+				break;
+			case PaletteMode.Palette_Erase:
+				if(chip.placed) {
+					playSound(require(`assets/sounds/ChipBeamVanish.wav`));
+
+					setPlacedChips((chips) => chips.map((value, idx) => idx === index ? {placed: false, group: "", tone: -1, image: ""} : value));		
+				}
+				
+				break;
+			case PaletteMode.Palette_Sound:
+				if(chip.placed) {
+					playSound(require(`assets/sounds/tones/UI_Sdodr_MyPalette_00_PushTip_${chip.group}_${chip.tone}.wav`));
+				}
+				break;
+		}
+	}, [paletteMode, playSound]);
 	
   	return (
 		<Theme>
@@ -135,7 +182,7 @@ function App() {
 				<PaletteSpace>
 					<Header>Side Order Palette Planner</Header>
 					<ButtonRow>
-						<ItemSelectionRow items={["Playing Mode", "Drawing Mode"]} selected={paletteMode} setSelected={setPaletteMode} />
+						<ItemSelectionRow items={["Draw Mode", "Erase Mode", "Sound Mode"]} selected={paletteMode} setSelected={setPaletteMode} />
 						<GlowButton onClick={() => { resetPalette(); }}>
 							Reset
 						</GlowButton>
@@ -145,6 +192,7 @@ function App() {
 						<GlowButton onClick={() => { downloadImage(); }}>
 							Download Image
 						</GlowButton>
+						<ItemSelectionRow items={["Sound On", "Sound Off"]} selected={soundSetting} setSelected={setSoundSetting} />
 					</ButtonRow>
 					<ButtonRow>
 						<PaletteIconBackground src={require(`assets/npcs/${palettes[paletteIndex].icon}`)} />
@@ -165,9 +213,10 @@ function App() {
 							<PaletteIcon src={require(`assets/tones/Category_${palettes[paletteIndex].firstTone}.png`)} />
 							<SecondaryTone src={require(`assets/tones/Category_${palettes[paletteIndex].secondTone}.png`)} />
 						</Tones>
+						<ItemSelectionRow items={["Limit Color Chips", "Any Color Chips"]} selected={colorChipMode} setSelected={setColorChipMode} />
 					</ButtonRow>
 					<PrintComponent ref={paletteRef}>
-						<ChipPalette palette={palettes[paletteIndex]} chipIndex={chipIndex} chips={placedChips} onClickChip={onClickChip} />
+						<ChipPalette palette={palettes[paletteIndex]} chipIndex={chipIndex} chips={placedChips} playSound={playSound} onClickChip={onClickChip} />
 					</PrintComponent>
 				</PaletteSpace>
 			</Content>

@@ -48,6 +48,7 @@ const Wrapper = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	user-select: none;
 
 	color: ${props => props.theme.palette.text};
 `;
