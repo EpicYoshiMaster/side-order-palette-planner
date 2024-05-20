@@ -8,11 +8,11 @@ interface ChipPaletteProps {
 	chips: PlacedChip[];
 	chipIndex: number;
 	palette: Palette;
-	playSound: (sound: string) => void;
+	openSlots: number;
 	onClickChip: (chip: PlacedChip, index: number) => void;
 }
 
-export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, palette, playSound, onClickChip }) => {
+export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, palette, openSlots, onClickChip }) => {
 
 	return (
 		<Background>
@@ -23,7 +23,7 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, pale
 			{
 			chips.map((value, index) => {
 				return (
-					<ChipSlot chip={value} index={index} key={index} selected={index === chipIndex} playSound={playSound} onClickChip={onClickChip} />
+					<ChipSlot chip={value} index={index} key={index} selected={index === chipIndex} locked={index + 1 > openSlots} onClickChip={onClickChip} />
 				)
 			})
 			}

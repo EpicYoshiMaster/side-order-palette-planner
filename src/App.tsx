@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import ColorTones from './data/tones.json'
 import ColorChips from './data/colorchips.json'
@@ -21,9 +21,9 @@ import { ItemSelectionRow } from 'components/ItemSelectionRow';
 // - Drawing Mode: Click / Click and drag to draw on the palette
 // - Play/Tracking mode where you progress through the palette as you play and can reset it
 // - Option to restrict the palette to only what's possible (ex. exclusive palette chips, chip # limits, etc.)
-// - Disabled Slots for Eight's Palette
 
 const NUM_PALETTE_SLOTS = 36;
+const EIGHTS_PALETTE = 11;
 const DEFAULT_PALETTE: PlacedChip[] = (new Array(NUM_PALETTE_SLOTS)).fill({ placed: false, color: "", pattern: "" });
 
 const colorGroups: ColorGroupJson[] = ColorTones.ColorGroups;
@@ -74,8 +74,6 @@ enum ColorChipMode {
 
 //--color-so-text-shadow: 0px 0px 4px rgba(137,39,17,.3)
 
-//disabled slot #262626
-
 function App() {
 
 	const [ placedChips, setPlacedChips ] = useState<PlacedChip[]>(DEFAULT_PALETTE);
@@ -84,11 +82,22 @@ function App() {
 	const [ soundSetting, setSoundSetting ] = useState(SoundSetting.Sound_On);
 	const [ colorChipMode, setColorChipMode ] = useState(ColorChipMode.Chips_Limited);
 	const [ paletteIndex, setPaletteIndex ] = useState(0);
+	const [ numOpenSlots, setNumOpenSlots ] = useState(NUM_PALETTE_SLOTS);
 
 	//Selected Chip
 	//Selected Tone
 
 	const paletteRef = useRef(null);
+
+	const numFreeSlots = useMemo(() => {
+		return paletteIndex === EIGHTS_PALETTE ? numOpenSlots : NUM_PALETTE_SLOTS;
+	}, [paletteIndex, numOpenSlots])
+
+	useEffect(() => {
+		if(chipIndex + 1 > numFreeSlots) {
+			setChipIndex(0);
+		}
+	}, [chipIndex, numFreeSlots])
 
 	const playSound = useCallback((sound: string | undefined) => {
 		if(soundSetting !== SoundSetting.Sound_On || !sound) return;
@@ -125,7 +134,7 @@ function App() {
 		setPlacedChips(randomChips);
 
 		playSound(require(`assets/sounds/PlaceColorChip.wav`));
-	}, [placedChips, resetPalette, playSound]);
+	}, [placedChips, playSound]);
 
 	const downloadImage = useCallback(() => {
 		exportComponentAsPNG(paletteRef, { fileName: "Palette", html2CanvasOptions: { backgroundColor: null }});
@@ -136,21 +145,21 @@ function App() {
 		setPlacedChips((chips) => chips.map((value, index) => index === chipIndex ? {placed: true, group: group.name, tone: tone.index, image: tone.image} : value))
 
 		setChipIndex((chip) => { 
-			return (chip + 1) % NUM_PALETTE_SLOTS;
+			return (chip + 1) % numFreeSlots;
 		});	
 
 		playSound(require(`assets/sounds/PlaceColorChip.wav`));
-	}, [chipIndex, playSound]);
+	}, [chipIndex, playSound, numFreeSlots]);
 
 	const onClickToneName = useCallback((group: ColorGroup, tone: ColorTone) => {
 		setPlacedChips((chips) => chips.map((value, index) => index === chipIndex ? {placed: true, group: group.name, tone: tone.index, image: tone.image} : value))
 
 		setChipIndex((chip) => { 
-			return (chip + 1) % NUM_PALETTE_SLOTS;
+			return (chip + 1) % numFreeSlots;
 		});	
 
 		playSound(require(`assets/sounds/PlaceColorChip.wav`));
-	}, [chipIndex, playSound]);
+	}, [chipIndex, playSound, numFreeSlots]);
 
 	const onClickChip = useCallback((chip: PlacedChip, index: number) => {
 		switch(paletteMode) {
@@ -213,10 +222,25 @@ function App() {
 							<PaletteIcon src={require(`assets/tones/Category_${palettes[paletteIndex].firstTone}.png`)} />
 							<SecondaryTone src={require(`assets/tones/Category_${palettes[paletteIndex].secondTone}.png`)} />
 						</Tones>
+						{paletteIndex === EIGHTS_PALETTE && (
+						<GlowSelect id="open-slots" value={numOpenSlots} onChange={(event) => { setNumOpenSlots(Number(event.target.value)); }}>
+							<GlowOption value={36}>0 Hacks</GlowOption>
+							<GlowOption value={30}>1 Hack</GlowOption>
+							<GlowOption value={24}>2 Hacks</GlowOption>
+							<GlowOption value={18}>3 Hacks</GlowOption>
+							<GlowOption value={12}>4 Hacks</GlowOption>
+							<GlowOption value={6}>5+ Hacks</GlowOption>
+						</GlowSelect>
+						)}
 						<ItemSelectionRow items={["Limit Color Chips", "Any Color Chips"]} selected={colorChipMode} setSelected={setColorChipMode} />
 					</ButtonRow>
 					<PrintComponent ref={paletteRef}>
-						<ChipPalette palette={palettes[paletteIndex]} chipIndex={chipIndex} chips={placedChips} playSound={playSound} onClickChip={onClickChip} />
+						<ChipPalette 
+						palette={palettes[paletteIndex]} 
+						chipIndex={chipIndex} 
+						chips={placedChips} 
+						onClickChip={onClickChip} 
+						openSlots={numFreeSlots} />
 					</PrintComponent>
 				</PaletteSpace>
 			</Content>

@@ -21,6 +21,7 @@ const theme: DefaultTheme = {
 	},
 
 	chipslot: {
+		locked: "#262626",
 		background: "#d3d3d3"
 	}
 };

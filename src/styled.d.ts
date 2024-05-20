@@ -21,6 +21,7 @@ declare module 'styled-components' {
 		}
 
 		chipslot: {
+			locked: string;
 			background: string;
 		}
 	}

@@ -6,8 +6,8 @@ import { PlacedChip } from "../../types/types";
 //Little dip where it plugs in
 //Noise Texture
 
-const getFullBackground = (placed: boolean, image: string, defaultColor: string) => {
-	if(placed && image !== "") {
+const getFullBackground = (showChip: boolean, image: string, defaultColor: string) => {
+	if(showChip && image !== "") {
 		return `url(${require(`assets/chips/${image}`)})`;
 	}
 
@@ -18,19 +18,22 @@ interface ChipSlotProps {
 	chip: PlacedChip;
 	index: number;
 	selected: boolean;
-	playSound: (sound: string) => void;
+	locked: boolean;
 	onClickChip: (chip: PlacedChip, index: number) => void;
 }
 
-export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, playSound, onClickChip }) => {
+export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, onClickChip }) => {
 
 	const [ placed, setPlaced ] = useState(false);
 	const [ clicked, setClicked ] = useState(false);
 
 	let onClick = useCallback(() => {
 		setClicked(true);
-		onClickChip(chip, index);
-	}, [index, chip, onClickChip]);
+
+		if(!locked) {
+			onClickChip(chip, index);
+		}
+	}, [index, chip, locked, onClickChip]);
 
 	let onAnimEnd = useCallback((animName: string) => {
 		if(animName === Place.getName()) {
@@ -55,6 +58,7 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, playS
 		$placed={chip.placed}
 		$image={chip.image} 
 		$selected={selected}
+		$locked={locked}
 		$clickAnim={clicked}
 		$placeAnim={placed}>
 			<ChipSlotAttachment $placed={chip.placed} />
@@ -86,7 +90,7 @@ const Click = keyframes`
 	}
 `;
 
-const Background = styled.div<{ $placed: boolean, $image: string, $selected: boolean, $clickAnim: boolean, $placeAnim: boolean }>`
+const Background = styled.div<{ $placed: boolean, $image: string, $selected: boolean, $locked: boolean, $clickAnim: boolean, $placeAnim: boolean }>`
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -107,7 +111,7 @@ const Background = styled.div<{ $placed: boolean, $image: string, $selected: boo
 	aspect-ratio: 1;
 	border-radius: 0.25rem;
 
-	background: ${({ $placed, $image, theme }) => getFullBackground($placed, $image, theme.chipslot.background)};
+	background: ${({ $placed, $image, $locked, theme }) => getFullBackground($placed && !$locked, $image, $locked ? theme.chipslot.locked : theme.chipslot.background)};
 	background-repeat: no-repeat;
 	background-size: contain;
 
