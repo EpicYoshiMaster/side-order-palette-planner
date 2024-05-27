@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
-import { PlacedChip } from "../../types/types";
+import { NO_CHIP, getColorChipImage } from "utils/utils";
 
 //Border
 //Little dip where it plugs in
@@ -15,11 +15,11 @@ const getFullBackground = (showChip: boolean, image: string, defaultColor: strin
 }
 
 interface ChipSlotProps {
-	chip: PlacedChip;
+	chip: number;
 	index: number;
 	selected: boolean;
 	locked: boolean;
-	onClickChip: (chip: PlacedChip, index: number) => void;
+	onClickChip: (chip: number, index: number) => void;
 }
 
 export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, onClickChip }) => {
@@ -46,7 +46,7 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 	}, []);
 
 	useEffect(() => {
-		if(chip.placed) {
+		if(chip !== NO_CHIP) {
 			setPlaced(true);
 		}
 	}, [chip]);
@@ -55,13 +55,13 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 		<Background 
 		onClick={() => { onClick(); }} 
 		onAnimationEnd={(event) => { onAnimEnd(event.animationName); }}
-		$placed={chip.placed}
-		$image={chip.image} 
+		$placed={chip !== NO_CHIP}
+		$image={chip !== NO_CHIP ? getColorChipImage(chip) : ""} 
 		$selected={selected}
 		$locked={locked}
 		$clickAnim={clicked}
 		$placeAnim={placed}>
-			<ChipSlotAttachment $placed={chip.placed} />
+			<ChipSlotAttachment $placed={chip !== NO_CHIP} />
 		</Background>
 	)
 }

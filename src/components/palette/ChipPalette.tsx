@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { Dashboard } from "./Dashboard";
 import { ChipSlot } from "./ChipSlot";
-import { Palette, PlacedChip } from "../../types/types";
+import { Palette } from "../../types/types";
 
 interface ChipPaletteProps {
-	chips: PlacedChip[];
+	chips: number[];
 	chipIndex: number;
 	palette: Palette;
 	openSlots: number;
-	onClickChip: (chip: PlacedChip, index: number) => void;
+	onClickChip: (chip: number, index: number) => void;
 }
 
 export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, palette, openSlots, onClickChip }) => {

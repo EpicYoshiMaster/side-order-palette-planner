@@ -1,23 +1,22 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { ActiveGlowButton, GlowButton, textGlow } from "./Layout";
-import { ColorGroup, OnClickChipProps, OnClickToneProps } from "../types/types";
+import { OnClickChipProps, DisplayState } from "../types/types";
+import { getColorGroups, getColorChips, getToneImage } from "utils/utils";
 import { ItemSelectionRow } from "./ItemSelectionRow";
 
 interface ColorChipListProps {
-    chipDatabase: ColorGroup[];
     onClickChip: OnClickChipProps;
-    onClickTone: OnClickToneProps;
+    selectedChip: number;
+    selectedTone: number;
+    displayState: DisplayState;
+    setDisplayState: Dispatch<SetStateAction<number>>;
 }
 
-enum DisplayState {
-    DS_ColorChips,
-    DS_Tones
-};
+const colorGroups = getColorGroups();
+const colorChips = getColorChips();
 
-export const ColorChipList: React.FC<ColorChipListProps> = ({ chipDatabase, onClickChip, onClickTone }) => {
-
-    const [displayState, setDisplayState] = useState(DisplayState.DS_ColorChips);
+export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selectedChip, selectedTone, displayState, setDisplayState }) => {
 
     return (
         <StyledColorChipList>
@@ -26,49 +25,34 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ chipDatabase, onCl
             </SelectionWrapper>
             <GroupList>
             {
-                chipDatabase.map((group, index) => {
-                    return (
+                colorGroups.map((group, index) => (
                     <GroupEntry key={index}>
                         <GroupTitle>
                             <GroupImage src={require(`assets/tones/${group.image}`)} alt={`${group.name} Logo`} />
-                            <GroupName>
-                                {group.name}
-                            </GroupName>
+                            <GroupName>{group.name}</GroupName>
                         </GroupTitle>
 
-                        {displayState === DisplayState.DS_ColorChips && (<ChipList>
-                        {
-                        group.tones.map((tone, index) => {
-                            return (
-                            <ToneEntry key={index}>
+                        {displayState === DisplayState.DS_ColorChips && 
+                        colorChips.filter((chip) => chip.group === group.index && !chip.isTone).map((chip, chipIndex) => (
+                                <ChipEntry key={chipIndex}>
+                                    <ChipItem $active={selectedChip === chip.index} onClick={() => { onClickChip(chip); }}>
+                                        {chip.name}
+                                    </ChipItem>
+                                </ChipEntry>
+                        ))}
+
+                        {displayState === DisplayState.DS_Tones && (
+                        
+                            <ToneRow>
                             {
-                                 tone.chips.map((chip, index) => {
-                                    return (
-                                        <ChipEntry key={index}>
-                                            <ChipItem onClick={() => { onClickChip(group, tone, chip); }} >
-                                                {chip.name}
-                                            </ChipItem>
-                                        </ChipEntry>
-                                    )
-                                    })
+                            colorChips.filter((chip) => chip.group === group.index && chip.isTone).map((chip, chipIndex) => (
+                                <ToneImage src={require(`assets/chips/${getToneImage(chip.group, chip.tone)}`)} key={chipIndex} onClick={() => { onClickChip(chip); }} />
+                            ))
                             }
-                            </ToneEntry>
-                            )
-                        })
-                        }
-                        </ChipList>
-                        )}
-                        {displayState === DisplayState.DS_Tones && (<ToneRow>
-                            {
-                            group.tones.map((tone, index) => {
-                                return <ToneImage src={require(`assets/chips/${tone.image}`)} key={index} onClick={() => { onClickTone(group, tone); }} />
-                            })
-                            }
-                        </ToneRow>
+                            </ToneRow>
                         )}
                     </GroupEntry>
-                    );
-                })
+                ))
             }
             </GroupList>
         </StyledColorChipList>
@@ -87,17 +71,15 @@ const SelectionWrapper = styled.div`
     margin-bottom: 10px;
 `;
 
-const GroupList = styled.ul`
+const GroupList = styled.div`
     position: relative;
     margin: 0;
     padding: 0 20px;
 
-    list-style: none;
-
     overflow: scroll;
 `;
 
-const GroupEntry = styled.li`
+const GroupEntry = styled.div`
     position: relative;
 `;
 
@@ -125,16 +107,6 @@ const GroupName = styled.div`
     background-image: linear-gradient(to right, ${props => props.theme.gradient_background} 70%, rgba(94, 66, 66, 0) 100%);
 `;
 
-const ChipList = styled.ul`
-    position: relative;
-    margin: 0;
-    padding: 0;
-
-    list-style: none;
-
-    overflow: auto;
-`;
-
 const ToneRow = styled.div`
     margin: 5px 0;
     height: 4em;
@@ -150,19 +122,14 @@ const ToneImage = styled.img`
     object-fit: contain;
 `;
 
-const ToneEntry = styled.div`
-    position: relative;
-    display: contents;
-`
-
-const ChipEntry = styled.li`
+const ChipEntry = styled.div`
     width: 100%;
     height: 100%;
 
     margin: 10px 0;
 `;
 
-const ChipItem = styled(GlowButton)`
+const ChipItem = styled(ActiveGlowButton)`
     width: 100%;
     height: 100%;
 `;

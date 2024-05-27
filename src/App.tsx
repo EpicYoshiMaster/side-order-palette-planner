@@ -1,11 +1,9 @@
 import React, { useCallback, useState, useRef, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
-import ColorTones from './data/tones.json'
-import ColorChips from './data/colorchips.json'
 import PaletteList from './data/palettes.json'
-import { ColorChipJson, ColorGroupJson, ColorGroup, PlacedChip, ColorTone, ColorChip, Palette } from './types/types';
+import { ColorChipJson, Palette, PaletteMode, SoundSetting, ColorChipMode, DisplayState } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
-import { createChipDatabase, randRange } from './utils/utils';
+import { randRange, getLastBaseIndex, NO_CHIP, getColorChipbyIndex, getColorGroup } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
 import { Theme } from 'components/Theme';
 import { GlowButton, textGlow, Dots, GlowSelect, GlowOption } from 'components/Layout';
@@ -24,21 +22,7 @@ import { ItemSelectionRow } from 'components/ItemSelectionRow';
 
 const NUM_PALETTE_SLOTS = 36;
 const EIGHTS_PALETTE = 11;
-const DEFAULT_PALETTE: PlacedChip[] = (new Array(NUM_PALETTE_SLOTS)).fill({ placed: false, color: "", pattern: "" });
-
-const colorGroups: ColorGroupJson[] = ColorTones.ColorGroups;
-
-const chips: ColorChipJson[] = Object.values(ColorChips.Table).map((value) => {
-	return {
-		name: value.Name,
-		group: value.Color,
-		tone: value.Tone,
-		index: value.Index,
-		max: value.MaxNum
-	}
-});
-
-const chipDatabase: ColorGroup[] = createChipDatabase(colorGroups, chips);
+const DEFAULT_PALETTE: number[] = (new Array(NUM_PALETTE_SLOTS)).fill(NO_CHIP);
 
 const sortPalettes = (a: Palette, b: Palette) => { return a.index < b.index ? -1 : (a.index > b.index ? 1 : 0); };
 
@@ -56,33 +40,20 @@ const palettes: Palette[] = Object.values(PaletteList.Table).map((value) => {
 	}
 }).sort(sortPalettes);
 
-enum PaletteMode {
-	Palette_Draw,
-	Palette_Erase,
-	Palette_Sound
-};
-
-enum SoundSetting {
-	Sound_On,
-	Sound_Off
-};
-
-enum ColorChipMode {
-	Chips_Limited,
-	Chips_Any
-};
-
 //--color-so-text-shadow: 0px 0px 4px rgba(137,39,17,.3)
 
 function App() {
 
-	const [ placedChips, setPlacedChips ] = useState<PlacedChip[]>(DEFAULT_PALETTE);
+	const [ placedChips, setPlacedChips ] = useState<number[]>(DEFAULT_PALETTE);
 	const [ chipIndex, setChipIndex ] = useState(0);
 	const [ paletteMode, setPaletteMode ] = useState(PaletteMode.Palette_Draw);
 	const [ soundSetting, setSoundSetting ] = useState(SoundSetting.Sound_On);
 	const [ colorChipMode, setColorChipMode ] = useState(ColorChipMode.Chips_Limited);
+	const [ displayState, setDisplayState ] = useState(DisplayState.DS_ColorChips);
 	const [ paletteIndex, setPaletteIndex ] = useState(0);
 	const [ numOpenSlots, setNumOpenSlots ] = useState(NUM_PALETTE_SLOTS);
+	const [ selectedChip, setSelectedChip ] = useState(0);
+	const [ selectedTone, setSelectedTone ] = useState(getLastBaseIndex() + 1);
 
 	//Selected Chip
 	//Selected Tone
@@ -119,16 +90,7 @@ function App() {
 		setChipIndex(0);
 
 		let randomChips = placedChips.map(() => {
-			let randomGroup = colorGroups[randRange(0, colorGroups.length - 1)];
-			let randomToneIndex = randRange(0, 2);
-			let randomTone: string = randomGroup.tones[randomToneIndex];
-
-			return {
-				placed: true,
-				group: randomGroup.name,
-				tone: randomToneIndex,
-				image: randomTone
-			}
+			return randRange(0, getLastBaseIndex());
 		})
 
 		setPlacedChips(randomChips);
@@ -140,54 +102,56 @@ function App() {
 		exportComponentAsPNG(paletteRef, { fileName: "Palette", html2CanvasOptions: { backgroundColor: null }});
 	}, []);
 
-	const onClickChipName = useCallback((group: ColorGroup, tone: ColorTone, chip: ColorChip) => {
-		
-		setPlacedChips((chips) => chips.map((value, index) => index === chipIndex ? {placed: true, group: group.name, tone: tone.index, image: tone.image} : value))
+	const onSelectChip = useCallback((chip: ColorChipJson) => {
 
-		setChipIndex((chip) => { 
-			return (chip + 1) % numFreeSlots;
-		});	
+		if(chip.isTone) {
+			setSelectedTone(chip.index);
+		}
+		else {
+			setSelectedChip(chip.index);
+		}
+	}, []);
 
-		playSound(require(`assets/sounds/PlaceColorChip.wav`));
-	}, [chipIndex, playSound, numFreeSlots]);
-
-	const onClickToneName = useCallback((group: ColorGroup, tone: ColorTone) => {
-		setPlacedChips((chips) => chips.map((value, index) => index === chipIndex ? {placed: true, group: group.name, tone: tone.index, image: tone.image} : value))
-
-		setChipIndex((chip) => { 
-			return (chip + 1) % numFreeSlots;
-		});	
-
-		playSound(require(`assets/sounds/PlaceColorChip.wav`));
-	}, [chipIndex, playSound, numFreeSlots]);
-
-	const onClickChip = useCallback((chip: PlacedChip, index: number) => {
+	const onClickChip = useCallback((chip: number, index: number) => {
 		switch(paletteMode) {
 			case PaletteMode.Palette_Draw:
-				setChipIndex(index);
+				setPlacedChips((chips) => chips.map((value, idx) => {
+					if(idx !== index) return value;
+
+					if(displayState === DisplayState.DS_ColorChips) {
+						return selectedChip;
+					}
+					else {
+						return selectedTone;
+					}
+				}));
+
+				playSound(require(`assets/sounds/PlaceColorChip.wav`));
 				break;
 			case PaletteMode.Palette_Erase:
-				if(chip.placed) {
+				if(chip !== NO_CHIP) {
 					playSound(require(`assets/sounds/ChipBeamVanish.wav`));
 
-					setPlacedChips((chips) => chips.map((value, idx) => idx === index ? {placed: false, group: "", tone: -1, image: ""} : value));		
+					setPlacedChips((chips) => chips.map((value, idx) => idx === index ? NO_CHIP : value));		
 				}
 				
 				break;
 			case PaletteMode.Palette_Sound:
-				if(chip.placed) {
-					playSound(require(`assets/sounds/tones/UI_Sdodr_MyPalette_00_PushTip_${chip.group}_${chip.tone}.wav`));
+				if(chip !== NO_CHIP) {
+					const colorChip = getColorChipbyIndex(chip);
+
+					playSound(require(`assets/sounds/tones/UI_Sdodr_MyPalette_00_PushTip_${getColorGroup(colorChip.group).name}_${colorChip.tone}.wav`));
 				}
 				break;
 		}
-	}, [paletteMode, playSound]);
+	}, [selectedChip, selectedTone, displayState, paletteMode, playSound]);
 	
   	return (
 		<Theme>
 			<Background />
 			<Dots />
 			<Content>
-				<ColorChipList chipDatabase={chipDatabase} onClickChip={onClickChipName} onClickTone={onClickToneName} />
+				<ColorChipList onClickChip={onSelectChip} selectedChip={selectedChip} selectedTone={selectedTone} displayState={displayState} setDisplayState={setDisplayState} />
 				<PaletteSpace>
 					<Header>Side Order Palette Planner</Header>
 					<ButtonRow>

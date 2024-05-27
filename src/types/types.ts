@@ -6,42 +6,17 @@ export type ColorGroupJson = {
 };
 
 export type ColorChipJson = {
+    key: string;
     name: string;
-    group: string;
+    group: number;
     tone: number;
+    entry: number;
     index: number;
     max: number;
+    isTone: boolean;
 };
 
-export type ColorChip = {
-    name: string;
-    max: number;
-};
-
-export type ColorTone = {
-    index: number;
-    image: string;
-    chips: ColorChip[];
-}
-
-export type ColorGroup = {
-    name: string;
-    image: string;
-    tones: ColorTone[];
-}
-
-//This is a placed Power Chip of Tone 1 called Splash Damage which has a maximum of 9 chips
-
-export type PlacedChip = {
-    placed: boolean;
-    group: string;    
-    tone: number;
-    image: string;
-}
-
-export type OnClickChipProps = (group: ColorGroup, tone: ColorTone, chip: ColorChip) => void;
-
-export type OnClickToneProps = (group: ColorGroup, tone: ColorTone) => void;
+export type OnClickChipProps = (chip: ColorChipJson) => void;
 
 export type Palette = {
     index: number;
@@ -54,3 +29,24 @@ export type Palette = {
     subWeapon: string;
     specialWeapon: string;
 }
+
+export enum PaletteMode {
+	Palette_Draw,
+	Palette_Erase,
+	Palette_Sound
+};
+
+export enum SoundSetting {
+	Sound_On,
+	Sound_Off
+};
+
+export enum ColorChipMode {
+	Chips_Limited,
+	Chips_Any
+};
+
+export enum DisplayState {
+    DS_ColorChips,
+    DS_Tones
+};
