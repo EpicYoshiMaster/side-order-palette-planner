@@ -2,10 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { NO_CHIP, getColorChipImage } from "utils/utils";
 
-//Border
-//Little dip where it plugs in
-//Noise Texture
-
 const getFullBackground = (showChip: boolean, image: string, defaultColor: string) => {
 	if(showChip && image !== "") {
 		return `url(${require(`assets/chips/${image}`)})`;
@@ -53,7 +49,9 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 
 	return (
 		<Background 
-		onClick={() => { onClick(); }} 
+		onMouseDown={(event) => { console.log(event); if(event.buttons === 1) { onClick(); } }} 
+		onMouseOver={(event) => { if(event.buttons === 1) { onClick(); }}}
+		onDragStart={(event) => { event.preventDefault(); }}
 		onAnimationEnd={(event) => { onAnimEnd(event.animationName); }}
 		$placed={chip !== NO_CHIP}
 		$image={chip !== NO_CHIP ? getColorChipImage(chip) : ""} 
@@ -61,7 +59,11 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 		$locked={locked}
 		$clickAnim={clicked}
 		$placeAnim={placed}>
-			<ChipSlotAttachment $placed={chip !== NO_CHIP} />
+			<ChipSlotAttachment 
+			onMouseDown={(event) => { event.stopPropagation(); }} 
+			onMouseOver={(event) => { event.stopPropagation(); }}
+			onDragStart={(event) => { event.stopPropagation(); }}
+			$placed={chip !== NO_CHIP} />
 		</Background>
 	)
 }

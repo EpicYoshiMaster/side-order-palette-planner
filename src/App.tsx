@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PaletteList from './data/palettes.json'
 import { ColorChipJson, Palette, PaletteMode, SoundSetting, ColorChipMode, DisplayState } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
-import { randRange, getLastBaseIndex, NO_CHIP, getColorChipbyIndex, getColorGroup } from './utils/utils';
+import { randRange, getLastBaseIndex, NO_CHIP, getColorChipbyIndex, getColorGroup, getColorTones } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
 import { Theme } from 'components/Theme';
 import { GlowButton, textGlow, Dots, GlowSelect, GlowOption } from 'components/Layout';
@@ -15,8 +15,6 @@ import { ItemSelectionRow } from 'components/ItemSelectionRow';
 // Palette Planner:
 //
 // - Import palettes from others to share them
-// - Eraser
-// - Drawing Mode: Click / Click and drag to draw on the palette
 // - Play/Tracking mode where you progress through the palette as you play and can reset it
 // - Option to restrict the palette to only what's possible (ex. exclusive palette chips, chip # limits, etc.)
 
@@ -98,6 +96,23 @@ function App() {
 		playSound(require(`assets/sounds/PlaceColorChip.wav`));
 	}, [placedChips, playSound]);
 
+	const randomizeTones = useCallback(() => {
+
+		const colorChips = getColorTones();
+
+		let randomChips = placedChips.map((chip) => {
+			if(chip === NO_CHIP) return chip;
+
+			const possibleChips = colorChips.filter((randomChip) => randomChip.group === getColorChipbyIndex(chip).group);
+
+			return possibleChips[randRange(0, possibleChips.length - 1)].index;
+		})
+		
+		setPlacedChips(randomChips);
+
+		playSound(require(`assets/sounds/PlaceColorChip.wav`));
+	}, [placedChips, playSound]);
+
 	const downloadImage = useCallback(() => {
 		exportComponentAsPNG(paletteRef, { fileName: "Palette", html2CanvasOptions: { backgroundColor: null }});
 	}, []);
@@ -115,6 +130,8 @@ function App() {
 	const onClickChip = useCallback((chip: number, index: number) => {
 		switch(paletteMode) {
 			case PaletteMode.Palette_Draw:
+				if(((displayState === DisplayState.DS_ColorChips) ? selectedChip : selectedTone) === chip) return;
+
 				setPlacedChips((chips) => chips.map((value, idx) => {
 					if(idx !== index) return value;
 
@@ -161,6 +178,9 @@ function App() {
 						</GlowButton>
 						<GlowButton onClick={() => { randomizePalette(); }}>
 							Randomize
+						</GlowButton>
+						<GlowButton onClick={() => { randomizeTones(); }}>
+							Randomize Tones
 						</GlowButton>
 						<GlowButton onClick={() => { downloadImage(); }}>
 							Download Image

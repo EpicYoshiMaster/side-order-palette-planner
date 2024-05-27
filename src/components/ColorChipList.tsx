@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
-import styled from "styled-components";
-import { ActiveGlowButton, GlowButton, textGlow } from "./Layout";
+import styled, { css } from "styled-components";
+import { ActiveGlowButton, textGlow } from "./Layout";
 import { OnClickChipProps, DisplayState } from "../types/types";
 import { getColorGroups, getColorChips, getToneImage } from "utils/utils";
 import { ItemSelectionRow } from "./ItemSelectionRow";
@@ -46,7 +46,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                             <ToneRow>
                             {
                             colorChips.filter((chip) => chip.group === group.index && chip.isTone).map((chip, chipIndex) => (
-                                <ToneImage src={require(`assets/chips/${getToneImage(chip.group, chip.tone)}`)} key={chipIndex} onClick={() => { onClickChip(chip); }} />
+                                <ToneImage $active={selectedTone === chip.index} src={require(`assets/chips/${getToneImage(chip.group, chip.tone)}`)} key={chipIndex} onClick={() => { onClickChip(chip); }} />
                             ))
                             }
                             </ToneRow>
@@ -114,12 +114,20 @@ const ToneRow = styled.div`
     position: relative;
     display: flex;
     flex-direction: row;
-    gap: 3px;
+    gap: 6px;
 `;
 
-const ToneImage = styled.img`
+const ToneImage = styled.img<{$active: boolean}>`
     height: 100%;
     object-fit: contain;
+
+    transition: transform 0.1s linear;
+
+    &:hover {
+        transform: scale(1.1, 1.1);
+    }
+
+    ${({ $active }) => $active ? css`transform: scale(1.05, 1.05); filter: drop-shadow(0px 0px 10px #ffffff);` : ''};
 `;
 
 const ChipEntry = styled.div`

@@ -12,10 +12,6 @@ export const getColorGroup = (group: number): ColorGroupJson => {
 	return ColorGroups[group];
 }
 
-export const getColorGroupImage = () => {
-	
-}
-
 const sortChips = (a: ColorChipJson, b: ColorChipJson) => { 
 	if(a.group < b.group) {
 		return -1;
@@ -81,6 +77,14 @@ export const getColorChips = () => {
 	return colorChips;
 }
 
+export const getBaseChips = () => {
+	return baseChips;
+}
+
+export const getColorTones = () => {
+	return toneChips;
+}
+
 export const getColorChipbyIndex = (index: number) => {
 	return colorChips[index];
 }
@@ -92,35 +96,6 @@ export const getToneImage = (group: number, tone: number) => {
 export const getColorChipImage = (index: number) => {
 	return getToneImage(colorChips[index].group, colorChips[index].tone);
 }
-
-/*
-export const createChipDatabase = (colorGroups: ColorGroupJson[], chips: ColorChipJson[]): ColorGroup[] => {
-	let chipDatabase: ColorGroup[] = [];
-
-	const sortTones = (a: ColorGroupJson, b: ColorGroupJson) => { return a.index < b.index ? -1 : (a.index > b.index ? 1 : 0); }
-
-	colorGroups = colorGroups.sort(sortTones);
-
-	chipDatabase = colorGroups.map((group) => {
-		return { 
-			name: group.name, 
-			image: group.image,
-			tones: group.tones.map((tone, index) => { 
-				return {image: tone, index: index, chips: []}; 
-			}) 
-		};
-	})
-
-	chips.forEach((chip) => {
-		let group = colorGroups.find((group) => { return chip.group === group.name; });
-
-		if(!group) return;
-
-		chipDatabase[group.index].tones[chip.tone].chips[chip.subIndex] = { name: chip.name, max: chip.max };
-	});
-
-	return chipDatabase;
-}*/
 
 /**
  * Random Integer between min and max (inclusive)
