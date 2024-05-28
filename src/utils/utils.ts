@@ -1,18 +1,18 @@
-import { ColorGroupJson, ColorChipJson } from "../types/types"
+import { ColorGroup, ColorChip } from "../types/types"
 import ColorChips from '../data/colorchips.json'
 import ColorGroups from '../data/colorgroups.json'
 
 export const NO_CHIP = -1;
 
-export const getColorGroups = (): ColorGroupJson[] => {
+export const getColorGroups = (): ColorGroup[] => {
 	return ColorGroups;
 }
 
-export const getColorGroup = (group: number): ColorGroupJson => {
+export const getColorGroup = (group: number): ColorGroup => {
 	return ColorGroups[group];
 }
 
-const sortChips = (a: ColorChipJson, b: ColorChipJson) => { 
+const sortChips = (a: ColorChip, b: ColorChip) => { 
 	if(a.group < b.group) {
 		return -1;
 	}
@@ -37,7 +37,7 @@ const sortChips = (a: ColorChipJson, b: ColorChipJson) => {
 	return 0;
 }
 
-const baseChips: ColorChipJson[] = Object.entries(ColorChips).map(([key, value]) => {
+const baseChips: ColorChip[] = Object.entries(ColorChips).map(([key, value]) => {
 	return {
 		key: key,
 		name: value.Name,
@@ -50,8 +50,8 @@ const baseChips: ColorChipJson[] = Object.entries(ColorChips).map(([key, value])
 	}
 }).sort(sortChips).map((item, index) => { return { ...item, index: index}});
 
-const toneChips: ColorChipJson[] = ColorGroups.map((group): ColorChipJson[] => {
-	return group.tones.map((tone, index): ColorChipJson => {
+const toneChips: ColorChip[] = ColorGroups.map((group): ColorChip[] => {
+	return group.tones.map((tone, index): ColorChip => {
 		return {
 			key: `${group.name}Tone${String.fromCharCode(65 + index)}`,
 			name: `${group.name} Tone ${String.fromCharCode(65 + index)}`,

@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import PaletteList from './data/palettes.json'
-import { ColorChipJson, Palette, PaletteMode, SoundSetting, ColorChipMode, DisplayState } from './types/types';
+import { ColorChip, Palette, PaletteMode, SoundSetting, ColorChipMode, DisplayState, LabelsSetting } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
 import { randRange, getLastBaseIndex, NO_CHIP, getColorChipbyIndex, getColorGroup, getColorTones } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
@@ -17,6 +17,7 @@ import { ItemSelectionRow } from 'components/ItemSelectionRow';
 // - Import palettes from others to share them
 // - Play/Tracking mode where you progress through the palette as you play and can reset it
 // - Option to restrict the palette to only what's possible (ex. exclusive palette chips, chip # limits, etc.)
+// - Add option for labelling the tones as it can be difficult to identify the color differences between them
 
 const NUM_PALETTE_SLOTS = 36;
 const EIGHTS_PALETTE = 11;
@@ -46,15 +47,13 @@ function App() {
 	const [ chipIndex, setChipIndex ] = useState(0);
 	const [ paletteMode, setPaletteMode ] = useState(PaletteMode.Palette_Draw);
 	const [ soundSetting, setSoundSetting ] = useState(SoundSetting.Sound_On);
+	const [ labelsSetting, setLabelsSetting ] = useState(LabelsSetting.Labels_Off);
 	const [ colorChipMode, setColorChipMode ] = useState(ColorChipMode.Chips_Limited);
 	const [ displayState, setDisplayState ] = useState(DisplayState.DS_ColorChips);
 	const [ paletteIndex, setPaletteIndex ] = useState(0);
 	const [ numOpenSlots, setNumOpenSlots ] = useState(NUM_PALETTE_SLOTS);
 	const [ selectedChip, setSelectedChip ] = useState(0);
 	const [ selectedTone, setSelectedTone ] = useState(getLastBaseIndex() + 1);
-
-	//Selected Chip
-	//Selected Tone
 
 	const paletteRef = useRef(null);
 
@@ -117,15 +116,19 @@ function App() {
 		exportComponentAsPNG(paletteRef, { fileName: "Palette", html2CanvasOptions: { backgroundColor: null }});
 	}, []);
 
-	const onSelectChip = useCallback((chip: ColorChipJson) => {
+	const onSelectChip = useCallback((chip: ColorChip) => {
 
-		if(chip.isTone) {
+		if(paletteMode === PaletteMode.Palette_Sound) {
+			playSound(require(`assets/sounds/tones/UI_Sdodr_MyPalette_00_PushTip_${getColorGroup(chip.group).name}_${chip.tone}.wav`));
+		}
+		else if(chip.isTone) {
 			setSelectedTone(chip.index);
 		}
 		else {
 			setSelectedChip(chip.index);
 		}
-	}, []);
+		
+	}, [playSound, paletteMode]);
 
 	const onClickChip = useCallback((chip: number, index: number) => {
 		switch(paletteMode) {
@@ -168,11 +171,21 @@ function App() {
 			<Background />
 			<Dots />
 			<Content>
-				<ColorChipList onClickChip={onSelectChip} selectedChip={selectedChip} selectedTone={selectedTone} displayState={displayState} setDisplayState={setDisplayState} />
+				<ColorChipList 
+				onClickChip={onSelectChip} 
+				selectedChip={selectedChip} 
+				selectedTone={selectedTone} 
+				displayState={displayState} 
+				setDisplayState={setDisplayState}
+				labelsSetting={labelsSetting} />
 				<PaletteSpace>
 					<Header>Side Order Palette Planner</Header>
 					<ButtonRow>
 						<ItemSelectionRow items={["Draw Mode", "Erase Mode", "Sound Mode"]} selected={paletteMode} setSelected={setPaletteMode} />
+						<ItemSelectionRow items={["Show Labels", "Hide Labels"]} selected={labelsSetting} setSelected={setLabelsSetting} />
+						<ItemSelectionRow items={["Sound On", "Sound Off"]} selected={soundSetting} setSelected={setSoundSetting} />
+					</ButtonRow>
+					<ButtonRow>
 						<GlowButton onClick={() => { resetPalette(); }}>
 							Reset
 						</GlowButton>
@@ -185,7 +198,6 @@ function App() {
 						<GlowButton onClick={() => { downloadImage(); }}>
 							Download Image
 						</GlowButton>
-						<ItemSelectionRow items={["Sound On", "Sound Off"]} selected={soundSetting} setSelected={setSoundSetting} />
 					</ButtonRow>
 					<ButtonRow>
 						<PaletteIconBackground src={require(`assets/npcs/${palettes[paletteIndex].icon}`)} />
@@ -224,7 +236,9 @@ function App() {
 						chipIndex={chipIndex} 
 						chips={placedChips} 
 						onClickChip={onClickChip} 
-						openSlots={numFreeSlots} />
+						openSlots={numFreeSlots}
+						labelsSetting={labelsSetting}
+						/>
 					</PrintComponent>
 				</PaletteSpace>
 			</Content>
@@ -310,4 +324,6 @@ const PaletteSpace = styled.div`
 
 	display: grid;
 	grid-template-rows: max-content max-content max-content 1fr;
+
+	overflow: auto;
 `;

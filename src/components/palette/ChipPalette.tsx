@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Dashboard } from "./Dashboard";
 import { ChipSlot } from "./ChipSlot";
-import { Palette } from "../../types/types";
+import { LabelsSetting, Palette } from "../../types/types";
 
 interface ChipPaletteProps {
 	chips: number[];
@@ -10,9 +10,10 @@ interface ChipPaletteProps {
 	palette: Palette;
 	openSlots: number;
 	onClickChip: (chip: number, index: number) => void;
+	labelsSetting: LabelsSetting;
 }
 
-export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, palette, openSlots, onClickChip }) => {
+export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, palette, openSlots, labelsSetting, onClickChip }) => {
 
 	return (
 		<Background>
@@ -23,7 +24,14 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, pale
 			{
 			chips.map((value, index) => {
 				return (
-					<ChipSlot chip={value} index={index} key={index} selected={index === chipIndex} locked={index + 1 > openSlots} onClickChip={onClickChip} />
+					<ChipSlot 
+					chip={value} 
+					index={index} 
+					key={index} 
+					selected={index === chipIndex} 
+					locked={index + 1 > openSlots}
+					labeled={labelsSetting === LabelsSetting.Labels_On}
+					onClickChip={onClickChip} />
 				)
 			})
 			}
@@ -35,6 +43,8 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, pale
 const Background = styled.div`
 	position: relative;
 	border-radius: 0.25rem;
+
+	margin-bottom: 10px;
 
 	width: 105rem;
 

@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction } from "react";
 import styled, { css } from "styled-components";
 import { ActiveGlowButton, textGlow } from "./Layout";
-import { OnClickChipProps, DisplayState } from "../types/types";
-import { getColorGroups, getColorChips, getToneImage } from "utils/utils";
+import { OnClickChipProps, DisplayState, LabelsSetting, ColorChip } from "../types/types";
+import { getColorGroups, getColorChips, getToneImage, getColorChipbyIndex } from "utils/utils";
 import { ItemSelectionRow } from "./ItemSelectionRow";
 
 interface ColorChipListProps {
@@ -11,12 +11,13 @@ interface ColorChipListProps {
     selectedTone: number;
     displayState: DisplayState;
     setDisplayState: Dispatch<SetStateAction<number>>;
+    labelsSetting: LabelsSetting;
 }
 
 const colorGroups = getColorGroups();
 const colorChips = getColorChips();
 
-export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selectedChip, selectedTone, displayState, setDisplayState }) => {
+export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selectedChip, selectedTone, displayState, setDisplayState, labelsSetting }) => {
 
     return (
         <StyledColorChipList>
@@ -33,20 +34,38 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                         </GroupTitle>
 
                         {displayState === DisplayState.DS_ColorChips && 
-                        colorChips.filter((chip) => chip.group === group.index && !chip.isTone).map((chip, chipIndex) => (
+                        colorChips.filter((chip) => chip.group === group.index && !chip.isTone).map((chip, chipIndex) => {
+                            let prevChip: ColorChip | undefined = undefined;
+
+                            if(chip.index > 0) {
+                                prevChip = getColorChipbyIndex(chip.index - 1);
+                            }
+
+                            return (
+                            <ChipWrapper>
+                                {prevChip && chip.group === prevChip.group && chip.tone !== prevChip.tone && (
+                                    <Divider />
+                                )}
                                 <ChipEntry key={chipIndex}>
                                     <ChipItem $active={selectedChip === chip.index} onClick={() => { onClickChip(chip); }}>
                                         {chip.name}
                                     </ChipItem>
                                 </ChipEntry>
-                        ))}
+                            </ChipWrapper>
+                            )
+                            })}
 
                         {displayState === DisplayState.DS_Tones && (
                         
                             <ToneRow>
                             {
                             colorChips.filter((chip) => chip.group === group.index && chip.isTone).map((chip, chipIndex) => (
-                                <ToneImage $active={selectedTone === chip.index} src={require(`assets/chips/${getToneImage(chip.group, chip.tone)}`)} key={chipIndex} onClick={() => { onClickChip(chip); }} />
+                                <ToneImage 
+                                onDragStart={(event) => { event.preventDefault(); }}
+                                $active={selectedTone === chip.index} 
+                                src={require(`assets/chips/${getToneImage(chip.group, chip.tone)}`)} 
+                                key={chipIndex} 
+                                onClick={() => { onClickChip(chip); }} />
                             ))
                             }
                             </ToneRow>
@@ -128,6 +147,13 @@ const ToneImage = styled.img<{$active: boolean}>`
     }
 
     ${({ $active }) => $active ? css`transform: scale(1.05, 1.05); filter: drop-shadow(0px 0px 10px #ffffff);` : ''};
+
+    user-select: none;
+`;
+
+const ChipWrapper = styled.div`
+    width: 100%;
+    height: 100%;
 `;
 
 const ChipEntry = styled.div`
@@ -140,4 +166,11 @@ const ChipEntry = styled.div`
 const ChipItem = styled(ActiveGlowButton)`
     width: 100%;
     height: 100%;
+`;
+
+const Divider = styled.div`
+    width: 90%;
+    margin: auto;
+
+    border-top: 3px ${props => props.theme.glow_background} solid;    
 `;

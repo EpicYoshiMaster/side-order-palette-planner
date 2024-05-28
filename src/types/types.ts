@@ -1,11 +1,11 @@
-export type ColorGroupJson = {
+export type ColorGroup = {
     name: string;
     image: string;
     index: number;
     tones: string[];
 };
 
-export type ColorChipJson = {
+export type ColorChip = {
     key: string;
     name: string;
     group: number;
@@ -16,7 +16,7 @@ export type ColorChipJson = {
     isTone: boolean;
 };
 
-export type OnClickChipProps = (chip: ColorChipJson) => void;
+export type OnClickChipProps = (chip: ColorChip) => void;
 
 export type Palette = {
     index: number;
@@ -39,6 +39,11 @@ export enum PaletteMode {
 export enum SoundSetting {
 	Sound_On,
 	Sound_Off
+};
+
+export enum LabelsSetting {
+    Labels_On,
+    Labels_Off
 };
 
 export enum ColorChipMode {

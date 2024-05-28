@@ -1,6 +1,7 @@
+import { textGlow } from "components/Layout";
 import React, { useCallback, useEffect, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
-import { NO_CHIP, getColorChipImage } from "utils/utils";
+import { NO_CHIP, getColorChipImage, getColorChipbyIndex } from "utils/utils";
 
 const getFullBackground = (showChip: boolean, image: string, defaultColor: string) => {
 	if(showChip && image !== "") {
@@ -15,10 +16,11 @@ interface ChipSlotProps {
 	index: number;
 	selected: boolean;
 	locked: boolean;
+	labeled: boolean;
 	onClickChip: (chip: number, index: number) => void;
 }
 
-export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, onClickChip }) => {
+export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, labeled, onClickChip }) => {
 
 	const [ placed, setPlaced ] = useState(false);
 	const [ clicked, setClicked ] = useState(false);
@@ -49,7 +51,7 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 
 	return (
 		<Background 
-		onMouseDown={(event) => { console.log(event); if(event.buttons === 1) { onClick(); } }} 
+		onMouseDown={(event) => { if(event.buttons === 1) { onClick(); } }} 
 		onMouseOver={(event) => { if(event.buttons === 1) { onClick(); }}}
 		onDragStart={(event) => { event.preventDefault(); }}
 		onAnimationEnd={(event) => { onAnimEnd(event.animationName); }}
@@ -64,6 +66,11 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 			onMouseOver={(event) => { event.stopPropagation(); }}
 			onDragStart={(event) => { event.stopPropagation(); }}
 			$placed={chip !== NO_CHIP} />
+			{labeled && chip !== NO_CHIP && (
+			<LabelText>
+				{getColorChipbyIndex(chip).name}
+			</LabelText>
+			)}
 		</Background>
 	)
 }
@@ -122,6 +129,8 @@ const Background = styled.div<{ $placed: boolean, $image: string, $selected: boo
 	&:hover {
 		transform: scale(1.1, 1.1);
 	}
+
+	user-select: none;
 `;
 
 const ChipSlotAttachment = styled.div<{ $placed: boolean }>`
@@ -135,5 +144,13 @@ const ChipSlotAttachment = styled.div<{ $placed: boolean }>`
 	background: linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.2) 49.37%,transparent 49.38%);
 	box-shadow: inset 0 0 5px 0 rgba(0,0,0,.2);
 	mix-blend-mode: multiply;
+`;
 
+const LabelText = styled.div`
+	position: relative;
+	margin: auto;
+
+	text-align: center;
+	font-size: 1.5rem;
+	text-shadow: 0px 0px 5px #000000, 0px 0px 5px #000000, 0px 0px 5px #000000, 0px 0px 5px #000000;
 `;
