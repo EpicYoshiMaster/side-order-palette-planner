@@ -130,8 +130,6 @@ const palettes: Palette[] = Object.values(PaletteList.Table).map((value) => {
 	}
 }).sort(sortPalettes);
 
-console.log(palettes);
-
 const exclusiveChips = Array.from(new Set(palettes.reduce((prevValue: number[], palette: Palette) => {
 	return prevValue.concat(palette.exclusiveChips);
 }, []))).sort((a, b) => a > b ? 1 : (a < b ? -1 : 0));

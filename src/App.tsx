@@ -10,6 +10,7 @@ import { exportComponentAsPNG } from 'react-component-export-image';
 import { PrintComponent } from 'components/PrintComponent';
 import { ItemSelectionRow } from 'components/ItemSelectionRow';
 import { ItemTextInputRow } from 'components/ItemTextInputRow';
+import { useKeyDown } from 'utils/hooks';
 
 //
 // Palette Planner:
@@ -17,7 +18,6 @@ import { ItemTextInputRow } from 'components/ItemTextInputRow';
 // - Import palettes from others to share them
 // - Play/Tracking mode where you progress through the palette as you play and can reset it
 // - Option to restrict the palette to only what's possible (ex. exclusive palette chips, chip # limits, etc.)
-// - Add hotkeys for various features
 // - Add easter eggs for entering palettes once the thing is done
 
 const DEFAULT_SHARE_CODE = generateShareCode(DEFAULT_PALETTE);
@@ -40,6 +40,50 @@ function App() {
 	const [ selectedChip, setSelectedChip ] = useState(0);
 	const [ selectedTone, setSelectedTone ] = useState(getLastBaseIndex() + 1);
 	const [ shareCode, setShareCode ] = useState(DEFAULT_SHARE_CODE);
+
+
+	useKeyDown((event: KeyboardEvent) => {
+
+		if(event.target && event.target instanceof HTMLInputElement) return;
+
+		switch(event.key) {
+			case "1":
+				setPaletteMode(PaletteMode.Palette_Draw);
+				break;
+
+			case "2":
+				setPaletteMode(PaletteMode.Palette_Erase);
+				break;
+
+			case "3":
+				setPaletteMode(PaletteMode.Palette_Sound);
+				break;
+
+			case "4":
+				setLabelsSetting(LabelsSetting.Labels_On);
+				break;
+			
+			case "5":
+				setLabelsSetting(LabelsSetting.Labels_Off);
+				break;
+			
+			case "6":
+				setSoundSetting(SoundSetting.Sound_On);
+				break;
+
+			case "7":
+				setSoundSetting(SoundSetting.Sound_Off);
+				break;
+			
+			case "8":
+				setColorChipMode(ColorChipMode.Chips_Limited);
+				break;
+			
+			case "9":
+				setColorChipMode(ColorChipMode.Chips_Any);
+				break;
+		}
+	});
 
 	const paletteRef = useRef(null);
 
@@ -208,9 +252,9 @@ function App() {
 				<PaletteSpace>
 					<Header>Side Order Palette Planner</Header>
 					<ButtonRow>
-						<ItemSelectionRow items={["Draw Mode", "Erase Mode", "Sound Mode"]} selected={paletteMode} setSelected={setPaletteMode} />
-						<ItemSelectionRow items={["Show Labels", "Hide Labels"]} selected={labelsSetting} setSelected={setLabelsSetting} />
-						<ItemSelectionRow items={["Sound On", "Sound Off"]} selected={soundSetting} setSelected={setSoundSetting} />
+						<ItemSelectionRow items={["1. Draw Mode", "2. Erase Mode", "3. Sound Mode"]} selected={paletteMode} setSelected={setPaletteMode} />
+						<ItemSelectionRow items={["4. Show Labels", "5. Hide Labels"]} selected={labelsSetting} setSelected={setLabelsSetting} />
+						<ItemSelectionRow items={["6. Sound On", "7. Sound Off"]} selected={soundSetting} setSelected={setSoundSetting} />
 					</ButtonRow>
 					<ButtonRow>
 						<GlowButton onClick={() => { resetPalette(); }}>
@@ -256,7 +300,7 @@ function App() {
 							<GlowOption value={6}>5+ Hacks</GlowOption>
 						</GlowSelect>
 						)}
-						<ItemSelectionRow items={["Limit Color Chips", "Any Color Chips"]} selected={colorChipMode} setSelected={setColorChipMode} />
+						<ItemSelectionRow items={["8. Limit Color Chips", "9. Any Color Chips"]} selected={colorChipMode} setSelected={setColorChipMode} />
 					</ButtonRow>
 					<PrintComponent ref={paletteRef}>
 						<ChipPalette 
