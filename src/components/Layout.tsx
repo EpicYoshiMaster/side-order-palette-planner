@@ -71,6 +71,25 @@ export const GlowOption = styled.option`
     font-size: 1.75rem;
 `;
 
+export const GlowInput = styled.input`
+    position: relative;
+    padding: 5px;
+
+    border: 3px transparent solid;
+    
+    background-color: rgba(0, 0, 0, 0.35);
+
+    text-align: center;
+    font-family: Splatoon, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-size: 1.75rem;
+    color: ${props => props.theme.text};
+
+    &:hover {
+        ${buttonGlow}
+    }
+`
+
 export const ActiveGlowButton = styled(GlowButton)<{ $active: boolean }>`
     ${({ $active }) => $active ? buttonGlow : ''};
 `;

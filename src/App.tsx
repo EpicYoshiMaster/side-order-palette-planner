@@ -1,15 +1,15 @@
 import React, { useCallback, useState, useRef, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
-import PaletteList from './data/palettes.json'
-import { ColorChip, Palette, PaletteMode, SoundSetting, ColorChipMode, DisplayState, LabelsSetting } from './types/types';
+import { ColorChip, PaletteMode, SoundSetting, ColorChipMode, DisplayState, LabelsSetting } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
-import { randRange, getLastBaseIndex, NO_CHIP, getColorChipbyIndex, getColorGroup, getColorTones } from './utils/utils';
+import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getPalettes, getColorChips } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
 import { Theme } from 'components/Theme';
 import { GlowButton, textGlow, Dots, GlowSelect, GlowOption } from 'components/Layout';
 import { exportComponentAsPNG } from 'react-component-export-image';
 import { PrintComponent } from 'components/PrintComponent';
 import { ItemSelectionRow } from 'components/ItemSelectionRow';
+import { ItemTextInputRow } from 'components/ItemTextInputRow';
 
 //
 // Palette Planner:
@@ -17,27 +17,12 @@ import { ItemSelectionRow } from 'components/ItemSelectionRow';
 // - Import palettes from others to share them
 // - Play/Tracking mode where you progress through the palette as you play and can reset it
 // - Option to restrict the palette to only what's possible (ex. exclusive palette chips, chip # limits, etc.)
-// - Add option for labelling the tones as it can be difficult to identify the color differences between them
+// - Add hotkeys for various features
+// - Add easter eggs for entering palettes once the thing is done
 
-const NUM_PALETTE_SLOTS = 36;
-const EIGHTS_PALETTE = 11;
-const DEFAULT_PALETTE: number[] = (new Array(NUM_PALETTE_SLOTS)).fill(NO_CHIP);
-
-const sortPalettes = (a: Palette, b: Palette) => { return a.index < b.index ? -1 : (a.index > b.index ? 1 : 0); };
-
-const palettes: Palette[] = Object.values(PaletteList.Table).map((value) => {
-	return {
-		index: value.OrderForChangeUI,
-		name: value.PaletteName,
-		icon: value.NPCIconPath,
-		pixel: value.PixelName,
-		firstTone: value.FreqFirstColorGroupType,
-		secondTone: value.FreqSecondColorGroupType,
-		mainWeapon: value.MainWeapon,
-		subWeapon: value.SubWeapon,
-		specialWeapon: value.SpecialWeapon
-	}
-}).sort(sortPalettes);
+const DEFAULT_SHARE_CODE = generateShareCode(DEFAULT_PALETTE);
+const palettes = getPalettes();
+const colorChips = getColorChips();
 
 //--color-so-text-shadow: 0px 0px 4px rgba(137,39,17,.3)
 
@@ -54,6 +39,7 @@ function App() {
 	const [ numOpenSlots, setNumOpenSlots ] = useState(NUM_PALETTE_SLOTS);
 	const [ selectedChip, setSelectedChip ] = useState(0);
 	const [ selectedTone, setSelectedTone ] = useState(getLastBaseIndex() + 1);
+	const [ shareCode, setShareCode ] = useState(DEFAULT_SHARE_CODE);
 
 	const paletteRef = useRef(null);
 
@@ -61,11 +47,39 @@ function App() {
 		return paletteIndex === EIGHTS_PALETTE ? numOpenSlots : NUM_PALETTE_SLOTS;
 	}, [paletteIndex, numOpenSlots])
 
+	const remainingChips = useMemo(() => {
+		let chipAmounts = colorChips.map((value) => value.max);
+
+		placedChips.forEach((chip) => {
+			if(chip === NO_CHIP) return;
+
+			chipAmounts[chip] -= 1;
+		})
+
+		return chipAmounts;
+
+	}, [placedChips]);
+
 	useEffect(() => {
 		if(chipIndex + 1 > numFreeSlots) {
 			setChipIndex(0);
 		}
 	}, [chipIndex, numFreeSlots])
+
+	const applyShareCode = useCallback((shareCode: string) => {
+		shareCode = shareCode.substring(0, NUM_PALETTE_SLOTS);
+
+		setPlacedChips(convertShareCode(shareCode));
+
+		setShareCode(shareCode);
+
+	}, [setShareCode]);
+
+	const createShareCode = useCallback((chips: number[]) => {
+		const newShareCode = generateShareCode(chips);
+
+		setShareCode(newShareCode);
+	}, [setShareCode]);
 
 	const playSound = useCallback((sound: string | undefined) => {
 		if(soundSetting !== SoundSetting.Sound_On || !sound) return;
@@ -80,7 +94,9 @@ function App() {
 		setChipIndex(0);
 
 		playSound(require(`assets/sounds/ChipBeamVanish.wav`));
-	}, [playSound]);
+
+		createShareCode(DEFAULT_PALETTE);
+	}, [createShareCode, playSound]);
 
 	const randomizePalette = useCallback(() => {
 		setPlacedChips(DEFAULT_PALETTE);
@@ -91,9 +107,10 @@ function App() {
 		})
 
 		setPlacedChips(randomChips);
+		createShareCode(randomChips);
 
 		playSound(require(`assets/sounds/PlaceColorChip.wav`));
-	}, [placedChips, playSound]);
+	}, [createShareCode, placedChips, playSound]);
 
 	const randomizeTones = useCallback(() => {
 
@@ -102,15 +119,16 @@ function App() {
 		let randomChips = placedChips.map((chip) => {
 			if(chip === NO_CHIP) return chip;
 
-			const possibleChips = colorChips.filter((randomChip) => randomChip.group === getColorChipbyIndex(chip).group);
+			const possibleChips = colorChips.filter((randomChip) => randomChip.group === getColorChipByIndex(chip).group);
 
 			return possibleChips[randRange(0, possibleChips.length - 1)].index;
 		})
 		
 		setPlacedChips(randomChips);
+		createShareCode(randomChips);
 
 		playSound(require(`assets/sounds/PlaceColorChip.wav`));
-	}, [placedChips, playSound]);
+	}, [createShareCode, placedChips, playSound]);
 
 	const downloadImage = useCallback(() => {
 		exportComponentAsPNG(paletteRef, { fileName: "Palette", html2CanvasOptions: { backgroundColor: null }});
@@ -121,7 +139,8 @@ function App() {
 		if(paletteMode === PaletteMode.Palette_Sound) {
 			playSound(require(`assets/sounds/tones/UI_Sdodr_MyPalette_00_PushTip_${getColorGroup(chip.group).name}_${chip.tone}.wav`));
 		}
-		else if(chip.isTone) {
+		
+		if(chip.isTone) {
 			setSelectedTone(chip.index);
 		}
 		else {
@@ -135,7 +154,7 @@ function App() {
 			case PaletteMode.Palette_Draw:
 				if(((displayState === DisplayState.DS_ColorChips) ? selectedChip : selectedTone) === chip) return;
 
-				setPlacedChips((chips) => chips.map((value, idx) => {
+				const newChips = placedChips.map((value, idx) => {
 					if(idx !== index) return value;
 
 					if(displayState === DisplayState.DS_ColorChips) {
@@ -144,27 +163,34 @@ function App() {
 					else {
 						return selectedTone;
 					}
-				}));
+				});
+
+				setPlacedChips(newChips);
+				createShareCode(newChips);
 
 				playSound(require(`assets/sounds/PlaceColorChip.wav`));
+
+				
 				break;
 			case PaletteMode.Palette_Erase:
 				if(chip !== NO_CHIP) {
 					playSound(require(`assets/sounds/ChipBeamVanish.wav`));
 
-					setPlacedChips((chips) => chips.map((value, idx) => idx === index ? NO_CHIP : value));		
+					const newChips = placedChips.map((value, idx) => idx === index ? NO_CHIP : value);
+
+					setPlacedChips(newChips);		
+					createShareCode(newChips);
 				}
-				
 				break;
 			case PaletteMode.Palette_Sound:
 				if(chip !== NO_CHIP) {
-					const colorChip = getColorChipbyIndex(chip);
+					const colorChip = getColorChipByIndex(chip);
 
 					playSound(require(`assets/sounds/tones/UI_Sdodr_MyPalette_00_PushTip_${getColorGroup(colorChip.group).name}_${colorChip.tone}.wav`));
 				}
 				break;
 		}
-	}, [selectedChip, selectedTone, displayState, paletteMode, playSound]);
+	}, [placedChips, createShareCode, selectedChip, selectedTone, displayState, paletteMode, playSound]);
 	
   	return (
 		<Theme>
@@ -177,7 +203,8 @@ function App() {
 				selectedTone={selectedTone} 
 				displayState={displayState} 
 				setDisplayState={setDisplayState}
-				labelsSetting={labelsSetting} />
+				labelsSetting={labelsSetting}
+				remainingChips={remainingChips} />
 				<PaletteSpace>
 					<Header>Side Order Palette Planner</Header>
 					<ButtonRow>
@@ -198,6 +225,7 @@ function App() {
 						<GlowButton onClick={() => { downloadImage(); }}>
 							Download Image
 						</GlowButton>
+						<ItemTextInputRow label="Share Code" value={shareCode} setValue={applyShareCode} />
 					</ButtonRow>
 					<ButtonRow>
 						<PaletteIconBackground src={require(`assets/npcs/${palettes[paletteIndex].icon}`)} />

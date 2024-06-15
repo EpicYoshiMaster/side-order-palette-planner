@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import styled, { css } from "styled-components";
 import { ActiveGlowButton, textGlow } from "./Layout";
 import { OnClickChipProps, DisplayState, LabelsSetting, ColorChip } from "../types/types";
-import { getColorGroups, getColorChips, getToneImage, getColorChipbyIndex } from "utils/utils";
+import { getColorGroups, getColorChips, getToneImage, getColorChipByIndex } from "utils/utils";
 import { ItemSelectionRow } from "./ItemSelectionRow";
 
 interface ColorChipListProps {
@@ -12,12 +12,13 @@ interface ColorChipListProps {
     displayState: DisplayState;
     setDisplayState: Dispatch<SetStateAction<number>>;
     labelsSetting: LabelsSetting;
+    remainingChips: number[];
 }
 
 const colorGroups = getColorGroups();
 const colorChips = getColorChips();
 
-export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selectedChip, selectedTone, displayState, setDisplayState, labelsSetting }) => {
+export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selectedChip, selectedTone, displayState, setDisplayState, labelsSetting, remainingChips }) => {
 
     return (
         <StyledColorChipList>
@@ -38,17 +39,25 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                             let prevChip: ColorChip | undefined = undefined;
 
                             if(chip.index > 0) {
-                                prevChip = getColorChipbyIndex(chip.index - 1);
+                                prevChip = getColorChipByIndex(chip.index - 1);
                             }
 
                             return (
-                            <ChipWrapper>
+                            <ChipWrapper key={chipIndex}>
                                 {prevChip && chip.group === prevChip.group && chip.tone !== prevChip.tone && (
                                     <Divider />
                                 )}
-                                <ChipEntry key={chipIndex}>
-                                    <ChipItem $active={selectedChip === chip.index} onClick={() => { onClickChip(chip); }}>
-                                        {chip.name}
+                                <ChipEntry >
+                                    <ChipItem 
+                                    //disabled={true}
+                                    $active={selectedChip === chip.index} 
+                                    onClick={() => { onClickChip(chip); }}>
+                                        <div>
+                                            {chip.name}
+                                        </div>
+                                        <div>
+                                            ({remainingChips[chip.index]})
+                                        </div>
                                     </ChipItem>
                                 </ChipEntry>
                             </ChipWrapper>
@@ -164,6 +173,10 @@ const ChipEntry = styled.div`
 `;
 
 const ChipItem = styled(ActiveGlowButton)`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
     width: 100%;
     height: 100%;
 `;

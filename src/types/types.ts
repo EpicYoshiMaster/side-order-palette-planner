@@ -28,6 +28,7 @@ export type Palette = {
     mainWeapon: string;
     subWeapon: string;
     specialWeapon: string;
+    exclusiveChips: number[];
 }
 
 export enum PaletteMode {

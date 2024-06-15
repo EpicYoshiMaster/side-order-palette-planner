@@ -1,7 +1,6 @@
-import { textGlow } from "components/Layout";
 import React, { useCallback, useEffect, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
-import { NO_CHIP, getColorChipImage, getColorChipbyIndex } from "utils/utils";
+import { NO_CHIP, getColorChipImage, getColorChipByIndex } from "utils/utils";
 
 const getFullBackground = (showChip: boolean, image: string, defaultColor: string) => {
 	if(showChip && image !== "") {
@@ -52,7 +51,7 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 	return (
 		<Background 
 		onMouseDown={(event) => { if(event.buttons === 1) { onClick(); } }} 
-		onMouseOver={(event) => { if(event.buttons === 1) { onClick(); }}}
+		onMouseEnter={(event) => { if(event.buttons === 1) { onClick(); }}}
 		onDragStart={(event) => { event.preventDefault(); }}
 		onAnimationEnd={(event) => { onAnimEnd(event.animationName); }}
 		$placed={chip !== NO_CHIP}
@@ -62,13 +61,11 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 		$clickAnim={clicked}
 		$placeAnim={placed}>
 			<ChipSlotAttachment 
-			onMouseDown={(event) => { event.stopPropagation(); }} 
-			onMouseOver={(event) => { event.stopPropagation(); }}
-			onDragStart={(event) => { event.stopPropagation(); }}
 			$placed={chip !== NO_CHIP} />
 			{labeled && chip !== NO_CHIP && (
-			<LabelText>
-				{getColorChipbyIndex(chip).name}
+			<LabelText
+			>
+				{getColorChipByIndex(chip).name}
 			</LabelText>
 			)}
 		</Background>
