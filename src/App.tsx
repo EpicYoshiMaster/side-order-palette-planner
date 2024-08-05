@@ -390,7 +390,7 @@ const Content = styled.div`
 
 	color: ${props => props.theme.text};
 
-	overflow: hidden;
+	overflow: auto;
 `;
 
 const Header = styled.h1`
