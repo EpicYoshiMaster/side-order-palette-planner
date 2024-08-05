@@ -62,7 +62,7 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 		$placeAnim={placed}>
 			<ChipSlotAttachment 
 			$placed={chip !== NO_CHIP} />
-			{labeled && chip !== NO_CHIP && (
+			{labeled && chip !== NO_CHIP && !locked && (
 			<LabelText
 			>
 				{getColorChipByIndex(chip).name}
@@ -122,6 +122,12 @@ const Background = styled.div<{ $placed: boolean, $image: string, $selected: boo
 	background-size: contain;
 
 	transition: transform 0.1s linear;
+
+	${({$selected}) => $selected ? 
+	css`
+		transform: scale(1.1, 1.1);
+		filter: drop-shadow(0px 0px 10px #000000);
+	`  : css``}
 
 	&:hover {
 		transform: scale(1.1, 1.1);

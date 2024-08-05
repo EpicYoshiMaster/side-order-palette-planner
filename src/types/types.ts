@@ -34,7 +34,8 @@ export type Palette = {
 export enum PaletteMode {
 	Palette_Draw,
 	Palette_Erase,
-	Palette_Sound
+	Palette_Sound,
+    Palette_Play
 };
 
 export enum SoundSetting {

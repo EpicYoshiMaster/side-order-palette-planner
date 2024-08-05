@@ -22,8 +22,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ palette }) => {
 			</Controls>
 			<Screen $gradient={require(`assets/gradients/${palette.pixel}Gradient.svg`)}>
 				<Dots />
+				
 				<PlateGlow src={PalettePlate} />
 				<Icon src={PalettePlate} />
+				
 				<NpcIconWrapper>
 					<FrameA>
 						<IconGlow src={require(`assets/pixelnpcs/${palette.pixel}FrameA.png`)} />
@@ -103,6 +105,7 @@ const Blink = keyframes`
 const Screen = styled.div<{ $gradient: any }>`
 	position: relative;
 	height: 100%;
+	//width: 100px;
 	display: flex;
 	flex-direction: row;
 	align-items: center; 

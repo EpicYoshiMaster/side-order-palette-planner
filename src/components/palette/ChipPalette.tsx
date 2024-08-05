@@ -6,14 +6,14 @@ import { LabelsSetting, Palette } from "../../types/types";
 
 interface ChipPaletteProps {
 	chips: number[];
-	chipIndex: number;
+	playIndex: number;
 	palette: Palette;
 	openSlots: number;
 	onClickChip: (chip: number, index: number) => void;
 	labelsSetting: LabelsSetting;
 }
 
-export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, palette, openSlots, labelsSetting, onClickChip }) => {
+export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, playIndex, palette, openSlots, labelsSetting, onClickChip }) => {
 
 	return (
 		<Background>
@@ -28,7 +28,7 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, chipIndex, pale
 					chip={value} 
 					index={index} 
 					key={index} 
-					selected={index === chipIndex} 
+					selected={index === playIndex} 
 					locked={index + 1 > openSlots}
 					labeled={labelsSetting === LabelsSetting.Labels_On}
 					onClickChip={onClickChip} />
@@ -44,12 +44,10 @@ const Background = styled.div`
 	position: relative;
 	border-radius: 0.25rem;
 
-	margin-bottom: 10px;
-
-	width: 105rem;
+	width: max(1400px, min(100%, calc(58vh * 9.0/4.0)));
 
 	display: grid;
-	grid-template-rows: max-content 1fr;
+	grid-template-rows: 0.2fr 1fr;
 
 	align-items: center;
 
@@ -59,6 +57,7 @@ const Background = styled.div`
 
 const DashboardArea = styled.div`
 	position: relative;
+	height: 100%;
 	padding: 0 25px;
 	padding-top: 25px;
 `;

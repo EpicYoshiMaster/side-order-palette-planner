@@ -138,8 +138,7 @@ export const getExclusiveChipIndexes = () => {
 	return exclusiveChips;
 }
 
-//-
-const characterSet = "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_+=,.?;:'/";
+const characterSet = "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&<>+=,.?;:'/";
 
 export const generateShareCode = (chips: number[]) => {
 	let shareCode = ``;

@@ -25,7 +25,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
             <SelectionWrapper>
                 <ItemSelectionRow items={["Color Chips", "Tones"]} selected={displayState} setSelected={setDisplayState} />
             </SelectionWrapper>
-            <GroupList>
+            <GroupList $useGrid={displayState === DisplayState.DS_Tones}>
             {
                 colorGroups.map((group, index) => (
                     <GroupEntry key={index}>
@@ -89,7 +89,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
 
 const StyledColorChipList = styled.div`
     height: 100vh;
-    width: 15vw;
+    width: 425px;
     position: relative;
     display: grid;
     grid-template-rows: max-content 1fr;
@@ -99,8 +99,19 @@ const SelectionWrapper = styled.div`
     margin-bottom: 10px;
 `;
 
-const GroupList = styled.div`
+const GroupList = styled.div<{ $useGrid: boolean }>`
     position: relative;
+    width: 100%;
+
+    ${ ({$useGrid}) => {
+        if($useGrid) {
+            return css`
+                display: grid;
+                grid-template-rows: repeat(6, 1fr);
+            `;
+        }
+    }}
+
     margin: 0;
     padding: 0 20px;
 
@@ -109,6 +120,7 @@ const GroupList = styled.div`
 
 const GroupEntry = styled.div`
     position: relative;
+    width: 100%;
 `;
 
 const GroupTitle = styled.div`
@@ -136,17 +148,17 @@ const GroupName = styled.div`
 `;
 
 const ToneRow = styled.div`
-    margin: 5px 0;
-    height: 4em;
-    width: 100%;
     position: relative;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+
+    margin: 5px 0;
     gap: 6px;
 `;
 
 const ToneImage = styled.img<{$active: boolean}>`
-    height: 100%;
+    width: 100%;
     object-fit: contain;
 
     transition: transform 0.1s linear;
