@@ -3,10 +3,14 @@ import { DefaultTheme, ThemeProvider } from "styled-components";
 
 const theme: DefaultTheme = {
 	text: "#ffffff",
+
 	glow: "#ad5431",
 	glow_border: "#988e85",
 	glow_background: "#615755",
 	gradient_background: "#5e4242",
+	disabled_border: "#988e85",
+	disabled_background: "#3a3332",
+	disabled_text: "#5a5a5a",
 
 	dot: "#2b1b2c",
 	background_from: "#1d101d",

@@ -4,13 +4,15 @@ import InfinityLogo from "../../assets/palette/InfinityLogoAndBackground.png"
 import DialControl from "../../assets/palette/DialControl.png"
 import PalettePlate from "../../assets/palette/PalettePlate.png"
 import { Dots } from "components/Layout";
-import { Palette } from "types/types";
+import { getPalettes } from "utils/utils";
 
 interface DashboardProps {
-	palette: Palette;
+	paletteIndex: number;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ palette }) => {
+const palettes = getPalettes();
+
+export const Dashboard: React.FC<DashboardProps> = ({ paletteIndex }) => {
 	return (
 		<Wrapper>
 			<Controls>
@@ -20,7 +22,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ palette }) => {
 					<Knobs src={DialControl} alt="" />
 				</Dials>
 			</Controls>
-			<Screen $gradient={require(`assets/gradients/${palette.pixel}Gradient.svg`)}>
+			<Screen $gradient={require(`assets/gradients/${palettes[paletteIndex].pixel}Gradient.svg`)}>
 				<Dots />
 				
 				<PlateGlow src={PalettePlate} />
@@ -28,12 +30,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ palette }) => {
 				
 				<NpcIconWrapper>
 					<FrameA>
-						<IconGlow src={require(`assets/pixelnpcs/${palette.pixel}FrameA.png`)} />
-						<Icon src={require(`assets/pixelnpcs/${palette.pixel}FrameA.png`)} />
+						<IconGlow src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameA.png`)} />
+						<Icon src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameA.png`)} />
 					</FrameA>
 					<FrameB>
-						<IconGlow src={require(`assets/pixelnpcs/${palette.pixel}FrameB.png`)} />
-						<Icon src={require(`assets/pixelnpcs/${palette.pixel}FrameB.png`)} />
+						<IconGlow src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameB.png`)} />
+						<Icon src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameB.png`)} />
 					</FrameB>
 				</NpcIconWrapper>
 			</Screen>

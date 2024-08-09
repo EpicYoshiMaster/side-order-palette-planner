@@ -1,31 +1,31 @@
 import React, { Dispatch, SetStateAction } from "react";
 import styled, { css } from "styled-components";
 import { ActiveGlowButton, textGlow } from "./Layout";
-import { OnClickChipProps, DisplayState, LabelsSetting, ColorChip } from "../types/types";
-import { getColorGroups, getColorChips, getToneImage, getColorChipByIndex } from "utils/utils";
+import { OnClickChipProps, DisplayState, ColorChip, Settings, ColorChipMode } from "../types/types";
+import { getColorGroups, getColorChips, getToneImage, getColorChipByIndex, isChipIndexExclusive } from "utils/utils";
 import { ItemSelectionRow } from "./ItemSelectionRow";
 
 interface ColorChipListProps {
     onClickChip: OnClickChipProps;
     selectedChip: number;
     selectedTone: number;
-    displayState: DisplayState;
+    settings: Settings;
     setDisplayState: Dispatch<SetStateAction<number>>;
-    labelsSetting: LabelsSetting;
     remainingChips: number[];
+    paletteIndex: number;
 }
 
 const colorGroups = getColorGroups();
 const colorChips = getColorChips();
 
-export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selectedChip, selectedTone, displayState, setDisplayState, labelsSetting, remainingChips }) => {
+export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selectedChip, selectedTone, settings, setDisplayState, remainingChips, paletteIndex }) => {
 
     return (
         <StyledColorChipList>
             <SelectionWrapper>
-                <ItemSelectionRow items={["Color Chips", "Tones"]} selected={displayState} setSelected={setDisplayState} />
+                <ItemSelectionRow items={["Color Chips", "Tones"]} selected={settings.display} setSelected={setDisplayState} />
             </SelectionWrapper>
-            <GroupList $useGrid={displayState === DisplayState.DS_Tones}>
+            <GroupList $useGrid={settings.display === DisplayState.DS_Tones}>
             {
                 colorGroups.map((group, index) => (
                     <GroupEntry key={index}>
@@ -34,7 +34,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                             <GroupName>{group.name}</GroupName>
                         </GroupTitle>
 
-                        {displayState === DisplayState.DS_ColorChips && 
+                        {settings.display === DisplayState.DS_ColorChips && 
                         colorChips.filter((chip) => chip.group === group.index && !chip.isTone).map((chip, chipIndex) => {
                             let prevChip: ColorChip | undefined = undefined;
 
@@ -42,14 +42,18 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                                 prevChip = getColorChipByIndex(chip.index - 1);
                             }
 
+                            const disabled = settings.chips === ColorChipMode.Chips_Limited && 
+                            (remainingChips[chip.index] <= 0
+                            || isChipIndexExclusive(chip.index, paletteIndex));
+
                             return (
                             <ChipWrapper key={chipIndex}>
                                 {prevChip && chip.group === prevChip.group && chip.tone !== prevChip.tone && (
                                     <Divider />
                                 )}
-                                <ChipEntry >
+                                <ChipEntry>
                                     <ChipItem 
-                                    //disabled={true}
+                                    disabled={disabled}
                                     $active={selectedChip === chip.index} 
                                     onClick={() => { onClickChip(chip); }}>
                                         <div>
@@ -64,7 +68,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                             )
                             })}
 
-                        {displayState === DisplayState.DS_Tones && (
+                        {settings.display === DisplayState.DS_Tones && (
                         
                             <ToneRow>
                             {

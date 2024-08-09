@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useRef, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
-import { ColorChip, PaletteMode, SoundSetting, ColorChipMode, DisplayState, LabelsSetting } from './types/types';
+import { ColorChip, PaletteMode, SoundSetting, ColorChipMode, DisplayState, LabelsSetting, Settings } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
 import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getPalettes, getColorChips } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
@@ -16,9 +16,9 @@ import { useKeyDown } from 'utils/hooks';
 // Palette Planner:
 //
 // - Import palettes from others to share them
-
-// - Option to restrict the palette to only what's possible (ex. exclusive palette chips, chip # limits, etc.)
-// - Add easter eggs for entering palettes once the thing is done
+// - Tone Count Limits
+// - Display exclusive chip icons
+// - Responsive CSS
 
 const DEFAULT_SHARE_CODE = generateShareCode(DEFAULT_PALETTE);
 const palettes = getPalettes();
@@ -38,6 +38,16 @@ function App() {
 	const [ selectedTone, setSelectedTone ] = useState(getLastBaseIndex() + 1);
 	const [ playIndex, setPlayIndex ] = useState(0);
 	const [ shareCode, setShareCode ] = useState(DEFAULT_SHARE_CODE);
+
+	const settings: Settings = useMemo(() => {
+		return {
+			mode: paletteMode, 
+			sound: soundSetting,
+			labels: labelsSetting,
+			chips: colorChipMode,
+			display: displayState
+		}
+	}, [paletteMode, soundSetting, labelsSetting, colorChipMode, displayState]);
 
 	const paletteRef = useRef(null);
 
@@ -278,11 +288,11 @@ function App() {
 				<ColorChipList 
 				onClickChip={onSelectChip} 
 				selectedChip={selectedChip} 
-				selectedTone={selectedTone} 
-				displayState={displayState} 
+				selectedTone={selectedTone}
+				settings={settings}
 				setDisplayState={setDisplayState}
-				labelsSetting={labelsSetting}
-				remainingChips={remainingChips} />
+				remainingChips={remainingChips}
+				paletteIndex={paletteIndex}  />
 				<PaletteSpace>
 					<TopArea>
 						<Header>Side Order Palette Planner (WIP)</Header>
@@ -352,12 +362,13 @@ function App() {
 					</TopArea>
 					<BottomArea>
 						<ChipPalette 
-							palette={palettes[paletteIndex]} 
+							paletteIndex={paletteIndex} 
 							playIndex={paletteMode === PaletteMode.Palette_Play ? playIndex : NO_CHIP} 
 							chips={placedChips} 
 							onClickChip={onClickChip} 
 							openSlots={numFreeSlots}
-							labelsSetting={labelsSetting}
+							settings={settings}
+							remainingChips={remainingChips}
 							/>
 					</BottomArea>	
 				</PaletteSpace>

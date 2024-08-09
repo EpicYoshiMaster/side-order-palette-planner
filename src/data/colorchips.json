@@ -14,6 +14,7 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"MaxNum": 5,
+	"IsDroneAction": false,
 	"FetchDisplayValueFromParam": false
   },
   "BlastDamageUp": {
@@ -35,7 +36,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 9
+	"MaxNum": 9,
+	"IsDroneAction": false
   },
   "BlastSizeUp": {
 	"Name": "Splash Radius",
@@ -52,7 +54,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "BulletCorePaintUp": {
 	"Name": "Rush Ink Coverage",
@@ -107,7 +110,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "BulletSizeUp": {
 	"Name": "Ink Attack Size",
@@ -125,6 +129,7 @@
 	"DisplayValueOverwriteArray": [],
 	"DisplayValueUnit": "Percent",
 	"MaxNum": 5,
+	"IsDroneAction": false,
 	"FetchDisplayValueFromParam": false
   },
   "ChargeKeepTimeUp": {
@@ -142,7 +147,8 @@
 	],
 	"DisplayValueUnit": "Second",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "ChargeTimeSave": {
 	"Name": "Quick Charge",
@@ -209,7 +215,8 @@
 	],
 	"DisplayValueUnit": "Second",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "ComboGraceTimeUp": {
 	"Name": "Lucky Chain Window",
@@ -226,7 +233,8 @@
 	],
 	"DisplayValueUnit": "Second",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "ComboItemDropUp": {
 	"Name": "Max Lucky Chain",
@@ -243,7 +251,8 @@
 	],
 	"DisplayValueUnit": "None",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DefeatEnemyBlastFreqUp": {
 	"Name": "Lucky Bomb Drop",
@@ -260,7 +269,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DefeatEnemyInkRecover": {
 	"Name": "Splat Ink Recovery",
@@ -277,7 +287,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DefeatEnemyItemDropArmor": {
 	"Name": "Armor Drop",
@@ -294,7 +305,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DefeatEnemyItemDropDroneActiveUp": {
 	"Name": "Drone-Battery Drop",
@@ -311,7 +323,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DefeatEnemyItemDropInkUp": {
 	"Name": "Ink-Bottle Drop",
@@ -328,7 +341,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DefeatEnemyItemDropSpecialUp": {
 	"Name": "Canned-Special Drop",
@@ -345,7 +359,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DefeatEnemyItemStunBomb": {
 	"Name": "Disc-Piece Drop",
@@ -362,7 +377,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DirectAttackBrushAwayUp": {
 	"Name": "Rush Knockback",
@@ -379,7 +395,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DirectAttackUp": {
 	"Name": "Rush Attack",
@@ -400,7 +417,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 9
+	"MaxNum": 9,
+	"IsDroneAction": false
   },
   "DisableCanopyShot": {
 	"Name": "No-Launch Brella",
@@ -413,7 +431,8 @@
 	],
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 1
+	"MaxNum": 1,
+	"IsDroneAction": false
   },
   "DroneActionBombQuick": {
 	"Name": "Drone Burst Bomb",
@@ -430,7 +449,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": true
   },
   "DroneActionBombSplash": {
 	"Name": "Drone Splat Bomb",
@@ -447,7 +467,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": true
   },
   "DroneActionItemDrop": {
 	"Name": "Drone Items",
@@ -464,7 +485,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": true
   },
   "DroneActionSprinkler": {
 	"Name": "Drone Sprinkler",
@@ -481,7 +503,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": true
   },
   "DroneActionSuperLaser": {
 	"Name": "Drone Killer Wail",
@@ -498,7 +521,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": true
   },
   "DroneActionTornado": {
 	"Name": "Drone Inkstrike",
@@ -515,7 +539,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": true
   },
   "DroneActionTrap": {
 	"Name": "Drone Ink Mine",
@@ -532,7 +557,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": true
   },
   "DroneCadenceDefeatEnemyUp": {
 	"Name": "Splat Drone Gauge",
@@ -549,7 +575,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DroneCadenceMoveUp": {
 	"Name": "Mobile Drone Gauge",
@@ -566,7 +593,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DroneCadencePaintUp": {
 	"Name": "Turf Drone Gauge",
@@ -583,7 +611,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "DroneCadenceTimeUp": {
 	"Name": "Drone-Gauge Charge",
@@ -600,7 +629,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "EnemySinkUp": {
 	"Name": "Sticky Ink",
@@ -617,7 +647,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "FarDamageRatioUp": {
 	"Name": "Main Damage (Distant)",
@@ -634,7 +665,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "HomingShot": {
 	"Name": "Homing Shots",
@@ -651,7 +683,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "HumanMoveUp": {
 	"Name": "Run Speed Up",
@@ -668,7 +701,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "InkRecoveryUp": {
 	"Name": "Ink-Recovery Rate",
@@ -685,7 +719,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "KnockBackUp": {
 	"Name": "Knockback",
@@ -702,7 +737,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "LoadingBulletUp": {
 	"Name": "Splatling Barrage",
@@ -720,7 +756,8 @@
 	"DisplayValueOverwriteArray": [],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "MainInkSave": {
 	"Name": "Ink Saver (Main)",
@@ -737,7 +774,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "MainPaintUp": {
 	"Name": "Main Ink Coverage",
@@ -864,7 +902,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "MainShotRangeUp": {
 	"Name": "Main Range",
@@ -1003,7 +1042,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "MainShotRateUp": {
 	"Name": "Main Firing Speed",
@@ -1094,7 +1134,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "ManeuverSlideAttack": {
 	"Name": "Dodge Roll Attack",
@@ -1107,7 +1148,8 @@
 	],
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 1
+	"MaxNum": 1,
+	"IsDroneAction": false
   },
   "ManeuverSlideUp": {
 	"Name": "Extra Dodge Roll",
@@ -1124,7 +1166,8 @@
 	],
 	"DisplayValueUnit": "None",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "MoveInkRecoverUp": {
 	"Name": "Mobile Ink Recovery",
@@ -1141,7 +1184,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "MoveSpecialIncreaseUp": {
 	"Name": "Mobile Special Charge",
@@ -1158,7 +1202,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "NearDamageRatioUp": {
 	"Name": "Main Damage (Close)",
@@ -1175,7 +1220,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "PaintCombo": {
 	"Name": "Turf Lucky Chain",
@@ -1192,7 +1238,8 @@
 	],
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "PenetrateNumUp": {
 	"Name": "Main Piercing",
@@ -1209,7 +1256,8 @@
 	],
 	"DisplayValueUnit": "None",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "PoisonInk": {
 	"Name": "Poison Ink",
@@ -1226,7 +1274,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "Recharge": {
 	"Name": "Midfire Charge",
@@ -1239,7 +1288,8 @@
 	],
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 1
+	"MaxNum": 1,
+	"IsDroneAction": false
   },
   "RollerDashUp": {
 	"Name": "Moving Ink Speed",
@@ -1256,7 +1306,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "SaberStepAttack": {
 	"Name": "Lunge Attack",
@@ -1269,7 +1320,8 @@
 	],
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 1
+	"MaxNum": 1,
+	"IsDroneAction": false
   },
   "ShelterNakedTimeSave": {
 	"Name": "Brella Cooldown",
@@ -1286,7 +1338,8 @@
 	],
 	"DisplayValueUnit": "Second",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "ShotBiasRatio": {
 	"Name": "Shot-Spread Reduction",
@@ -1303,7 +1356,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "ShotDamageUp": {
 	"Name": "Ink Damage",
@@ -1324,7 +1378,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 9
+	"MaxNum": 9,
+	"IsDroneAction": false
   },
   "SpecialIncreaseUp": {
 	"Name": "Special Charge Up",
@@ -1341,7 +1396,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "SquidMoveUp": {
 	"Name": "Swim Speed Up",
@@ -1358,7 +1414,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "SquidSomersaultAttack": {
 	"Name": "Squid Attack",
@@ -1371,7 +1428,8 @@
 	],
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 1
+	"MaxNum": 1,
+	"IsDroneAction": false
   },
   "SubInkSave": {
 	"Name": "Ink Saver (Sub)",
@@ -1388,7 +1446,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "WaveDamageUp": {
 	"Name": "Sound-Wave Damage",
@@ -1405,7 +1464,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "WeakSwingRateUp": {
 	"Name": "Horizontal-Slash Speed",
@@ -1422,7 +1482,8 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   },
   "WeakenEnemyDamageRateUp": {
 	"Name": "Hindrance Damage",
@@ -1439,6 +1500,7 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
-	"MaxNum": 5
+	"MaxNum": 5,
+	"IsDroneAction": false
   }
 }

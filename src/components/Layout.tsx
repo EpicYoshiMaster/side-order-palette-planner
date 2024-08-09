@@ -36,14 +36,20 @@ export const GlowButton = styled.button`
     font-size: 1.75rem;
     color: ${props => props.theme.text};
 
-    &:hover {
-        ${buttonGlow}
+    ${ ({disabled}) => disabled ? css`
+    color: ${props => props.theme.disabled_text};
+    background-color: rgba(22, 22, 22, 0.35);
+    &:hover, &:active {
+        background-color: ${props => props.theme.disabled_background};
+        border-color: ${props => props.theme.disabled_border};
+        text-shadow: none;
     }
 
-    &:active {
+    ` : css`
+    &:hover, &:active {
         ${buttonGlow}
-        filter: contrast(200%);
     }
+    `}
 `;
 
 export const GlowSelect = styled.select`
@@ -91,5 +97,5 @@ export const GlowInput = styled.input`
 `
 
 export const ActiveGlowButton = styled(GlowButton)<{ $active: boolean }>`
-    ${({ $active }) => $active ? buttonGlow : ''};
+    ${({ $active }) => $active ? buttonGlow : css``};
 `;

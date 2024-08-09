@@ -13,7 +13,9 @@ export type ColorChip = {
     entry: number;
     index: number;
     max: number;
+    drone: boolean;
     isTone: boolean;
+    exclusive: number[];
 };
 
 export type OnClickChipProps = (chip: ColorChip) => void;
@@ -28,7 +30,7 @@ export type Palette = {
     mainWeapon: string;
     subWeapon: string;
     specialWeapon: string;
-    exclusiveChips: number[];
+    exclusiveTips: string[];
 }
 
 export enum PaletteMode {
@@ -57,3 +59,11 @@ export enum DisplayState {
     DS_ColorChips,
     DS_Tones
 };
+
+export type Settings = {
+    mode: PaletteMode;
+    sound: SoundSetting;
+    labels: LabelsSetting;
+    chips: ColorChipMode;
+    display: DisplayState;
+}

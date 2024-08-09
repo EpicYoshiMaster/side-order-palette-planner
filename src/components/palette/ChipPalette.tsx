@@ -2,27 +2,62 @@ import React from "react";
 import styled from "styled-components";
 import { Dashboard } from "./Dashboard";
 import { ChipSlot } from "./ChipSlot";
-import { LabelsSetting, Palette } from "../../types/types";
+import { ColorChip, ColorChipMode, LabelsSetting, Palette, Settings } from "../../types/types";
+import { getColorChipByIndex, isChipIndexExclusive, MAX_DRONE_ABILITIES, NO_CHIP } from "utils/utils";
 
 interface ChipPaletteProps {
 	chips: number[];
 	playIndex: number;
-	palette: Palette;
+	paletteIndex: number;
 	openSlots: number;
+	settings: Settings;
 	onClickChip: (chip: number, index: number) => void;
-	labelsSetting: LabelsSetting;
+	remainingChips: number[];
 }
 
-export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, playIndex, palette, openSlots, labelsSetting, onClickChip }) => {
+export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, playIndex, paletteIndex, openSlots, settings, onClickChip, remainingChips }) => {
 
 	return (
 		<Background>
 			<DashboardArea>
-				<Dashboard palette={palette} />
+				<Dashboard paletteIndex={paletteIndex} />
 			</DashboardArea>
 			<ChipArea>
 			{
-			chips.map((value, index) => {
+			chips.map((value, index, chips) => {
+
+				const isChipCountExceeded = (chip: ColorChip, chipIndex: number, index: number): boolean => {
+					if(!chip) return false;
+					if(chip.isTone) return false;
+					if(remainingChips[chipIndex] >= 0) return false;
+
+					const chipNumber = chips.filter((itemChipIndex, itemIndex) => itemIndex <= index && itemChipIndex === chipIndex).length;
+
+					return chipNumber > chip.max;
+				}
+
+				const isDroneAbilitiesExceeded = (chip: ColorChip, chipIndex: number, index: number): boolean => {
+					if(!chip) return false;
+					if(!chip.drone) return false;
+					if(chip.isTone) return false;
+
+					const abilities = chips.filter((itemChipIndex, itemIndex, array) => {
+						if(itemChipIndex === NO_CHIP) return false;
+
+						const itemChip = getColorChipByIndex(itemChipIndex)
+
+						return itemIndex <= index && itemChip.drone && array.indexOf(itemChipIndex) === itemIndex;
+					});
+
+					return abilities.indexOf(chipIndex) + 1 > MAX_DRONE_ABILITIES;
+				}
+
+				const isLimited = value !== NO_CHIP 
+					&& settings.chips === ColorChipMode.Chips_Limited 
+					&& (isChipIndexExclusive(value, paletteIndex) 
+					|| isChipCountExceeded(getColorChipByIndex(value), value, index)
+					|| isDroneAbilitiesExceeded(getColorChipByIndex(value), value, index));
+
 				return (
 					<ChipSlot 
 					chip={value} 
@@ -30,7 +65,8 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, playIndex, pale
 					key={index} 
 					selected={index === playIndex} 
 					locked={index + 1 > openSlots}
-					labeled={labelsSetting === LabelsSetting.Labels_On}
+					labeled={settings.labels === LabelsSetting.Labels_On}
+					limited={isLimited}
 					onClickChip={onClickChip} />
 				)
 			})

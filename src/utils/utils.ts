@@ -6,6 +6,7 @@ import PaletteList from '../data/palettes.json'
 export const NO_CHIP = -1;
 export const NUM_PALETTE_SLOTS = 36;
 export const EIGHTS_PALETTE = 11;
+export const MAX_DRONE_ABILITIES = 5;
 export const DEFAULT_PALETTE: number[] = (new Array(NUM_PALETTE_SLOTS)).fill(NO_CHIP);
 
 const sortPalettes = (a: Palette, b: Palette) => { return a.index < b.index ? -1 : (a.index > b.index ? 1 : 0); };
@@ -43,37 +44,78 @@ const sortChips = (a: ColorChip, b: ColorChip) => {
 	return 0;
 }
 
-const baseChips: ColorChip[] = Object.entries(ColorChips).map(([key, value]) => {
-	return {
-		key: key,
-		name: value.Name,
-		group: value.Color,
-		tone: value.Tone,
-		entry: value.Index,
-		index: -1,
-		max: value.MaxNum,
-		isTone: false
-	}
-}).sort(sortChips).map((item, index) => { return { ...item, index: index}});
-
-const toneChips: ColorChip[] = ColorGroups.map((group): ColorChip[] => {
-	return group.tones.map((tone, index): ColorChip => {
+const generateChipsAndPalettes = () => {
+	let baseChips: ColorChip[] = Object.entries(ColorChips).map(([key, value]) => {
 		return {
-			key: `${group.name}Tone${String.fromCharCode(65 + index)}`,
-			name: `${group.name} Tone ${String.fromCharCode(65 + index)}`,
-			group: group.index,
-			tone: index,
-			entry: -1,
+			key: key,
+			name: value.Name,
+			group: value.Color,
+			tone: value.Tone,
+			entry: value.Index,
 			index: -1,
-			max: -1,
-			isTone: true
+			max: value.MaxNum,
+			drone: value.IsDroneAction,
+			isTone: false,
+			exclusive: []
+		}
+	}).sort(sortChips).map((item, index) => { return { ...item, index: index}});
+
+	let toneChips: ColorChip[] = ColorGroups.map((group): ColorChip[] => {
+		return group.tones.map((tone, index): ColorChip => {
+			return {
+				key: `${group.name}Tone${String.fromCharCode(65 + index)}`,
+				name: `${group.name} Tone ${String.fromCharCode(65 + index)}`,
+				group: group.index,
+				tone: index,
+				entry: -1,
+				index: -1,
+				max: -1,
+				drone: false,
+				isTone: true,
+				exclusive: []
+			}
+		})
+	}).reduce((prev, current) => prev.concat(current)).map((chip, index) => {
+		return { ...chip, index: baseChips.length + index }
+	});
+
+	let palettes: Palette[] = Object.values(PaletteList.Table).map((value) => {
+		return {
+			index: value.OrderForChangeUI,
+			name: value.PaletteName,
+			icon: value.NPCIconPath,
+			pixel: value.PixelName,
+			firstTone: value.FreqFirstColorGroupType,
+			secondTone: value.FreqSecondColorGroupType,
+			mainWeapon: value.MainWeapon,
+			subWeapon: value.SubWeapon,
+			specialWeapon: value.SpecialWeapon,
+			exclusiveTips: value.UnlockTip
+		}
+	}).sort(sortPalettes);
+
+	palettes.forEach((palette) => {
+		palette.exclusiveTips.forEach((tipName) => {
+			const chipIndex = baseChips.findIndex((value) => value.key === tipName);
+
+			if(chipIndex !== NO_CHIP) {
+				baseChips[chipIndex].exclusive.push(palette.index);
+			}
+		})
+	})
+
+	const colorChips = baseChips.concat(toneChips);
+
+	colorChips.forEach((chip) => {
+		if(chip.exclusive.length > 0) {
+			console.log(chip.name);
 		}
 	})
-}).reduce((prev, current) => prev.concat(current)).map((chip, index) => {
-	return { ...chip, index: baseChips.length + index }
-});
 
-const colorChips = baseChips.concat(toneChips);
+	return {baseChips, toneChips, colorChips, palettes};
+}
+
+const { baseChips, toneChips, colorChips, palettes } = generateChipsAndPalettes();
 
 export const getPalettes = () => {
 	return palettes;
@@ -111,31 +153,12 @@ export const getColorChipImage = (index: number) => {
 	return getToneImage(colorChips[index].group, colorChips[index].tone);
 }
 
-const palettes: Palette[] = Object.values(PaletteList.Table).map((value) => {
-	return {
-		index: value.OrderForChangeUI,
-		name: value.PaletteName,
-		icon: value.NPCIconPath,
-		pixel: value.PixelName,
-		firstTone: value.FreqFirstColorGroupType,
-		secondTone: value.FreqSecondColorGroupType,
-		mainWeapon: value.MainWeapon,
-		subWeapon: value.SubWeapon,
-		specialWeapon: value.SpecialWeapon,
-		exclusiveChips: value.UnlockTip.flatMap((tipName) => {
-			const chip = getColorChipByTip(tipName);
+export const isChipIndexExclusive = (index: number, paletteIndex: number): boolean => {
+	const chip = colorChips[index];
 
-			return chip ? [chip.index] : [];
-		})
-	}
-}).sort(sortPalettes);
+	if(!chip) return false;
 
-const exclusiveChips = Array.from(new Set(palettes.reduce((prevValue: number[], palette: Palette) => {
-	return prevValue.concat(palette.exclusiveChips);
-}, []))).sort((a, b) => a > b ? 1 : (a < b ? -1 : 0));
-
-export const getExclusiveChipIndexes = () => {
-	return exclusiveChips;
+	return chip.exclusive.length > 0 && (chip.exclusive.findIndex((exclusivePaletteIndex) => exclusivePaletteIndex === paletteIndex) === NO_CHIP);
 }
 
 const characterSet = "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&<>+=,.?;:'/";

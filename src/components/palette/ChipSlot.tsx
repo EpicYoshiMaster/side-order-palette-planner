@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 import { NO_CHIP, getColorChipImage, getColorChipByIndex } from "utils/utils";
+import Marker from "assets/markers/purple_x.png"
 
 const getFullBackground = (showChip: boolean, image: string, defaultColor: string) => {
 	if(showChip && image !== "") {
@@ -16,10 +17,11 @@ interface ChipSlotProps {
 	selected: boolean;
 	locked: boolean;
 	labeled: boolean;
+	limited: boolean;
 	onClickChip: (chip: number, index: number) => void;
 }
 
-export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, labeled, onClickChip }) => {
+export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, labeled, limited, onClickChip }) => {
 
 	const [ placed, setPlaced ] = useState(false);
 	const [ clicked, setClicked ] = useState(false);
@@ -60,14 +62,19 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 		$locked={locked}
 		$clickAnim={clicked}
 		$placeAnim={placed}>
-			<ChipSlotAttachment 
-			$placed={chip !== NO_CHIP} />
+			<ChipSlotAttachment $placed={chip !== NO_CHIP} />
+
+			{limited && (
+				<XMarker src={Marker} />
+			)}
+
 			{labeled && chip !== NO_CHIP && !locked && (
 			<LabelText
 			>
 				{getColorChipByIndex(chip).name}
 			</LabelText>
 			)}
+
 		</Background>
 	)
 }
@@ -147,6 +154,13 @@ const ChipSlotAttachment = styled.div<{ $placed: boolean }>`
 	background: linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.2) 49.37%,transparent 49.38%);
 	box-shadow: inset 0 0 5px 0 rgba(0,0,0,.2);
 	mix-blend-mode: multiply;
+`;
+
+const XMarker = styled.img`
+	position: absolute;
+	padding: 10%;
+	width: 100%;
+	height: 100%;
 `;
 
 const LabelText = styled.div`
