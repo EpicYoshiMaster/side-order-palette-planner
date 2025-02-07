@@ -1,3 +1,41 @@
+:root {
+  --text: #ffffff;
+  --title-size: 3rem;
+  --text-size: 1.5rem;
+  --color-group-size: 2rem;
+  --label-size: 1.25rem;
+  --disabled-text: #5a5a5a;
+
+  /* Background */
+  --background-gradient-start: #1d101d;
+  --background-gradient-end: #381e2d;
+
+  /* Main Glow Effect */
+  --text-glow: #ad5431;
+  
+  /* Buttons, Selects */
+  --button-background: rgba(0, 0, 0, 0.35);
+  --button-highlight-border: #988e85;
+  --button-highlight-background: #615755;
+  --button-active-background: #ffffff;
+
+  --button-disabled-background: rgba(22, 22, 22, 0.35);
+  --button-disabled-highlight-background: #3a3332;
+  --button-disabled-highlight-border: #988e85;
+
+  /* Group Gradient */
+  --color-group-gradient-start: #5e4242;
+  --color-group-gradient-end: rgba(94, 66, 66, 0);
+
+  /* Aside */
+  --list-divider: #615755;
+
+  /* Palette */
+  --palette-background: #ffffff;
+  --color-chip-slot-background: #d3d3d3;
+  --color-chip-slot-locked: #262626;
+}
+
 @font-face {
   font-family: Splatoon;
   src: url('./fonts/BlitzMain.otf');

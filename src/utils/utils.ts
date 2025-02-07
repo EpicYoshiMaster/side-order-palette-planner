@@ -4,6 +4,7 @@ import ColorGroups from '../data/colorgroups.json'
 import PaletteList from '../data/palettes.json'
 
 export const NO_CHIP = -1;
+export const PALETTE_ROW_LENGTH = 9;
 export const NUM_PALETTE_SLOTS = 36;
 export const EIGHTS_PALETTE = 11;
 export const MAX_DRONE_ABILITIES = 5;
@@ -106,12 +107,6 @@ const generateChipsAndPalettes = () => {
 
 	const colorChips = baseChips.concat(toneChips);
 
-	colorChips.forEach((chip) => {
-		if(chip.exclusive.length > 0) {
-			console.log(chip.name);
-		}
-	})
-
 	return {baseChips, toneChips, colorChips, palettes};
 }
 
@@ -159,6 +154,40 @@ export const isChipIndexExclusive = (index: number, paletteIndex: number): boole
 	if(!chip) return false;
 
 	return chip.exclusive.length > 0 && (chip.exclusive.findIndex((exclusivePaletteIndex) => exclusivePaletteIndex === paletteIndex) === NO_CHIP);
+}
+
+export const isChipCountExceeded = (chips: number[], remainingChips: number[], chip: ColorChip, chipIndex: number, index: number): boolean => {
+	if(!chip) return false;
+	if(chip.isTone) return false;
+	if(remainingChips[chipIndex] >= 0) return false;
+
+	const chipCount = chips.filter((itemChipIndex, itemIndex) => itemIndex <= index && itemChipIndex === chipIndex).length;
+
+	return chipCount > chip.max;
+}
+
+export const isDroneAbilitiesExceeded = (chips: number[], chip: ColorChip, chipIndex: number, index: number): boolean => {
+	if(!chip) return false;
+	if(!chip.drone) return false;
+	if(chip.isTone) return false;
+
+	const abilities = chips.filter((itemChipIndex, itemIndex, array) => {
+		if(itemChipIndex === NO_CHIP) return false;
+
+		const itemChip = getColorChipByIndex(itemChipIndex)
+
+		return itemIndex <= index && itemChip.drone && array.indexOf(itemChipIndex) === itemIndex;
+	});
+
+	return abilities.indexOf(chipIndex) + 1 > MAX_DRONE_ABILITIES;
+}
+
+export const isChipLimited = (chipIndex: number, index: number, paletteIndex: number, chips: number[], remainingChips: number[]): boolean => {
+	if(chipIndex === NO_CHIP) return false;
+
+	return (isChipIndexExclusive(chipIndex, paletteIndex) 
+		|| isChipCountExceeded(chips, remainingChips, getColorChipByIndex(chipIndex), chipIndex, index)
+		|| isDroneAbilitiesExceeded(chips, getColorChipByIndex(chipIndex), chipIndex, index));
 }
 
 const characterSet = "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&<>+=,.?;:'/";

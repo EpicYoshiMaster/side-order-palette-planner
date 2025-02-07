@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { GlowInput, ActiveGlowButton } from "./Layout";
+import { GlowInput, SquareGlowButton, IconGlowButton } from "./Layout";
 import { Copy } from "@phosphor-icons/react"
 
 interface ItemTextInputRowProps
@@ -17,7 +17,7 @@ export const ItemTextInputRow: React.FC<ItemTextInputRowProps> = ({ label, value
 			<IconGlowButton 
 				onClick={() => { navigator.clipboard.writeText(value); }}
 				$active={true}>
-				<GlowCopy />
+				<Copy />
 			</IconGlowButton>
 		</ButtonRow>
 	)
@@ -29,18 +29,4 @@ const ButtonRow = styled.div`
 	flex-direction: row;
 
 	text-align: center;
-`;
-
-const SquareGlowButton = styled(ActiveGlowButton)`
-	border-radius: 0;
-	text-align: center;
-`;
-
-const IconGlowButton = styled(SquareGlowButton)`
-	padding: 2px 15px;
-	font-size: 2rem;
-`;
-
-const GlowCopy = styled(Copy)`
-	box-shadow: inset 0px 0px 30px ${props => props.theme.glow}, 0px 0px 20px ${props => props.theme.glow}, 0px 0px 20px ${props => props.theme.glow}, 0px 0px 20px ${props => props.theme.glow};
 `;

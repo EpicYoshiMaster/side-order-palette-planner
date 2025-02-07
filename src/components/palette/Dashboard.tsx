@@ -46,7 +46,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ paletteIndex }) => {
 const Wrapper = styled.div`
 	padding-left: 5px;
 	width: 100%;
-	height: 150px;
+	height: 130px;
 	position: relative;
 	display: flex;
 	flex-direction: row;
@@ -54,7 +54,21 @@ const Wrapper = styled.div`
 	align-items: center;
 	user-select: none;
 
-	color: ${props => props.theme.palette.text};
+	@media (max-width: 1920px) {
+		height: 100px;
+	}
+
+	@media (max-width: 1350px) {
+		height: 80px;
+	}
+
+	@media (max-width: 1000px) {
+		height: 50px;
+	}
+
+	@media (max-width: 600px) {
+		height: 30px;
+	}
 `;
 
 const Controls = styled.div`
@@ -84,10 +98,26 @@ const Knobs = styled.img`
 
 const NpcIconWrapper = styled.div`
 	position: absolute;
-	left: calc(100% - 150px);
+	left: calc(100% - 130px);
 	right: 0;
 
 	height: 100%;
+
+	@media (max-width: 1920px) {
+		left: calc(100% - 100px);
+	}
+
+	@media (max-width: 1350px) {
+		left: calc(100% - 80px);
+	}
+
+	@media (max-width: 1000px) {
+		left: calc(100% - 50px);
+	}
+
+	@media (max-width: 600px) {
+		left: calc(100% - 30px);
+	}
 `;
 
 const Blink = keyframes`

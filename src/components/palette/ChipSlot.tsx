@@ -64,13 +64,12 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 		$placeAnim={placed}>
 			<ChipSlotAttachment $placed={chip !== NO_CHIP} />
 
-			{limited && (
+			{limited && !locked && (
 				<XMarker src={Marker} />
 			)}
 
 			{labeled && chip !== NO_CHIP && !locked && (
-			<LabelText
-			>
+			<LabelText>
 				{getColorChipByIndex(chip).name}
 			</LabelText>
 			)}
@@ -124,7 +123,7 @@ const Background = styled.div<{ $placed: boolean, $image: string, $selected: boo
 	aspect-ratio: 1;
 	border-radius: 0.25rem;
 
-	background: ${({ $placed, $image, $locked, theme }) => getFullBackground($placed && !$locked, $image, $locked ? theme.chipslot.locked : theme.chipslot.background)};
+	background: ${({ $placed, $image, $locked }) => getFullBackground($placed && !$locked, $image, $locked ? "var(--color-chip-slot-locked)" : "var(--color-chip-slot-background)")};
 	background-repeat: no-repeat;
 	background-size: contain;
 
@@ -168,6 +167,6 @@ const LabelText = styled.div`
 	margin: auto;
 
 	text-align: center;
-	font-size: 1.5rem;
+	font-size: var(--label-size);
 	text-shadow: 0px 0px 5px #000000, 0px 0px 5px #000000, 0px 0px 5px #000000, 0px 0px 5px #000000;
 `;

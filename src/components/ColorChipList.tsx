@@ -93,7 +93,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
 
 const StyledColorChipList = styled.div`
     height: 100vh;
-    width: 425px;
+    width: 100%;
     position: relative;
     display: grid;
     grid-template-rows: max-content 1fr;
@@ -133,7 +133,7 @@ const GroupTitle = styled.div`
     flex-direction: row;
     align-items: center;
 
-    font-size: 2rem;
+    font-size: var(--color-group-size);
 `;
 
 const GroupImage = styled.img`
@@ -148,7 +148,7 @@ const GroupName = styled.div`
     padding-right: 50px;
 
     ${textGlow};
-    background-image: linear-gradient(to right, ${props => props.theme.gradient_background} 70%, rgba(94, 66, 66, 0) 100%);
+    background-image: linear-gradient(to right, var(--color-group-gradient-start) 70%, var(--color-group-gradient-end) 100%);
 `;
 
 const ToneRow = styled.div`
@@ -201,5 +201,5 @@ const Divider = styled.div`
     width: 90%;
     margin: auto;
 
-    border-top: 3px ${props => props.theme.glow_background} solid;    
+    border-top: 3px var(--list-divider) solid;    
 `;

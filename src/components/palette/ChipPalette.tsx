@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Dashboard } from "./Dashboard";
 import { ChipSlot } from "./ChipSlot";
-import { ColorChip, ColorChipMode, LabelsSetting, Palette, Settings } from "../../types/types";
-import { getColorChipByIndex, isChipIndexExclusive, MAX_DRONE_ABILITIES, NO_CHIP } from "utils/utils";
+import { ColorChipMode, LabelsSetting, Settings } from "../../types/types";
+import { isChipLimited } from "utils/utils";
 
 interface ChipPaletteProps {
 	chips: number[];
@@ -25,38 +25,7 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, playIndex, pale
 			<ChipArea>
 			{
 			chips.map((value, index, chips) => {
-
-				const isChipCountExceeded = (chip: ColorChip, chipIndex: number, index: number): boolean => {
-					if(!chip) return false;
-					if(chip.isTone) return false;
-					if(remainingChips[chipIndex] >= 0) return false;
-
-					const chipNumber = chips.filter((itemChipIndex, itemIndex) => itemIndex <= index && itemChipIndex === chipIndex).length;
-
-					return chipNumber > chip.max;
-				}
-
-				const isDroneAbilitiesExceeded = (chip: ColorChip, chipIndex: number, index: number): boolean => {
-					if(!chip) return false;
-					if(!chip.drone) return false;
-					if(chip.isTone) return false;
-
-					const abilities = chips.filter((itemChipIndex, itemIndex, array) => {
-						if(itemChipIndex === NO_CHIP) return false;
-
-						const itemChip = getColorChipByIndex(itemChipIndex)
-
-						return itemIndex <= index && itemChip.drone && array.indexOf(itemChipIndex) === itemIndex;
-					});
-
-					return abilities.indexOf(chipIndex) + 1 > MAX_DRONE_ABILITIES;
-				}
-
-				const isLimited = value !== NO_CHIP 
-					&& settings.chips === ColorChipMode.Chips_Limited 
-					&& (isChipIndexExclusive(value, paletteIndex) 
-					|| isChipCountExceeded(getColorChipByIndex(value), value, index)
-					|| isDroneAbilitiesExceeded(getColorChipByIndex(value), value, index));
+				const isLimited = settings.chips === ColorChipMode.Chips_Limited && isChipLimited(value, index, paletteIndex, chips, remainingChips);
 
 				return (
 					<ChipSlot 
@@ -80,22 +49,30 @@ const Background = styled.div`
 	position: relative;
 	border-radius: 0.25rem;
 
-	width: max(1400px, min(100%, calc(58vh * 9.0/4.0)));
-
 	display: grid;
-	grid-template-rows: 0.2fr 1fr;
+	grid-template-rows: max-content 1fr;
 
 	align-items: center;
 
-	background-color: ${props => props.theme.palette.background};
-	filter: drop-shadow(0px 0px 5px ${props => props.theme.palette.background});
+	background-color: var(--palette-background);
+	filter: drop-shadow(0px 0px 5px var(--palette-background));
 `;
 
 const DashboardArea = styled.div`
 	position: relative;
 	height: 100%;
-	padding: 0 25px;
-	padding-top: 25px;
+	padding: 25px;
+	padding-bottom: 0;
+
+	@media (max-width: 1350px) {
+		padding: 15px;
+		padding-bottom: 0;
+	}
+
+	@media (max-width: 1000px) {
+		padding: 8px;
+		padding-bottom: 0;
+	}
 `;
 
 const ChipArea = styled.div`
@@ -107,4 +84,21 @@ const ChipArea = styled.div`
 
 	row-gap: 30px;
 	column-gap: 20px; 
+
+	@media (max-width: 1920px) {
+		row-gap: 20px;
+		column-gap: 15px;
+	}
+
+	@media (max-width: 1350px) {
+		row-gap: 12px;
+		column-gap: 8px;
+		padding: 15px;
+	}
+
+	@media (max-width: 1000px) {
+		row-gap: 8px;
+		column-gap: 5px;
+		padding: 8px;
+	}
 `;
