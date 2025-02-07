@@ -36,6 +36,7 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, playIndex, pale
 					locked={index + 1 > openSlots}
 					labeled={settings.labels === LabelsSetting.Labels_On}
 					limited={isLimited}
+					showAttachment={true}
 					onClickChip={onClickChip} />
 				)
 			})

@@ -16,10 +16,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ paletteIndex }) => {
 	return (
 		<Wrapper>
 			<Controls>
-				<Logo src={InfinityLogo} alt="Side Order Infinity Logo" />
+				<Logo src={InfinityLogo} alt="Side Order Palette Infinity Logo" />
 				<Dials>
-					<Knobs src={DialControl} alt="" />
-					<Knobs src={DialControl} alt="" />
+					<Knobs src={DialControl} alt="Side Order Palette Dial" />
+					<Knobs src={DialControl} alt="Side Order Palette Dial" />
 				</Dials>
 			</Controls>
 			<Screen $gradient={require(`assets/gradients/${palettes[paletteIndex].pixel}Gradient.svg`)}>

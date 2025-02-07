@@ -17,7 +17,7 @@
   --button-background: rgba(0, 0, 0, 0.35);
   --button-highlight-border: #988e85;
   --button-highlight-background: #615755;
-  --button-active-background: #ffffff;
+  --button-active-background: #312c2b;
 
   --button-disabled-background: rgba(22, 22, 22, 0.35);
   --button-disabled-highlight-background: #3a3332;
@@ -34,6 +34,7 @@
   --palette-background: #ffffff;
   --color-chip-slot-background: #d3d3d3;
   --color-chip-slot-locked: #262626;
+  --color-chip-drop-shadow: #000000;
 }
 
 @font-face {

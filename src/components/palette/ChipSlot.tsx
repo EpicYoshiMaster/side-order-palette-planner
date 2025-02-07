@@ -18,10 +18,11 @@ interface ChipSlotProps {
 	locked: boolean;
 	labeled: boolean;
 	limited: boolean;
+	showAttachment: boolean;
 	onClickChip: (chip: number, index: number) => void;
 }
 
-export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, labeled, limited, onClickChip }) => {
+export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, labeled, limited, onClickChip, showAttachment }) => {
 
 	const [ placed, setPlaced ] = useState(false);
 	const [ clicked, setClicked ] = useState(false);
@@ -54,6 +55,7 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 		<Background 
 		onMouseDown={(event) => { if(event.buttons === 1) { onClick(); } }} 
 		onMouseEnter={(event) => { if(event.buttons === 1) { onClick(); }}}
+		onTouchStart={() => { onClick(); }}
 		onDragStart={(event) => { event.preventDefault(); }}
 		onAnimationEnd={(event) => { onAnimEnd(event.animationName); }}
 		$placed={chip !== NO_CHIP}
@@ -62,7 +64,9 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 		$locked={locked}
 		$clickAnim={clicked}
 		$placeAnim={placed}>
-			<ChipSlotAttachment $placed={chip !== NO_CHIP} />
+			{showAttachment && (
+				<ChipSlotAttachment $placed={chip !== NO_CHIP} />
+			)}
 
 			{limited && !locked && (
 				<XMarker src={Marker} />
@@ -132,7 +136,7 @@ const Background = styled.div<{ $placed: boolean, $image: string, $selected: boo
 	${({$selected}) => $selected ? 
 	css`
 		transform: scale(1.1, 1.1);
-		filter: drop-shadow(0px 0px 10px #000000);
+		filter: drop-shadow(0px 0px 10px var(--color-chip-drop-shadow));
 	`  : css``}
 
 	&:hover {

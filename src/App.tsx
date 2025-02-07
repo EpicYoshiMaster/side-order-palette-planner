@@ -2,7 +2,7 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorChip, PaletteMode, SoundSetting, ColorChipMode, DisplayState, LabelsSetting, Settings } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
-import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, PALETTE_ROW_LENGTH, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getPalettes, getColorChips } from './utils/utils';
+import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, PALETTE_ROW_LENGTH, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getPalettes, getColorChips, getMaxChipsOfTone } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
 import { GlowButton, textGlow, Dots, GlowSelect, GlowOption, IconGlowButton } from 'components/Layout';
 import { ItemSelectionRow } from 'components/ItemSelectionRow';
@@ -145,7 +145,11 @@ function App() {
 	});
 
 	const remainingChips = useMemo(() => {
-		let chipAmounts = colorChips.map((value) => value.max);
+		let chipAmounts = colorChips.map((chip, index, array) => {
+			if(!chip.isTone) return chip.max;
+
+			return getMaxChipsOfTone(chip.index, paletteIndex);
+		});
 
 		placedChips.forEach((chip) => {
 			if(chip === NO_CHIP) return;
@@ -155,7 +159,7 @@ function App() {
 
 		return chipAmounts;
 
-	}, [placedChips]);
+	}, [placedChips, paletteIndex]);
 
 	const applyShareCode = useCallback((shareCode: string) => {
 		shareCode = shareCode.substring(0, NUM_PALETTE_SLOTS);
@@ -572,6 +576,11 @@ const Main = styled.div`
 	overflow: auto;
 	padding: 10px;
 	padding-top: 0;
+
+	@media (max-width: 1000px) {
+		padding: 5px;
+		padding-top: 0;
+	}
 `;
 
 const PaletteSpace = styled.div`
@@ -587,7 +596,7 @@ const PaletteSpace = styled.div`
 	}
 
 	@media (max-width: 1000px) {
-		width: 95vw;
+		width: 98vw;
 	}
 `;
 

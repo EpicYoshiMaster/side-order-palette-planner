@@ -1,9 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
 import styled, { css } from "styled-components";
 import { ActiveGlowButton, textGlow } from "./Layout";
-import { OnClickChipProps, DisplayState, ColorChip, Settings, ColorChipMode } from "../types/types";
-import { getColorGroups, getColorChips, getToneImage, getColorChipByIndex, isChipIndexExclusive } from "utils/utils";
+import { OnClickChipProps, DisplayState, ColorChip, Settings, ColorChipMode, LabelsSetting } from "../types/types";
+import { getColorGroups, getColorChips, getColorChipByIndex, isChipIndexExclusive } from "utils/utils";
 import { ItemSelectionRow } from "./ItemSelectionRow";
+import { ChipSlot } from "./palette/ChipSlot";
 
 interface ColorChipListProps {
     onClickChip: OnClickChipProps;
@@ -73,12 +74,16 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                             <ToneRow>
                             {
                             colorChips.filter((chip) => chip.group === group.index && chip.isTone).map((chip, chipIndex) => (
-                                <ToneImage 
-                                onDragStart={(event) => { event.preventDefault(); }}
-                                $active={selectedTone === chip.index} 
-                                src={require(`assets/chips/${getToneImage(chip.group, chip.tone)}`)} 
-                                key={chipIndex} 
-                                onClick={() => { onClickChip(chip); }} />
+                                <ChipSlot
+                                    chip={chip.index}
+                                    index={chipIndex}
+                                    key={chipIndex}
+                                    selected={selectedTone === chip.index}
+                                    limited={false}
+                                    labeled={settings.labels === LabelsSetting.Labels_On}
+                                    locked={false}
+                                    showAttachment={false}
+                                    onClickChip={() => { onClickChip(chip); }}  />
                             ))
                             }
                             </ToneRow>
@@ -159,21 +164,12 @@ const ToneRow = styled.div`
 
     margin: 5px 0;
     gap: 6px;
-`;
 
-const ToneImage = styled.img<{$active: boolean}>`
-    width: 100%;
-    object-fit: contain;
+    --color-chip-drop-shadow: #ffffff;
 
-    transition: transform 0.1s linear;
-
-    &:hover {
-        transform: scale(1.1, 1.1);
+    @media (max-width: 1350px) {
+        --label-size: 0.9rem;
     }
-
-    ${({ $active }) => $active ? css`transform: scale(1.05, 1.05); filter: drop-shadow(0px 0px 10px #ffffff);` : ''};
-
-    user-select: none;
 `;
 
 const ChipWrapper = styled.div`

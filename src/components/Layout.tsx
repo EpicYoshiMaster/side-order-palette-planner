@@ -53,6 +53,10 @@ export const GlowButton = styled.button`
         &:hover {
             ${buttonGlow}
         }
+
+        &:active {
+            background-color: var(--button-active-background);
+        }
     `}
 
     @media (max-width: 1350px) {

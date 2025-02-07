@@ -158,12 +158,12 @@ export const isChipIndexExclusive = (index: number, paletteIndex: number): boole
 
 export const isChipCountExceeded = (chips: number[], remainingChips: number[], chip: ColorChip, chipIndex: number, index: number): boolean => {
 	if(!chip) return false;
-	if(chip.isTone) return false;
 	if(remainingChips[chipIndex] >= 0) return false;
 
-	const chipCount = chips.filter((itemChipIndex, itemIndex) => itemIndex <= index && itemChipIndex === chipIndex).length;
+	const chipsOfTypeNumber = chips.filter((itemChipIndex, itemIndex) => itemIndex <= index && itemChipIndex === chipIndex).length;
+	const totalChipsOfType = chips.filter((itemChipIndex) => itemChipIndex === chipIndex).length;
 
-	return chipCount > chip.max;
+	return (totalChipsOfType - chipsOfTypeNumber) < Math.abs(remainingChips[chipIndex]);
 }
 
 export const isDroneAbilitiesExceeded = (chips: number[], chip: ColorChip, chipIndex: number, index: number): boolean => {
@@ -188,6 +188,22 @@ export const isChipLimited = (chipIndex: number, index: number, paletteIndex: nu
 	return (isChipIndexExclusive(chipIndex, paletteIndex) 
 		|| isChipCountExceeded(chips, remainingChips, getColorChipByIndex(chipIndex), chipIndex, index)
 		|| isDroneAbilitiesExceeded(chips, getColorChipByIndex(chipIndex), chipIndex, index));
+}
+
+export const getMaxChipsOfTone = (chipIndex: number, paletteIndex: number): number => {
+	const chip = colorChips[chipIndex];
+
+	if(!chip) return -1;
+
+	const chipsOfTone = colorChips.filter((testChip) => testChip.group === chip.group && testChip.tone === chip.tone && !testChip.isTone);
+
+	return chipsOfTone.reduce((accum, currentValue) => { 
+		if(currentValue.exclusive.length <= 0) return accum + currentValue.max;
+
+		const isExclusive = currentValue.exclusive.findIndex((exclusivePaletteIndex) => exclusivePaletteIndex === paletteIndex) === -1;
+
+		return isExclusive ? accum : accum + currentValue.max;
+	 }, 0);
 }
 
 const characterSet = "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&<>+=,.?;:'/";
