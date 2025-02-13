@@ -16,6 +16,12 @@ import { List } from '@phosphor-icons/react';
 //
 // - Tone Count Limits
 // - Display exclusive chip icons
+// - An Additional Details Display:
+// Reasons for chips being locked
+// Minimum # of hacks necessary for the palette
+// Currently selected Chip Details (if a tone, show the associated valid chips)
+
+// Maybe the actual palette stats? but that's a lot more work
 
 const DEFAULT_SHARE_CODE = generateShareCode(DEFAULT_PALETTE);
 const palettes = getPalettes();

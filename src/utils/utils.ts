@@ -1,4 +1,4 @@
-import { ColorGroup, ColorChip, Palette } from "../types/types"
+import { ColorGroup, ColorChip, Palette, DroneAbilitiesEntry } from "../types/types"
 import ColorChips from '../data/colorchips.json'
 import ColorGroups from '../data/colorgroups.json'
 import PaletteList from '../data/palettes.json'
@@ -8,6 +8,7 @@ export const PALETTE_ROW_LENGTH = 9;
 export const NUM_PALETTE_SLOTS = 36;
 export const EIGHTS_PALETTE = 11;
 export const MAX_DRONE_ABILITIES = 5;
+export const DRONE_ABILITY_MAX_CHIPS = 5;
 export const DEFAULT_PALETTE: number[] = (new Array(NUM_PALETTE_SLOTS)).fill(NO_CHIP);
 
 const sortPalettes = (a: Palette, b: Palette) => { return a.index < b.index ? -1 : (a.index > b.index ? 1 : 0); };
@@ -71,7 +72,7 @@ const generateChipsAndPalettes = () => {
 				entry: -1,
 				index: -1,
 				max: -1,
-				drone: false,
+				drone: group.drone && index <= 1,
 				isTone: true,
 				exclusive: []
 			}
@@ -169,17 +170,30 @@ export const isChipCountExceeded = (chips: number[], remainingChips: number[], c
 export const isDroneAbilitiesExceeded = (chips: number[], chip: ColorChip, chipIndex: number, index: number): boolean => {
 	if(!chip) return false;
 	if(!chip.drone) return false;
-	if(chip.isTone) return false;
 
-	const abilities = chips.filter((itemChipIndex, itemIndex, array) => {
-		if(itemChipIndex === NO_CHIP) return false;
+	const abilityEntries = chips.reduce<DroneAbilitiesEntry[]>((abilities, currentChip, currentIndex) => {
+		if(currentChip === NO_CHIP) return abilities;
+		if(currentIndex > index) return abilities;
+		
+		const itemChip = getColorChipByIndex(currentChip);
 
-		const itemChip = getColorChipByIndex(itemChipIndex)
+		if(!itemChip.drone) return abilities;
 
-		return itemIndex <= index && itemChip.drone && array.indexOf(itemChipIndex) === itemIndex;
-	});
+		const abilityEntry = abilities.findIndex((value) => currentChip === value.index);
 
-	return abilities.indexOf(chipIndex) + 1 > MAX_DRONE_ABILITIES;
+		if(abilityEntry !== -1) {
+			abilities[abilityEntry].count += 1;
+		}
+		else {
+			abilities.push({ index: currentChip, count: 1 })
+		}
+
+		return abilities;
+	}, []);
+
+	const abilityCount = abilityEntries.reduce((accum, entry) => { return accum + Math.ceil(entry.count / DRONE_ABILITY_MAX_CHIPS); }, 0);
+
+	return abilityCount > MAX_DRONE_ABILITIES;
 }
 
 export const isChipLimited = (chipIndex: number, index: number, paletteIndex: number, chips: number[], remainingChips: number[]): boolean => {

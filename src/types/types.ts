@@ -33,6 +33,11 @@ export type Palette = {
     exclusiveTips: string[];
 }
 
+export type DroneAbilitiesEntry = {
+    index: number;
+    count: number;
+}
+
 export enum PaletteMode {
 	Palette_Draw,
 	Palette_Erase,

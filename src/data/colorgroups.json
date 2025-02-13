@@ -7,7 +7,8 @@
             "Power_ToneA.png",
             "Power_ToneB.png",
             "Power_ToneC.png"
-        ]
+        ],
+        "drone": false
     },
     {
         "name": "Support",
@@ -17,7 +18,8 @@
             "Support_ToneA.png",
             "Support_ToneB.png",
             "Support_ToneC.png"
-        ]
+        ],
+        "drone": false
     },
     {
         "name": "Range",
@@ -27,7 +29,8 @@
             "Range_ToneA.png",
             "Range_ToneB.png",
             "Range_ToneC.png"
-        ]
+        ],
+        "drone": false
     },
     {
         "name": "Mobility",
@@ -37,7 +40,8 @@
             "Mobility_ToneA.png",
             "Mobility_ToneB.png",
             "Mobility_ToneC.png"
-        ]
+        ],
+        "drone": false
     },
     {
         "name": "Lucky",
@@ -47,7 +51,8 @@
             "Lucky_ToneA.png",
             "Lucky_ToneB.png",
             "Lucky_ToneC.png"
-        ]
+        ],
+        "drone": false
     },
     {
         "name": "Drone",
@@ -57,6 +62,7 @@
             "Drone_ToneA.png",
             "Drone_ToneB.png",
             "Drone_ToneC.png"
-        ]
+        ],
+        "drone": true
     }
 ]
