@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import styled, { css } from "styled-components";
 import { ActiveGlowButton, textGlow } from "./Layout";
 import { OnClickChipProps, DisplayState, ColorChip, Settings, ColorChipMode, LabelsSetting } from "../types/types";
-import { getColorGroups, getColorChips, getColorChipByIndex, isChipIndexExclusive } from "utils/utils";
+import { getColorGroups, getColorChips, getColorChipByIndex, isChipExclusive, getRemainingChips, isChipLimited } from "utils/utils";
 import { ItemSelectionRow } from "./ItemSelectionRow";
 import { ChipSlot } from "./palette/ChipSlot";
 
@@ -12,14 +12,14 @@ interface ColorChipListProps {
     selectedTone: number;
     settings: Settings;
     setDisplayState: Dispatch<SetStateAction<number>>;
-    remainingChips: number[];
+    placedChips: number[];
     paletteIndex: number;
 }
 
 const colorGroups = getColorGroups();
 const colorChips = getColorChips();
 
-export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selectedChip, selectedTone, settings, setDisplayState, remainingChips, paletteIndex }) => {
+export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selectedChip, selectedTone, settings, setDisplayState, placedChips, paletteIndex }) => {
 
     return (
         <StyledColorChipList>
@@ -43,9 +43,11 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                                 prevChip = getColorChipByIndex(chip.index - 1);
                             }
 
+                            const remainingChips = getRemainingChips(placedChips, chip, paletteIndex);
+
                             const disabled = settings.chips === ColorChipMode.Chips_Limited && 
-                            (remainingChips[chip.index] <= 0
-                            || isChipIndexExclusive(chip.index, paletteIndex));
+                            (remainingChips <= 0
+                            || isChipExclusive(chip, paletteIndex));
 
                             return (
                             <ChipWrapper key={chipIndex}>
@@ -61,7 +63,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                                             {chip.name}
                                         </div>
                                         <div>
-                                            ({remainingChips[chip.index]})
+                                            ({remainingChips})
                                         </div>
                                     </ChipItem>
                                 </ChipEntry>
@@ -73,18 +75,22 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                         
                             <ToneRow>
                             {
-                            colorChips.filter((chip) => chip.group === group.index && chip.isTone).map((chip, chipIndex) => (
+                            colorChips.filter((chip) => chip.group === group.index && chip.isTone).map((chip, chipIndex) => {
+                                const testPlacedChips = placedChips.concat([chip.index]);
+                                const isLimited = isChipLimited(testPlacedChips, chip, paletteIndex);
+
+                                return (
                                 <ChipSlot
                                     chip={chip.index}
                                     index={chipIndex}
                                     key={chipIndex}
                                     selected={selectedTone === chip.index}
-                                    limited={false}
+                                    limited={isLimited}
                                     labeled={settings.labels === LabelsSetting.Labels_On}
                                     locked={false}
                                     showAttachment={false}
                                     onClickChip={() => { onClickChip(chip); }}  />
-                            ))
+                            )})
                             }
                             </ToneRow>
                         )}

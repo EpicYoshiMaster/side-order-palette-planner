@@ -1,4 +1,4 @@
-import { ColorGroup, ColorChip, Palette, DroneAbilitiesEntry } from "../types/types"
+import { ColorGroup, ColorChip, Palette, DroneAbilitiesEntry, ColorGroupEntry } from "../types/types"
 import ColorChips from '../data/colorchips.json'
 import ColorGroups from '../data/colorgroups.json'
 import PaletteList from '../data/palettes.json'
@@ -8,7 +8,8 @@ export const PALETTE_ROW_LENGTH = 9;
 export const NUM_PALETTE_SLOTS = 36;
 export const EIGHTS_PALETTE = 11;
 export const MAX_DRONE_ABILITIES = 5;
-export const DRONE_ABILITY_MAX_CHIPS = 5;
+export const TONE_ABILITIES_BELOW_MAX_DETERMINED = 4; //This number of abilities below max has definitive drone abilities
+export const ABILITY_INTERVAL = 5;
 export const DEFAULT_PALETTE: number[] = (new Array(NUM_PALETTE_SLOTS)).fill(NO_CHIP);
 
 const sortPalettes = (a: Palette, b: Palette) => { return a.index < b.index ? -1 : (a.index > b.index ? 1 : 0); };
@@ -133,6 +134,10 @@ export const getColorTones = () => {
 	return toneChips;
 }
 
+export const getDroneChips = (includeTones: boolean) => {
+	return colorChips.filter((chip) => chip.drone && (includeTones || !chip.isTone));
+}
+
 export const getColorChipByIndex = (index: number) => {
 	return colorChips[index];
 }
@@ -149,75 +154,128 @@ export const getColorChipImage = (index: number) => {
 	return getToneImage(colorChips[index].group, colorChips[index].tone);
 }
 
-export const isChipIndexExclusive = (index: number, paletteIndex: number): boolean => {
-	const chip = colorChips[index];
-
+export const isChipExclusive = (chip: ColorChip, paletteIndex: number): boolean => {
 	if(!chip) return false;
 
 	return chip.exclusive.length > 0 && (chip.exclusive.findIndex((exclusivePaletteIndex) => exclusivePaletteIndex === paletteIndex) === NO_CHIP);
 }
 
-export const isChipCountExceeded = (chips: number[], remainingChips: number[], chip: ColorChip, chipIndex: number, index: number): boolean => {
-	if(!chip) return false;
-	if(remainingChips[chipIndex] >= 0) return false;
+export const getChipCount = (chips: number[], chip: ColorChip, maximumIndex: number = chips.length - 1): number => {
+	if(!chip) return 0;
 
-	const chipsOfTypeNumber = chips.filter((itemChipIndex, itemIndex) => itemIndex <= index && itemChipIndex === chipIndex).length;
-	const totalChipsOfType = chips.filter((itemChipIndex) => itemChipIndex === chipIndex).length;
+	const chipsOfTypeInRange = chips.filter((itemChipIndex, itemIndex) => itemIndex <= maximumIndex && itemChipIndex === chip.index).length;
 
-	return (totalChipsOfType - chipsOfTypeNumber) < Math.abs(remainingChips[chipIndex]);
+	return chipsOfTypeInRange;
 }
 
-export const isDroneAbilitiesExceeded = (chips: number[], chip: ColorChip, chipIndex: number, index: number): boolean => {
-	if(!chip) return false;
-	if(!chip.drone) return false;
+/**
+ * Considerations:
+ * Tones should be Wildcards, so they take whatever slot would minimize their count as abilities.
+ * Abilities are returned by their Color Chip Names, ex. "Drone Splat Bomb"
+ * If an ability is unclear, it will be returned as "Drone Unknown"
+ * seems to still be some bugs with tone positioning
+ */
+export const getDroneAbilities = (chips: number[], paletteIndex: number, maximumIndex: number = chips.length - 1): string[] => {
+	let abilityEntries: DroneAbilitiesEntry[] = [];
 
-	const abilityEntries = chips.reduce<DroneAbilitiesEntry[]>((abilities, currentChip, currentIndex) => {
-		if(currentChip === NO_CHIP) return abilities;
-		if(currentIndex > index) return abilities;
+	console.log(`Maximum Index: ${maximumIndex}`);
+
+	chips.forEach((currentChip, currentIndex) => {
+		if(currentChip === NO_CHIP) return;
+		if(currentIndex > maximumIndex) return;
 		
 		const itemChip = getColorChipByIndex(currentChip);
 
-		if(!itemChip.drone) return abilities;
+		if(!itemChip.drone) return;
 
-		const abilityEntry = abilities.findIndex((value) => currentChip === value.index);
+		const abilityIndex = abilityEntries.findIndex((value) => currentChip === value.chip.index);
 
-		if(abilityEntry !== -1) {
-			abilities[abilityEntry].count += 1;
+		if(abilityIndex !== -1) {
+			abilityEntries[abilityIndex].count += 1;
 		}
 		else {
-			abilities.push({ index: currentChip, count: 1 })
+			abilityEntries.push({ chip: itemChip, count: 1 });
+		}
+	});
+
+	//Sort to force tones to be last in the list
+	abilityEntries.sort((a, b) => a.chip.isTone ? (b.chip.isTone ? 0 : 1) : (b.chip.isTone ? -1 : 0));
+
+	console.log(abilityEntries);
+
+	const abilities = abilityEntries.reduce<string[]>((abilitiesList, entry, index, array) => { 
+		if(entry.count <= 0) return abilitiesList;
+
+		//If we are not a tone, and we are placed, then we just count as an ability outright
+		if(!entry.chip.isTone && entry.count > 0) return abilitiesList.concat([entry.chip.name]);
+
+		//This Tone has enough chips that we can say with certainty every ability of its tone should be present, just add them and move on
+		//Also an out for if there are too many tone chips with regular chips, prevents new non-existant abilities being added
+		if(entry.count >= getMaxChips(chips, entry.chip, paletteIndex) - TONE_ABILITIES_BELOW_MAX_DETERMINED) {
+			getDroneChips(false).forEach((chip) => {
+				if(chip.tone === entry.chip.tone && !abilitiesList.includes(chip.name)) {
+					abilitiesList.push(chip.name);
+				}
+			})
+
+			return abilitiesList;
 		}
 
-		return abilities;
+		//If we are a tone, we need to check for the presence of chips we can apply to as wildcards
+		//Prioritize those with existing counts as they add no slots
+		const wildcardOptions = array.filter((arrayEntry) => !arrayEntry.chip.isTone && arrayEntry.chip.tone === entry.chip.tone).sort((a, b) => b.count - a.count);
+
+		console.log(`Wildcard Options for ${entry.chip.name}`);
+		console.log(wildcardOptions);
+
+		let remainingCount = entry.count;
+
+		wildcardOptions.forEach((option) => {
+			if(remainingCount <= 0) return;
+			
+			if(option.count > 0) {
+				if(option.count < option.chip.max) {
+					remainingCount -= option.chip.max - option.count;
+				}
+			}
+			else {
+				//We're in essence adding this ability
+				remainingCount -= option.chip.max;
+				abilitiesList.push(option.chip.name);
+			}
+		})
+
+		if(remainingCount <= 0) return abilitiesList;
+
+		//Any remaining now must apply to abilities which we simply don't know, for every ABILITY_INTERVAL, add an unknown ability.
+		return abilitiesList.concat(Array(Math.ceil(remainingCount / ABILITY_INTERVAL)).fill("Drone Unknown"));
 	}, []);
 
-	const abilityCount = abilityEntries.reduce((accum, entry) => { return accum + Math.ceil(entry.count / DRONE_ABILITY_MAX_CHIPS); }, 0);
-
-	return abilityCount > MAX_DRONE_ABILITIES;
+	return abilities;
 }
 
-export const isChipLimited = (chipIndex: number, index: number, paletteIndex: number, chips: number[], remainingChips: number[]): boolean => {
-	if(chipIndex === NO_CHIP) return false;
-
-	return (isChipIndexExclusive(chipIndex, paletteIndex) 
-		|| isChipCountExceeded(chips, remainingChips, getColorChipByIndex(chipIndex), chipIndex, index)
-		|| isDroneAbilitiesExceeded(chips, getColorChipByIndex(chipIndex), chipIndex, index));
-}
-
-export const getMaxChipsOfTone = (chipIndex: number, paletteIndex: number): number => {
-	const chip = colorChips[chipIndex];
-
-	if(!chip) return -1;
+export const getMaxChips = (placedChips: number[], chip: ColorChip, paletteIndex: number): number => {
+	if(!chip.isTone) return chip.max;
 
 	const chipsOfTone = colorChips.filter((testChip) => testChip.group === chip.group && testChip.tone === chip.tone && !testChip.isTone);
 
-	return chipsOfTone.reduce((accum, currentValue) => { 
-		if(currentValue.exclusive.length <= 0) return accum + currentValue.max;
+	return chipsOfTone.reduce((accum, currentChip) => {
+		const isExclusive = isChipExclusive(currentChip, paletteIndex);
 
-		const isExclusive = currentValue.exclusive.findIndex((exclusivePaletteIndex) => exclusivePaletteIndex === paletteIndex) === -1;
-
-		return isExclusive ? accum : accum + currentValue.max;
+		return isExclusive ? accum : accum + (currentChip.max - getChipCount(placedChips, currentChip));
 	 }, 0);
+}
+
+export const getRemainingChips = (placedChips: number[], chip: ColorChip, paletteIndex: number, maximumIndex = placedChips.length - 1) => {
+	return getMaxChips(placedChips, chip, paletteIndex) - getChipCount(placedChips, chip, maximumIndex);
+}
+
+export const isChipLimited = (placedChips: number[], chip: ColorChip, paletteIndex: number, maximumIndex = placedChips.length - 1): boolean => {
+	if(!chip) return false;
+
+	return (isChipExclusive(chip, paletteIndex) 
+		|| getRemainingChips(placedChips, chip, paletteIndex, maximumIndex) < 0)
+		|| (chip.drone && getDroneAbilities(placedChips, paletteIndex, maximumIndex).length > MAX_DRONE_ABILITIES);
 }
 
 const characterSet = "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&<>+=,.?;:'/";
@@ -246,6 +304,47 @@ export const convertShareCode = (shareCode: string) => {
 	});
 
 	return chips;
+}
+
+/**
+ * Determines from the placed color chips which group is biased in the form "[group]-bias"
+ * 
+ * A biased color group has the maximum number of color chips in its group (ex. Power) in the palette.
+ * It must also have at least 2 chips of that color
+ * 
+ * Otherwise, a "none-bias" is returned.
+ */
+export const getBiasedColorGroup = (placedChips: number[], maximumIndex: number = placedChips.length - 1): string => {
+	let groupCounts: ColorGroupEntry[] = [{ group: -1, count: 1 }];
+
+	placedChips.forEach((currentChip, index) => {
+		if(currentChip === NO_CHIP) return;
+		if(index > maximumIndex) return;
+
+		const itemChip = getColorChipByIndex(currentChip);
+
+		if(!itemChip) return;
+
+		const entryIndex = groupCounts.findIndex((entry) => entry.group === itemChip.group);
+
+		if(entryIndex !== -1) {
+			groupCounts[entryIndex].count += 1;
+		}
+		else {
+			groupCounts.push({ group: itemChip.group, count: 1 });
+		}
+	})
+
+	const maxGroup = groupCounts.reduce((prevValue, currentValue) => {
+		return prevValue.count >= currentValue.count ? prevValue : currentValue;
+	})
+
+	if(maxGroup.group === -1) {
+		return "none-bias";
+	}
+	else {
+		return `${getColorGroups()[maxGroup.group].name}-bias`.toLowerCase()
+	}
 }
 
 /**

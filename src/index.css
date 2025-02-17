@@ -10,6 +10,15 @@
   --background-gradient-start: #1d101d;
   --background-gradient-end: #381e2d;
 
+  /* Color Chip Biases */
+  --icon-none-bias: #a9a19f;
+  --icon-power-bias: #b89192;
+  --icon-support-bias: #a296b2;
+  --icon-range-bias: #b1947a;
+  --icon-mobility-bias: #90a2ba;
+  --icon-lucky-bias: #bac277;
+  --icon-drone-bias: #88b7a3;
+
   /* Main Glow Effect */
   --text-glow: #ad5431;
   
@@ -29,6 +38,15 @@
 
   /* Aside */
   --list-divider: #615755;
+
+  /* Upper */
+  --bottom-row-background-start: #372941;
+  --bottom-row-background-end: #b8999a;
+  --bottom-row-section-background: #2f2a30;
+  --drone-ability-circle: #f0d2da;
+  --drone-ability-circle-overcap: #b83659;
+  /* Upper background #312f2e */
+  /* Ability background rgba(0,0,0,.8) */
 
   /* Palette */
   --palette-background: #ffffff;

@@ -34,7 +34,12 @@ export type Palette = {
 }
 
 export type DroneAbilitiesEntry = {
-    index: number;
+    chip: ColorChip;
+    count: number;
+}
+
+export type ColorGroupEntry = {
+    group: number;
     count: number;
 }
 

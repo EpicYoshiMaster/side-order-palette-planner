@@ -3,19 +3,18 @@ import styled from "styled-components";
 import { Dashboard } from "./Dashboard";
 import { ChipSlot } from "./ChipSlot";
 import { ColorChipMode, LabelsSetting, Settings } from "../../types/types";
-import { isChipLimited } from "utils/utils";
+import { getColorChipByIndex, isChipLimited } from "utils/utils";
 
 interface ChipPaletteProps {
-	chips: number[];
+	placedChips: number[];
 	playIndex: number;
 	paletteIndex: number;
 	openSlots: number;
 	settings: Settings;
 	onClickChip: (chip: number, index: number) => void;
-	remainingChips: number[];
 }
 
-export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, playIndex, paletteIndex, openSlots, settings, onClickChip, remainingChips }) => {
+export const ChipPalette: React.FC<ChipPaletteProps> = ({ placedChips, playIndex, paletteIndex, openSlots, settings, onClickChip }) => {
 
 	return (
 		<Background>
@@ -24,8 +23,8 @@ export const ChipPalette: React.FC<ChipPaletteProps> = ({ chips, playIndex, pale
 			</DashboardArea>
 			<ChipArea>
 			{
-			chips.map((value, index, chips) => {
-				const isLimited = settings.chips === ColorChipMode.Chips_Limited && isChipLimited(value, index, paletteIndex, chips, remainingChips);
+			placedChips.map((value, index) => {
+				const isLimited = settings.chips === ColorChipMode.Chips_Limited && isChipLimited(placedChips, getColorChipByIndex(value), paletteIndex, index);
 
 				return (
 					<ChipSlot 

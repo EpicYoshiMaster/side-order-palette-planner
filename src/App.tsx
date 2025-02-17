@@ -2,7 +2,7 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorChip, PaletteMode, SoundSetting, ColorChipMode, DisplayState, LabelsSetting, Settings } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
-import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, PALETTE_ROW_LENGTH, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getPalettes, getColorChips, getMaxChipsOfTone } from './utils/utils';
+import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, PALETTE_ROW_LENGTH, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getBiasedColorGroup, getDroneAbilities, MAX_DRONE_ABILITIES } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
 import { GlowButton, textGlow, Dots, GlowSelect, GlowOption, IconGlowButton } from 'components/Layout';
 import { ItemSelectionRow } from 'components/ItemSelectionRow';
@@ -10,6 +10,7 @@ import { ItemTextInputRow } from 'components/ItemTextInputRow';
 import { useKeyDown, useSearchParamNumber, useLocalStorage } from 'utils/hooks';
 import { useMediaQuery } from 'react-responsive';
 import { List } from '@phosphor-icons/react';
+import { PaletteInfo } from 'components/PaletteInfo';
 
 //
 // Palette Planner:
@@ -24,8 +25,6 @@ import { List } from '@phosphor-icons/react';
 // Maybe the actual palette stats? but that's a lot more work
 
 const DEFAULT_SHARE_CODE = generateShareCode(DEFAULT_PALETTE);
-const palettes = getPalettes();
-const colorChips = getColorChips();
 
 function App() {
 	//const [ placedChips, setPlacedChips ] = useState<number[]>(DEFAULT_PALETTE);
@@ -66,7 +65,26 @@ function App() {
 
 	const numFreeSlots = useMemo(() => {
 		return paletteIndex === EIGHTS_PALETTE ? numOpenSlots : NUM_PALETTE_SLOTS;
-	}, [paletteIndex, numOpenSlots])
+	}, [paletteIndex, numOpenSlots]);
+
+	const colorChipBias: string = useMemo(() => {
+		return getBiasedColorGroup(placedChips);
+	}, [placedChips]);
+
+	//Will always be at least 5, if invalid chips are placed, allowed to go to 6 or more
+	//(Designed to be detected by the UI to display)
+	const droneAbilities = useMemo(() => {
+		const abilities = getDroneAbilities(placedChips, paletteIndex);
+
+		const emptySlots = MAX_DRONE_ABILITIES - abilities.length;
+
+		if(emptySlots > 0) {
+			return abilities.concat(Array(emptySlots).fill(""));
+		}
+		else {
+			return abilities;
+		}
+	}, [placedChips, paletteIndex]);
 
 	useEffect(() => {
 		if(playIndex + 1 > numFreeSlots) {
@@ -91,8 +109,6 @@ function App() {
 	}, [playIndex, setPlayIndex, numFreeSlots, paletteMode]);
 
 	useKeyDown((event: KeyboardEvent) => {
-
-		console.log(event.target);
 
 		if(event.target && event.target instanceof HTMLInputElement) return;
 
@@ -149,23 +165,6 @@ function App() {
 				break;
 		}
 	});
-
-	const remainingChips = useMemo(() => {
-		let chipAmounts = colorChips.map((chip, index, array) => {
-			if(!chip.isTone) return chip.max;
-
-			return getMaxChipsOfTone(chip.index, paletteIndex);
-		});
-
-		placedChips.forEach((chip) => {
-			if(chip === NO_CHIP) return;
-
-			chipAmounts[chip] -= 1;
-		})
-
-		return chipAmounts;
-
-	}, [placedChips, paletteIndex]);
 
 	const applyShareCode = useCallback((shareCode: string) => {
 		shareCode = shareCode.substring(0, NUM_PALETTE_SLOTS);
@@ -341,7 +340,7 @@ function App() {
 						selectedTone={selectedTone}
 						settings={settings}
 						setDisplayState={setDisplayState}
-						remainingChips={remainingChips}
+						placedChips={placedChips}
 						paletteIndex={paletteIndex}  />
 				</Aside>
 				<Main>
@@ -354,7 +353,7 @@ function App() {
 							</ButtonRow>
 							<ButtonRow>
 								<ItemSelectionRow items={["7. Sound On", "8. Sound Off"]} selected={soundSetting} setSelected={setSoundSetting} />
-								<ItemSelectionRow items={["9. Lock Chips", "0. Any Chips"]} selected={colorChipMode} setSelected={setColorChipMode} />
+								<ItemSelectionRow items={["9. Chip Logic", "0. No Logic"]} selected={colorChipMode} setSelected={setColorChipMode} />
 								<ItemTextInputRow label="Share Code" value={shareCode} setValue={applyShareCode} />
 							</ButtonRow>
 							<ButtonRow>
@@ -373,26 +372,6 @@ function App() {
 								<GlowButton onClick={() => { flipVertical(); }}>
 									Flip Vertically
 								</GlowButton>
-							</ButtonRow>
-							<ButtonRow>
-								<PaletteIconBackground src={require(`assets/npcs/${palettes[paletteIndex].icon}`)} />
-								<GlowSelect id="palette-index" value={paletteIndex} onChange={(event) => { setPaletteIndex(Number(event.target.value)); }}>
-									{
-									palettes.map((value, index) => {
-										return (
-											<GlowOption value={index} key={index}>{value.name}</GlowOption>
-										)
-									})
-									}
-								</GlowSelect>
-								<PaletteIconBackground src={require(`assets/weapons/${palettes[paletteIndex].mainWeapon}`)} />
-								<PaletteIcon src={require(`assets/subs/${palettes[paletteIndex].subWeapon}`)} />
-								<PaletteIcon src={require(`assets/specials/${palettes[paletteIndex].specialWeapon}`)} />
-								<div>Common Tones</div>
-								<Tones>
-									<PaletteIcon src={require(`assets/tones/Category_${palettes[paletteIndex].firstTone}.png`)} />
-									<SecondaryTone src={require(`assets/tones/Category_${palettes[paletteIndex].secondTone}.png`)} />
-								</Tones>
 								{paletteIndex === EIGHTS_PALETTE && (
 								<GlowSelect id="open-slots" value={numOpenSlots} onChange={(event) => { setNumOpenSlots(Number(event.target.value)); }}>
 									<GlowOption value={36}>0 Hacks</GlowOption>
@@ -404,27 +383,31 @@ function App() {
 								</GlowSelect>
 								)}
 								{paletteMode === PaletteMode.Palette_Play && (
-								<>
-									<GlowButton onClick={() => { offsetPlayIndex(-1); }}>
-										←
-									</GlowButton>
-									<GlowButton onClick={() => { offsetPlayIndex(1); }}>
-										→
-									</GlowButton>
-								</>
+									<>
+										<GlowButton onClick={() => { offsetPlayIndex(-1); }}>
+											←
+										</GlowButton>
+										<GlowButton onClick={() => { offsetPlayIndex(1); }}>
+											→
+										</GlowButton>
+									</>
 								)}
-
 							</ButtonRow>
+							<PaletteInfo 
+								droneAbilities={droneAbilities}
+								colorBias={colorChipBias}
+								paletteIndex={paletteIndex}
+								setPaletteIndex={setPaletteIndex}
+							/>
 						</TopArea>
 						<BottomArea>
 							<ChipPalette 
 								paletteIndex={paletteIndex} 
 								playIndex={paletteMode === PaletteMode.Palette_Play ? playIndex : NO_CHIP} 
-								chips={placedChips} 
+								placedChips={placedChips} 
 								onClickChip={onClickChip} 
 								openSlots={numFreeSlots}
 								settings={settings}
-								remainingChips={remainingChips}
 								/>
 						</BottomArea>
 					</PaletteSpace>
@@ -509,40 +492,6 @@ const ButtonRow = styled.div`
 
 	& > div, & > button {
 		margin: 0 5px;
-	}
-`;
-
-const PaletteIcon = styled.img`
-	margin-right: 10px;
-	height: 4rem;
-	object-fit: contain;
-
-	@media (max-width: 1350px) {
-		height: 2.5rem;
-	}
-`;
-
-const Tones = styled.div`
-	display: flex;
-	flex-direction: row;
-	align-items: top;
-	justify-content: flex-start;	
-`;
-
-const SecondaryTone = styled(PaletteIcon)`
-	height: 3.25rem;
-
-	@media (max-width: 1350px) {
-		height: 2rem;
-	}
-`;
-
-const PaletteIconBackground = styled(PaletteIcon)`
-	height: 5rem;
-	background: radial-gradient(circle, #fffefe34 0% 40%, transparent 70%);
-
-	@media (max-width: 1350px) {
-		height: 3rem;
 	}
 `;
 
