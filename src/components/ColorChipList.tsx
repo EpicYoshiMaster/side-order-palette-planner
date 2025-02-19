@@ -85,7 +85,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                                     index={chipIndex}
                                     key={chipIndex}
                                     selected={selectedTone === chip.index}
-                                    limited={isLimited}
+                                    limited={settings.chips === ColorChipMode.Chips_Limited && isLimited}
                                     labeled={settings.labels === LabelsSetting.Labels_On}
                                     locked={false}
                                     showAttachment={false}

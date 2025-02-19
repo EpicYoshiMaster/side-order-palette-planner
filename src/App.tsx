@@ -2,7 +2,7 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorChip, PaletteMode, SoundSetting, ColorChipMode, DisplayState, LabelsSetting, Settings } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
-import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, PALETTE_ROW_LENGTH, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getBiasedColorGroup, getDroneAbilities, MAX_DRONE_ABILITIES } from './utils/utils';
+import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, PALETTE_ROW_LENGTH, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getBiasedColorGroup, getDroneAbilities, MAX_DRONE_ABILITIES, getBaseChips, getRemainingValidChips } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
 import { GlowButton, textGlow, Dots, GlowSelect, GlowOption, IconGlowButton } from 'components/Layout';
 import { ItemSelectionRow } from 'components/ItemSelectionRow';
@@ -194,10 +194,47 @@ function App() {
 	const randomizePalette = useCallback(() => {
 		setPlacedChips(DEFAULT_PALETTE);
 
-		let randomChips = placedChips.map(() => {
-			return randRange(0, getLastBaseIndex());
-		})
+		let randomChips: number[] = [];
 
+		if(colorChipMode === ColorChipMode.Chips_Any) {
+			randomChips = placedChips.map((chip) => {
+				if(chip === NO_CHIP) return chip;
+	
+				const possibleChips = getBaseChips().filter((randomChip) => randomChip.group === getColorChipByIndex(chip).group);
+	
+				return possibleChips[randRange(0, possibleChips.length - 1)].index;
+			})
+		}
+		else {
+			let remainingColorChips = getBaseChips();
+
+			placedChips.forEach(() => {
+				remainingColorChips = getRemainingValidChips(remainingColorChips, randomChips, paletteIndex);
+
+				const randomChip = remainingColorChips[randRange(0, remainingColorChips.length - 1)].index;
+
+				randomChips.push(randomChip);
+			})
+		}
+
+		setPlacedChips(randomChips);
+		createShareCode(randomChips);
+
+		playSound(require(`assets/sounds/PlaceColorChip.wav`));
+	}, [createShareCode, placedChips, playSound, setPlacedChips, paletteIndex, colorChipMode]);
+
+	const randomizeTones = useCallback(() => {
+
+		const colorChips = getColorTones();
+
+		let randomChips = placedChips.map((chip) => {
+			if(chip === NO_CHIP) return chip;
+
+			const possibleChips = colorChips.filter((randomChip) => randomChip.group === getColorChipByIndex(chip).group);
+
+			return possibleChips[randRange(0, possibleChips.length - 1)].index;
+		})
+		
 		setPlacedChips(randomChips);
 		createShareCode(randomChips);
 
@@ -238,24 +275,6 @@ function App() {
 		playSound(require(`assets/sounds/PlaceColorChip.wav`));
 
 	}, [setPlacedChips, createShareCode, placedChips, playSound])
-
-	const randomizeTones = useCallback(() => {
-
-		const colorChips = getColorTones();
-
-		let randomChips = placedChips.map((chip) => {
-			if(chip === NO_CHIP) return chip;
-
-			const possibleChips = colorChips.filter((randomChip) => randomChip.group === getColorChipByIndex(chip).group);
-
-			return possibleChips[randRange(0, possibleChips.length - 1)].index;
-		})
-		
-		setPlacedChips(randomChips);
-		createShareCode(randomChips);
-
-		playSound(require(`assets/sounds/PlaceColorChip.wav`));
-	}, [createShareCode, placedChips, playSound, setPlacedChips]);
 
 	const onSelectChip = useCallback((chip: ColorChip) => {
 
