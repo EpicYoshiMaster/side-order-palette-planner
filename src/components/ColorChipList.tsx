@@ -89,6 +89,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
                                     labeled={settings.labels === LabelsSetting.Labels_On}
                                     locked={false}
                                     showAttachment={false}
+                                    chipNumber={getRemainingChips(placedChips, chip, paletteIndex)}
                                     onClickChip={() => { onClickChip(chip); }}  />
                             )})
                             }

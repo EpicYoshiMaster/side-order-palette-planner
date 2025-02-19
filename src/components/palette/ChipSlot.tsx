@@ -19,10 +19,11 @@ interface ChipSlotProps {
 	labeled: boolean;
 	limited: boolean;
 	showAttachment: boolean;
+	chipNumber?: number;
 	onClickChip: (chip: number, index: number) => void;
 }
 
-export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, labeled, limited, onClickChip, showAttachment }) => {
+export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locked, labeled, limited, onClickChip, showAttachment, chipNumber = -999 }) => {
 
 	const [ placed, setPlaced ] = useState(false);
 	const [ clicked, setClicked ] = useState(false);
@@ -74,7 +75,7 @@ export const ChipSlot: React.FC<ChipSlotProps> = ({ chip, index, selected, locke
 
 			{labeled && chip !== NO_CHIP && !locked && (
 			<LabelText>
-				{getColorChipByIndex(chip).name}
+				{`${getColorChipByIndex(chip).name} ${chipNumber !== -999 ? `(${chipNumber})` : ``}`}
 			</LabelText>
 			)}
 
