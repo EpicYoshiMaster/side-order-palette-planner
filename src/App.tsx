@@ -2,7 +2,7 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorChip, PaletteMode, SoundSetting, ColorChipMode, DisplayState, LabelsSetting, Settings } from './types/types';
 import { ColorChipList } from './components/ColorChipList';
-import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, PALETTE_ROW_LENGTH, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getBiasedColorGroup, getDroneAbilities, MAX_DRONE_ABILITIES, getBaseChips, getRemainingValidChips } from './utils/utils';
+import { randRange, getLastBaseIndex, NO_CHIP, DEFAULT_PALETTE, EIGHTS_PALETTE, NUM_PALETTE_SLOTS, PALETTE_ROW_LENGTH, getColorChipByIndex, getColorGroup, getColorTones, generateShareCode, convertShareCode, getBiasedColorGroup, getDroneAbilities, MAX_DRONE_ABILITIES, getBaseChips, getRemainingValidChips, getWeightedRandomChip } from './utils/utils';
 import { ChipPalette } from './components/palette/ChipPalette';
 import { GlowButton, textGlow, Dots, GlowSelect, GlowOption, IconGlowButton } from 'components/Layout';
 import { ItemSelectionRow } from 'components/ItemSelectionRow';
@@ -225,21 +225,47 @@ function App() {
 
 	const randomizeTones = useCallback(() => {
 
-		const colorChips = getColorTones();
+		const toneChips = getColorTones();
 
-		let randomChips = placedChips.map((chip) => {
-			if(chip === NO_CHIP) return chip;
+		let randomChips: number[] = [];
 
-			const possibleChips = colorChips.filter((randomChip) => randomChip.group === getColorChipByIndex(chip).group);
+		if(colorChipMode === ColorChipMode.Chips_Any) {
+			randomChips = placedChips.map((chip) => {
+				if(chip === NO_CHIP) return chip;
+	
+				const possibleChips = toneChips.filter((randomChip) => randomChip.group === getColorChipByIndex(chip).group);
+	
+				return possibleChips[randRange(0, possibleChips.length - 1)].index;
+			})
+		}
+		else {
+			//When logic is enabled, randomize chips where possible until no options remain, then simply randomize from the tone.
+			placedChips.forEach((chip) => {
+				if(chip === NO_CHIP) {
+					randomChips.push(chip);
+					return;
+				}
 
-			return possibleChips[randRange(0, possibleChips.length - 1)].index;
-		})
+				const relevantChips = toneChips.filter((randomChip) => randomChip.group === getColorChipByIndex(chip).group);
+
+				const validChips = getRemainingValidChips(relevantChips, randomChips, paletteIndex);
+
+				if(validChips.length <= 0) {
+					const randomChip = relevantChips[randRange(0, relevantChips.length - 1)].index;
+					randomChips.push(randomChip);
+				}
+				else {
+					const randomChip = getWeightedRandomChip(validChips, randomChips, paletteIndex);
+					randomChips.push(randomChip.index);
+				}
+			})
+		}
 		
 		setPlacedChips(randomChips);
 		createShareCode(randomChips);
 
 		playSound(require(`assets/sounds/PlaceColorChip.wav`));
-	}, [createShareCode, placedChips, playSound, setPlacedChips]);
+	}, [createShareCode, placedChips, playSound, setPlacedChips, paletteIndex, colorChipMode]);
 
 	const flipHorizontal = useCallback(() => {
 		const flippedChips = placedChips.map((chip, index) => {

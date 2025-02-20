@@ -12,6 +12,16 @@ export const TONE_ABILITIES_BELOW_MAX_DETERMINED = 4; //This number of abilities
 export const ABILITY_INTERVAL = 5;
 export const DEFAULT_PALETTE: number[] = (new Array(NUM_PALETTE_SLOTS)).fill(NO_CHIP);
 
+/**
+ * Random Integer between min and max (inclusive)
+ */
+export const randRange = (min: number, max: number): number => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const sortPalettes = (a: Palette, b: Palette) => { return a.index < b.index ? -1 : (a.index > b.index ? 1 : 0); };
 
 export const getColorGroups = (): ColorGroup[] => {
@@ -366,11 +376,31 @@ export const getBiasedColorGroup = (placedChips: number[], maximumIndex: number 
 }
 
 /**
- * Random Integer between min and max (inclusive)
+ * Selects a random chip from a provided set of color chips, weighted by the number of chips remaining for each.
+ * Useful for logic-based randomization to help distribute color chips with lesser quantities better.
+ * 
+ * It is expected that possibleChips.length > 0.
  */
-export const randRange = (min: number, max: number): number => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
+export const getWeightedRandomChip = (possibleChips: ColorChip[], placedChips: number[], paletteIndex: number, maximumIndex: number = placedChips.length - 1): ColorChip => {
 
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+	const weights = possibleChips.map((chip) => {
+		return getRemainingChips(placedChips, chip, paletteIndex, maximumIndex);
+	})
+
+	const weightsSum = weights.reduce((prev, current) => prev + current);
+
+	let random = Math.floor(Math.random() * weightsSum);
+	let selectedIndex = 0;
+
+	weights.forEach((item, index) => {
+		if(random <= 0) return;
+
+		random -= item;
+
+		if(random <= 0) {
+			selectedIndex = index;
+		}
+	})
+
+	return possibleChips[selectedIndex];
 }
