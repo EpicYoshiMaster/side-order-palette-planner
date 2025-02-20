@@ -267,6 +267,23 @@ function App() {
 		playSound(require(`assets/sounds/PlaceColorChip.wav`));
 	}, [createShareCode, placedChips, playSound, setPlacedChips, paletteIndex, colorChipMode]);
 
+	const shuffleChips = useCallback(() => {
+		const shuffledChips: number[] = [];
+		const remainingChips: number[] = placedChips.slice();
+
+		placedChips.forEach(() => {
+			const randomIndex = randRange(0, remainingChips.length - 1);
+
+			shuffledChips.push(remainingChips[randomIndex]);
+			remainingChips.splice(randomIndex, 1);
+		})
+
+		setPlacedChips(shuffledChips);
+		createShareCode(shuffledChips);
+
+		playSound(require(`assets/sounds/PlaceColorChip.wav`));
+	}, [createShareCode, placedChips, playSound, setPlacedChips])
+
 	const flipHorizontal = useCallback(() => {
 		const flippedChips = placedChips.map((chip, index) => {
 			const rowOffset = (Math.floor((index / PALETTE_ROW_LENGTH)) * PALETTE_ROW_LENGTH);
@@ -416,6 +433,9 @@ function App() {
 								</GlowButton>
 								<GlowButton onClick={() => { flipVertical(); }}>
 									Flip Vertically
+								</GlowButton>
+								<GlowButton onClick={() => { shuffleChips(); }}>
+									Shuffle
 								</GlowButton>
 								{paletteIndex === EIGHTS_PALETTE && (
 								<GlowSelect id="open-slots" value={numOpenSlots} onChange={(event) => { setNumOpenSlots(Number(event.target.value)); }}>

@@ -148,6 +148,10 @@ export const getDroneChips = (includeTones: boolean) => {
 	return colorChips.filter((chip) => chip.drone && (includeTones || !chip.isTone));
 }
 
+export const getSameToneChips = (colorChip: ColorChip, includeTones: boolean) => {
+	return colorChips.filter((chip) => (includeTones || !chip.isTone) && chip.group === colorChip.group && chip.tone === colorChip.tone);
+}
+
 export const getColorChipByIndex = (index: number) => {
 	return colorChips[index];
 }
@@ -182,13 +186,11 @@ export const getChipCount = (chips: number[], chip: ColorChip, maximumIndex: num
  * Considerations:
  * Tones should be Wildcards, so they take whatever slot would minimize their count as abilities.
  * Abilities are returned by their Color Chip Names, ex. "Drone Splat Bomb"
- * If an ability is unclear, it will be returned as "Drone Unknown"
+ * If an ability is unclear as a wildcard, it will be returned with its tone name as "Drone Tone A" or "Drone Tone B"
  * seems to still be some bugs with tone positioning
  */
 export const getDroneAbilities = (chips: number[], paletteIndex: number, maximumIndex: number = chips.length - 1): string[] => {
 	let abilityEntries: DroneAbilitiesEntry[] = [];
-
-	console.log(`Maximum Index: ${maximumIndex}`);
 
 	chips.forEach((currentChip, currentIndex) => {
 		if(currentChip === NO_CHIP) return;
@@ -210,8 +212,6 @@ export const getDroneAbilities = (chips: number[], paletteIndex: number, maximum
 
 	//Sort to force tones to be last in the list
 	abilityEntries.sort((a, b) => a.chip.isTone ? (b.chip.isTone ? 0 : 1) : (b.chip.isTone ? -1 : 0));
-
-	console.log(abilityEntries);
 
 	const abilities = abilityEntries.reduce<string[]>((abilitiesList, entry, index, array) => { 
 		if(entry.count <= 0) return abilitiesList;
@@ -235,9 +235,6 @@ export const getDroneAbilities = (chips: number[], paletteIndex: number, maximum
 		//Prioritize those with existing counts as they add no slots
 		const wildcardOptions = array.filter((arrayEntry) => !arrayEntry.chip.isTone && arrayEntry.chip.tone === entry.chip.tone).sort((a, b) => b.count - a.count);
 
-		console.log(`Wildcard Options for ${entry.chip.name}`);
-		console.log(wildcardOptions);
-
 		let remainingCount = entry.count;
 
 		wildcardOptions.forEach((option) => {
@@ -257,8 +254,8 @@ export const getDroneAbilities = (chips: number[], paletteIndex: number, maximum
 
 		if(remainingCount <= 0) return abilitiesList;
 
-		//Any remaining now must apply to abilities which we simply don't know, for every ABILITY_INTERVAL, add an unknown ability.
-		return abilitiesList.concat(Array(Math.ceil(remainingCount / ABILITY_INTERVAL)).fill("Drone Unknown"));
+		//Any remaining now must apply to abilities which we simply don't know, for every ABILITY_INTERVAL, add the tone itself.
+		return abilitiesList.concat(Array(Math.ceil(remainingCount / ABILITY_INTERVAL)).fill(entry.chip.name));
 	}, []);
 
 	return abilities;
@@ -298,12 +295,40 @@ export const getHacksUsed = (placedChips: number[], maximumIndex = placedChips.l
 	return [];
 }
 
+/**
+ * A Color Chip is considered Limited if it contributes invalidity to the palette.
+ * 
+ * Invalidity is some condition broken which makes the palette impossible to make:
+ * - The chip is exclusive to specific palettes, and this palette is not one of those.
+ * - The chip's total number which can be placed has been exceeded.
+ * - The chip is a Drone Chip for an ability that exceeds the established maximum cap of Drone Abilities.
+ */
 export const isChipLimited = (placedChips: number[], chip: ColorChip, paletteIndex: number, maximumIndex = placedChips.length - 1): boolean => {
 	if(!chip) return false;
+	if(isChipExclusive(chip, paletteIndex)) return true;
+	if(getRemainingChips(placedChips, chip, paletteIndex, maximumIndex) < 0) return true;
 
-	return (isChipExclusive(chip, paletteIndex) 
-		|| getRemainingChips(placedChips, chip, paletteIndex, maximumIndex) < 0)
-		|| (chip.drone && getDroneAbilities(placedChips, paletteIndex, maximumIndex).length > MAX_DRONE_ABILITIES);
+	const droneAbilities = getDroneAbilities(placedChips, paletteIndex, maximumIndex);
+
+	let abilityIndex = -1;
+
+	if(chip.isTone) {
+		//For tone chips, we are attributed to whatever the last ability we could be associated with is.
+		const aliasChips = getSameToneChips(chip, true);
+
+		abilityIndex = aliasChips.reduce((currentIndex, currentChip) => {
+			const index = droneAbilities.lastIndexOf(currentChip.name);
+
+			return index > currentIndex ? index : currentIndex;
+		}, abilityIndex)
+	}
+	else {
+		abilityIndex = droneAbilities.lastIndexOf(chip.name);
+	}
+
+	if(chip.drone && abilityIndex !== -1 && abilityIndex + 1 > MAX_DRONE_ABILITIES) return true;
+
+	return false;
 }
 
 const characterSet = "-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&<>+=,.?;:'/";
