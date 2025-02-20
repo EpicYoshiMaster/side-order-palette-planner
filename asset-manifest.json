@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/side-order-palette-planner/static/css/main.5c8c7cc5.css",
-    "main.js": "/side-order-palette-planner/static/js/main.8d4a98ef.js",
+    "main.js": "/side-order-palette-planner/static/js/main.e5ccef57.js",
     "static/js/453.9634a910.chunk.js": "/side-order-palette-planner/static/js/453.9634a910.chunk.js",
     "static/media/BlitzMain.otf": "/side-order-palette-planner/static/media/BlitzMain.88e4b5579411c56568b5.otf",
     "static/media/UI_Sdodr_MyPalette_00_PushTip_Drone_0.wav": "/side-order-palette-planner/static/media/UI_Sdodr_MyPalette_00_PushTip_Drone_0.516ddcf79bbcb7b5ddac.wav",
@@ -80,11 +80,11 @@
     "static/media/MarinaGradient.svg": "/side-order-palette-planner/static/media/MarinaGradient.ed4b6339c71b37969968.svg",
     "static/media/dots.svg": "/side-order-palette-planner/static/media/dots.b368190ee2204c41a76102b9798a4365.svg",
     "main.5c8c7cc5.css.map": "/side-order-palette-planner/static/css/main.5c8c7cc5.css.map",
-    "main.8d4a98ef.js.map": "/side-order-palette-planner/static/js/main.8d4a98ef.js.map",
+    "main.e5ccef57.js.map": "/side-order-palette-planner/static/js/main.e5ccef57.js.map",
     "453.9634a910.chunk.js.map": "/side-order-palette-planner/static/js/453.9634a910.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5c8c7cc5.css",
-    "static/js/main.8d4a98ef.js"
+    "static/js/main.e5ccef57.js"
   ]
 }
