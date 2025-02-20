@@ -266,8 +266,26 @@ export const getMaxChips = (placedChips: number[], chip: ColorChip, paletteIndex
 	 }, 0);
 }
 
-export const getRemainingChips = (placedChips: number[], chip: ColorChip, paletteIndex: number, maximumIndex = placedChips.length - 1) => {
+/**
+ * Returns a list of all color chips which have at least 1 chip remaining that is legal to place next on the palette.
+ */
+export const getRemainingValidChips = (currentColorChips: ColorChip[], placedChips: number[], paletteIndex: number, maximumIndex: number = placedChips.length - 1): ColorChip[] => {
+
+	const slicedPlacedChips = placedChips.slice(0, maximumIndex + 1);
+
+	return currentColorChips.filter(chip => {
+		const testPlacedChips = slicedPlacedChips.concat([chip.index]);
+
+		return !isChipLimited(testPlacedChips, chip, paletteIndex, testPlacedChips.length - 1);
+	})
+}
+
+export const getRemainingChips = (placedChips: number[], chip: ColorChip, paletteIndex: number, maximumIndex = placedChips.length - 1): number => {
 	return getMaxChips(placedChips, chip, paletteIndex) - getChipCount(placedChips, chip, maximumIndex);
+}
+
+export const getHacksUsed = (placedChips: number[], maximumIndex = placedChips.length - 1): string[] => {
+	return [];
 }
 
 export const isChipLimited = (placedChips: number[], chip: ColorChip, paletteIndex: number, maximumIndex = placedChips.length - 1): boolean => {
