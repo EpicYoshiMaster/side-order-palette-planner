@@ -10,6 +10,25 @@ Try it for yourself at [epicyoshimaster.github.io/side-order-palette-planner](ht
 
 ![An Overview of the Palette Planner](./screenshots/Overview.png)
 
+## Sample Share Codes
+
+Here's some example palettes to check out, give them a try!
+
+| Name               | Description | Type | Share Code |
+| :-:                | --- | --- | ---- |
+| Among Us Crewmate  | The one that started it all... | Art | `,=+#!!,==+++//!!,=+==#@@!==,++!+#,=+` |
+| Hi!                | Hi! | Art | `>$>%&&&$&&>&^^>%^<&^>%%>%^$>$>$&&<^>` |
+| Pearlina% | A category by [CJ Hyperfresh](https://www.youtube.com/watch?v=m-IjEatLJpk) | Art | `::/@/#'':':#!@#!:/://!#!:::':':!''::` |
+| Overlorder Palette | The easter egg palette in-game! | Music | `!=&@$.:+&%!+:.?;$,;@!.#<>%<^/='%/=:>` |
+| Ebb and Flow       | Cool that this works! Well, almost. | Music | `??;?.??;?<><.?;??.>??;?.?;<<>..?;??.` |
+| Anarchy Rainbow    | Lot of power chips! | Music | `>.@!.!<.>>><!@!.><.@?.!<.><,,><!@!.>` |
+
+Learn more about using these share codes by reading on!
+
+For palettes labelled **Music**, try using **Sound Mode**! 
+They're typically played alternating left to right then right to left, since this is what the Overlorder palette does.
+Ordering the notes like this makes it easy to play them back in-game as you are able to move directly to the next note as you move between rows.
+
 ## Terminology
 
 Before talking about features, it's helpful to briefly introduce some of the terms used by this tool!
@@ -69,6 +88,8 @@ The Palette Planner features several modes and features which you can use to bui
 
 ### Draw Mode
 
+https://github.com/user-attachments/assets/a05577f4-2b90-4ee4-84c0-c038d398b32d
+
 **Draw Mode** allows you to draw on the individual slots of the Palette with whatever Color Chip or Tone you have selected.
 
 Pick a particular Color Chip or Tone on the left menu to select it.
@@ -77,11 +98,15 @@ Then, click on a slot to place it, or, click and hold then drag your mouse aroun
 
 ### Erase Mode
 
+https://github.com/user-attachments/assets/69ad9a61-fb19-4c0e-a812-db1ee7087cab
+
 **Erase Mode** will remove color chips that you've placed on the palette.
 
 Click on a slot to erase it, or, click and hold then drag your mouse around to erase many at a time.
 
 ### Sound Mode
+
+https://github.com/user-attachments/assets/7009cc89-4288-4c26-b691-02fa1e870f9c
 
 Did you know the Color Chips in Side Order are associated with sounds?
 
@@ -94,6 +119,8 @@ Each sound is associated with a particular Tone, and with **Sound Mode** you can
 This mode will also respect whether you have the Sound setting on or off, so be sure to double check if it's enabled if you aren't hearing anything!
 
 ### Play Mode
+
+https://github.com/user-attachments/assets/367198f6-0bf4-447e-8a96-b69ec9ed1632
 
 **Play Mode** will highlight the first chip placed on the palette to use as a marker.
 If you press the left and right arrow keys, or use the arrow buttons which appear, you can move the marker around which is very handy to track your progress while playing the palette in-game!
@@ -155,7 +182,7 @@ Side note: the last one is technically not checked, getting the precise hack cou
 
 ![The Share Code Box](./screenshots/ShareCode.png)
 
-Share Codes allow you to save and share your palettes with people!
+**Share Codes** allow you to save and share your palettes with people!
 
 Each code consists of 36 characters which each correspond to one color chip placed on the palette.
 
@@ -165,16 +192,20 @@ To import a palette, paste the code in the box!
 
 (Here's the above one: `&,<=<<&=&<><++&=,&<+&,+<=+,&=&+><<+&`)
 
+Alternatively, you can share the URL of the page, which contains the share code along with your settings for which palette to use and chip logic!
+
 ### Reset, Randomize, Flip, etc
+
+https://github.com/user-attachments/assets/c21d208a-35a2-4c0d-a268-2149e9c46cfe
 
 Several buttons exist to quickly modify your palette in various ways:
 
-- Reset - Resets the palette back to empty.
-- Randomize - Randomizes the full palette of color chips, if the logic option is enabled, it will attempt to ensure the resulting palette is valid as well.
-- Randomize Tones - Randomizes an existing palette's tones between A, B, and C. For example, if a particular chip is Support Tone B, it could be chosen to be, Support Tone A, C, or B again. This option is useful if you use one flat tone first to draw out the palette, then randomize the tones to give it more texture if you don't need specific ones. If logic is enabled, it will attempt to ensure the resulting palette is valid as well.
-- Flip Horizontally - Flips an existing palette's color chips across the Y-axis (centered). If a color chip were in the top left corner, it would now be in the top right corner instead.
-- Flip Vertically - Flips an existing palette's color chips across the X-axis (centered). If a color chip where in the top left corner, it would now be in the bottom left corner instead.
-- Shuffle - Modifies an existing palette by moving around its color chips to random positions.
+- **Reset** - Resets the palette back to empty.
+- **Randomize** - Randomizes the full palette of color chips, if the logic option is enabled, it will attempt to ensure the resulting palette is valid as well.
+- **Randomize Tones** - Randomizes an existing palette's tones between A, B, and C. For example, if a particular chip is Support Tone B, it could be chosen to be, Support Tone A, C, or B again. This option is useful if you use one flat tone first to draw out the palette, then randomize the tones to give it more texture if you don't need specific ones. If logic is enabled, it will attempt to ensure the resulting palette is valid as well.
+- **Flip Horizontally** - Flips an existing palette's color chips across the Y-axis (centered). If a color chip were in the top left corner, it would now be in the top right corner instead.
+- **Flip Vertically** - Flips an existing palette's color chips across the X-axis (centered). If a color chip where in the top left corner, it would now be in the bottom left corner instead.
+- **Shuffle** - Modifies an existing palette by moving around its color chips to random positions.
 
 ### Hacks
 
@@ -186,7 +217,7 @@ When using Eight's Palette, a dropdown will appear to select the number of hacks
 
 ![A Palette consists of a character, main weapon, sub, special, and color chip biases](./screenshots/Palette.png)
 
-The Palette Info Bar gives you specific details about your palette's character, weapon, sub, special, and biased color chips.
+The **Palette Info Bar** gives you specific details about your palette's character, weapon, sub, special, and biased color chips.
 
 It will also display the Drone Abilities that your palette has, or might have, according to the chips you've placed.
 
