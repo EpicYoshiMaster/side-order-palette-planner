@@ -1,0 +1,34 @@
+{
+	"DroneActionSlot": {
+		"Name": "Drone Action Slots",
+		"Max": 4
+	},
+	"DroneCadencePaintTip": {
+		"Name": "Drone-Gauge Turf Charge",
+		"Max": 1
+	},
+	"DroneCadenceDefeatEnemyTip": {
+		"Name": "Drone-Gauge Splat Charge",
+		"Max": 1
+	},
+	"DroneActionTrapTip": {
+		"Name": "Drone Ink Mine",
+		"Max": 1
+	},
+	"DroneActionSprinklerTip": {
+		"Name": "Drone Sprinkler",
+		"Max": 1
+	},
+	"DroneActionBombQuickTip": {
+		"Name": "Drone Burst Bomb",
+		"Max": 1
+	},
+	"DroneActionTornadoTip": {
+		"Name": "Drone Inkstrike",
+		"Max": 1
+	},
+	"DroneActionItemDropTip": {
+		"Name": "Drone Items",
+		"Max": 1
+	}
+}

@@ -16,26 +16,26 @@ export const Dashboard: React.FC<DashboardProps> = ({ paletteIndex }) => {
 	return (
 		<Wrapper>
 			<Controls>
-				<Logo src={InfinityLogo} alt="Side Order Palette Infinity Logo" />
+				<Logo src={InfinityLogo} alt="" />
 				<Dials>
-					<Knobs src={DialControl} alt="Side Order Palette Dial" />
-					<Knobs src={DialControl} alt="Side Order Palette Dial" />
+					<Knobs src={DialControl} alt="" />
+					<Knobs src={DialControl} alt="" />
 				</Dials>
 			</Controls>
 			<Screen $gradient={require(`assets/gradients/${palettes[paletteIndex].pixel}Gradient.svg`)}>
 				<Dots />
 				
-				<PlateGlow src={PalettePlate} />
-				<Icon src={PalettePlate} />
+				<PlateGlow alt="" src={PalettePlate} />
+				<Icon alt="" src={PalettePlate} />
 				
 				<NpcIconWrapper>
 					<FrameA>
-						<IconGlow src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameA.png`)} />
-						<Icon src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameA.png`)} />
+						<IconGlow alt="" src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameA.png`)} />
+						<Icon alt="" src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameA.png`)} />
 					</FrameA>
 					<FrameB>
-						<IconGlow src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameB.png`)} />
-						<Icon src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameB.png`)} />
+						<IconGlow alt="" src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameB.png`)} />
+						<Icon alt="" src={require(`assets/pixelnpcs/${palettes[paletteIndex].pixel}FrameB.png`)} />
 					</FrameB>
 				</NpcIconWrapper>
 			</Screen>
@@ -54,19 +54,27 @@ const Wrapper = styled.div`
 	align-items: center;
 	user-select: none;
 
-	@media (max-width: 1920px) {
+	@media (max-width: 2200px) {
 		height: 100px;
 	}
 
-	@media (max-width: 1350px) {
+	@media (max-width: 1400px) {
 		height: 80px;
 	}
 
-	@media (max-width: 1000px) {
+	@media (max-width: 875px) {
+		height: 65px;
+	}
+
+	@media (max-width: 650px) {
 		height: 50px;
 	}
 
-	@media (max-width: 600px) {
+	@media (max-width: 500px) {
+		height: 40px;
+	}
+
+	@media (max-width: 400px) {
 		height: 30px;
 	}
 `;
@@ -103,19 +111,27 @@ const NpcIconWrapper = styled.div`
 
 	height: 100%;
 
-	@media (max-width: 1920px) {
+	@media (max-width: 2200px) {
 		left: calc(100% - 100px);
 	}
 
-	@media (max-width: 1350px) {
+	@media (max-width: 1400px) {
 		left: calc(100% - 80px);
 	}
 
-	@media (max-width: 1000px) {
+	@media (max-width: 875px) {
+		left: calc(100% - 65px);
+	}
+
+	@media (max-width: 650px) {
 		left: calc(100% - 50px);
 	}
 
-	@media (max-width: 600px) {
+	@media (max-width: 500px) {
+		left: calc(100% - 40px);
+	}
+
+	@media (max-width: 400px) {
 		left: calc(100% - 30px);
 	}
 `;
@@ -137,7 +153,6 @@ const Blink = keyframes`
 const Screen = styled.div<{ $gradient: any }>`
 	position: relative;
 	height: 100%;
-	//width: 100px;
 	display: flex;
 	flex-direction: row;
 	align-items: center; 

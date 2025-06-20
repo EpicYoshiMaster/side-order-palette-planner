@@ -64,13 +64,28 @@ const DashboardArea = styled.div`
 	padding: 25px;
 	padding-bottom: 0;
 
-	@media (max-width: 1350px) {
+	@media (max-width: 2200px) {
+		padding: 20px;
+		padding-bottom: 0;
+	}
+
+	@media (max-width: 1400px) {
 		padding: 15px;
 		padding-bottom: 0;
 	}
 
-	@media (max-width: 1000px) {
+	@media (max-width: 875px) {
+		padding: 10px;
+		padding-bottom: 0;
+	}
+
+	@media (max-width: 600px) {
 		padding: 8px;
+		padding-bottom: 0;
+	}
+
+	@media (max-width: 450px) {
+		padding: 5px;
 		padding-bottom: 0;
 	}
 `;
@@ -85,20 +100,33 @@ const ChipArea = styled.div`
 	row-gap: 30px;
 	column-gap: 20px; 
 
-	@media (max-width: 1920px) {
+	@media (max-width: 2200px) {
 		row-gap: 20px;
 		column-gap: 15px;
+		padding: 20px;
 	}
 
-	@media (max-width: 1350px) {
+	@media (max-width: 1400px) {
 		row-gap: 12px;
 		column-gap: 8px;
 		padding: 15px;
 	}
 
-	@media (max-width: 1000px) {
+	@media (max-width: 875px) {
+		row-gap: 10px;
+		column-gap: 7px;
+		padding: 10px;
+	}
+
+	@media (max-width: 600px) {
 		row-gap: 8px;
 		column-gap: 5px;
 		padding: 8px;
+	}
+
+	@media (max-width: 450px) {
+		row-gap: 5px;
+		column-gap: 3px;
+		padding: 5px;
 	}
 `;

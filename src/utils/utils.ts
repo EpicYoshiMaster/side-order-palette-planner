@@ -12,6 +12,21 @@ export const TONE_ABILITIES_BELOW_MAX_DETERMINED = 4; //This number of abilities
 export const ABILITY_INTERVAL = 5;
 export const DEFAULT_PALETTE: number[] = (new Array(NUM_PALETTE_SLOTS)).fill(NO_CHIP);
 
+export const NONE_CHIP: ColorChip = {
+	key: "None",
+	name: "None",
+	group: -1,
+	tone: -1,
+	entry: -1,
+	index: -1,
+	max: -1,
+	drone: false,
+	isTone: false,
+	exclusive: [],
+	pitch: "",
+	hack: ""
+}
+
 /**
  * Random Integer between min and max (inclusive)
  */
@@ -69,7 +84,9 @@ const generateChipsAndPalettes = () => {
 			max: value.MaxNum,
 			drone: value.IsDroneAction,
 			isTone: false,
-			exclusive: []
+			exclusive: [],
+			pitch: ColorGroups[value.Color].pitches[value.Tone],
+			hack: value.Hack
 		}
 	}).sort(sortChips).map((item, index) => { return { ...item, index: index}});
 
@@ -85,7 +102,9 @@ const generateChipsAndPalettes = () => {
 				max: -1,
 				drone: group.drone && index <= 1,
 				isTone: true,
-				exclusive: []
+				exclusive: [],
+				pitch: group.pitches[index],
+				hack: ""
 			}
 		})
 	}).reduce((prev, current) => prev.concat(current)).map((chip, index) => {
@@ -128,6 +147,10 @@ export const getPalettes = () => {
 	return palettes;
 }
 
+export const getPaletteByIndex = (index: number) => {
+	return palettes[index];
+}
+
 export const getLastBaseIndex = () => {
 	return baseChips.length - 1;
 }
@@ -150,6 +173,10 @@ export const getDroneChips = (includeTones: boolean) => {
 
 export const getSameToneChips = (colorChip: ColorChip, includeTones: boolean) => {
 	return colorChips.filter((chip) => (includeTones || !chip.isTone) && chip.group === colorChip.group && chip.tone === colorChip.tone);
+}
+
+export const getSamePitchChips = (colorChip: ColorChip, includeTones: boolean, includeChips: boolean) => {
+	return colorChips.filter((chip) => (includeTones || !chip.isTone) && (includeChips || chip.isTone) && chip.pitch === colorChip.pitch);	
 }
 
 export const getColorChipByIndex = (index: number) => {
@@ -428,4 +455,11 @@ export const getWeightedRandomChip = (possibleChips: ColorChip[], placedChips: n
 	})
 
 	return possibleChips[selectedIndex];
+}
+
+export const formatWeaponName = (name: string) => {
+	name = name.replaceAll(".png", "");
+	name = name.replace(/([A-Z])/g, ' $1').trim()
+
+	return name;
 }

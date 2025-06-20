@@ -9,10 +9,40 @@ export const textGlow = css`
     0px 0px 30px var(--text-glow);
 `;
 
+export const textGlowSmall = css`
+	text-shadow: 
+    0px 0px 10px var(--text-glow), 
+    0px 0px 10px var(--text-glow), 
+    0px 0px 10px var(--text-glow), 
+    0px 0px 10px var(--text-glow);
+`;
+
 export const buttonGlow = css`
     background-color: var(--button-highlight-background);
     border-color: var(--button-highlight-border);
     ${textGlow};
+`;
+
+export const hacksTextGlow = css`
+	text-shadow: 
+    0px 0px 30px var(--hacks-text-glow), 
+    0px 0px 30px var(--hacks-text-glow), 
+    0px 0px 30px var(--hacks-text-glow), 
+    0px 0px 30px var(--hacks-text-glow);    
+`;
+
+export const hacksTextGlowSmall = css`
+	text-shadow: 
+    0px 0px 10px var(--hacks-text-glow), 
+    0px 0px 10px var(--hacks-text-glow), 
+    0px 0px 10px var(--hacks-text-glow), 
+    0px 0px 10px var(--hacks-text-glow);    
+`;
+
+export const hacksButtonGlow = css`
+    background-color: var(--hacks-button-highlight-background);
+    border-color: var(--hacks-button-highlight-border);
+    ${hacksTextGlow};   
 `;
 
 export const Dots = styled.div`
@@ -26,42 +56,52 @@ export const Dots = styled.div`
 	opacity: 0.3;
 `;
 
-export const GlowButton = styled.button`
+export const GlowButton = styled.button<{ $hacks?: boolean }>`
     position: relative;
     padding: 5px 20px;
 
     border: 3px transparent solid;
     border-radius: 5rem;
+
+    ${({ $hacks }) => $hacks ? css`width: 100%;` : css``}
     
-    background-color: var(--button-background);
+    background-color: ${({ $hacks }) => `var(--${$hacks ? 'hacks-' : ''}button-background)`};
 
     text-align: left;
     font-family: Splatoon;
     font-size: var(--text-size);
     color: var(--text);
 
-    ${ ({disabled}) => disabled ? css`
-        color: var(--disabled-text);
-        background-color: var(--button-disabled-background);
+    ${ ({disabled, $hacks }) => disabled ? css`
+        color: var(--${$hacks ? 'hacks-' : ''}disabled-text);
+        background-color: var(--${$hacks ? 'hacks-' : ''}button-disabled-background);
 
         &:hover, &:active {
-            background-color: var(--button-disabled-highlight-background);
-            border-color: var(--button-disabled-highlight-border);
+            background-color: var(--${$hacks ? 'hacks-' : ''}button-disabled-highlight-background);
+            border-color: var(--${$hacks ? 'hacks-' : ''}button-disabled-highlight-border);
             text-shadow: none;
         }
     ` : css`
         &:hover {
-            ${buttonGlow}
+            ${$hacks ? hacksButtonGlow : buttonGlow}
         }
 
         &:active {
-            background-color: var(--button-active-background);
+            background-color: var(--${$hacks ? 'hacks-' : ''}button-active-background);
         }
     `}
 
-    @media (max-width: 1350px) {
+    @media (max-width: 2200px) {
+        padding: 5px 15px;
+    }
+
+    @media (max-width: 1400px) {
 		padding: 5px 10px;
 	}
+
+    @media (max-width: 450px) {
+        padding: 3px;
+    }
 `;
 
 export const GlowSelect = styled.select`
@@ -123,9 +163,9 @@ export const IconGlowButton = styled(SquareGlowButton)`
 
 	svg {
 		box-shadow: inset 
-		0px 0px 20px var(--text-glow), 
-		0px 0px 20px var(--text-glow), 
-		0px 0px 20px var(--text-glow), 
-		0px 0px 20px var(--text-glow);
+		0px 0px 25px var(--text-glow), 
+		0px 0px 25px var(--text-glow), 
+		0px 0px 25px var(--text-glow), 
+		0px 0px 25px var(--text-glow);
 	}
 `;

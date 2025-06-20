@@ -16,6 +16,8 @@ export type ColorChip = {
     drone: boolean;
     isTone: boolean;
     exclusive: number[];
+    pitch: string;
+    hack: string;
 };
 
 export type OnClickChipProps = (chip: ColorChip) => void;
@@ -70,10 +72,23 @@ export enum DisplayState {
     DS_Tones
 };
 
+export enum AsideState {
+    Aside_None,
+    Aside_Left,
+    Aside_Right
+};
+
 export type Settings = {
     mode: PaletteMode;
     sound: SoundSetting;
     labels: LabelsSetting;
     chips: ColorChipMode;
     display: DisplayState;
+}
+
+export type Hack = {
+    index: number;
+    key: string;
+    name: string;
+    max: number;
 }

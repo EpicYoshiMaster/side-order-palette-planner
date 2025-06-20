@@ -8,6 +8,11 @@
             "Power_ToneB.png",
             "Power_ToneC.png"
         ],
+        "pitches": [
+            "Pitch A",
+            "Pitch B",
+            "Drum Set"
+        ],
         "drone": false
     },
     {
@@ -18,6 +23,11 @@
             "Support_ToneA.png",
             "Support_ToneB.png",
             "Support_ToneC.png"
+        ],
+        "pitches": [
+            "Pitch A",
+            "Click",
+            "Drop"
         ],
         "drone": false
     },
@@ -30,6 +40,11 @@
             "Range_ToneB.png",
             "Range_ToneC.png"
         ],
+        "pitches": [
+            "Pitch A",
+            "Pitch D",
+            "Pitch E"
+        ],
         "drone": false
     },
     {
@@ -40,6 +55,11 @@
             "Mobility_ToneA.png",
             "Mobility_ToneB.png",
             "Mobility_ToneC.png"
+        ],
+        "pitches": [
+            "Drum Set",
+            "Drum Set",
+            "Clap"
         ],
         "drone": false
     },
@@ -52,6 +72,11 @@
             "Lucky_ToneB.png",
             "Lucky_ToneC.png"
         ],
+        "pitches": [
+            "Pitch G",
+            "Pitch A",
+            "Pitch B"
+        ],
         "drone": false
     },
     {
@@ -62,6 +87,11 @@
             "Drone_ToneA.png",
             "Drone_ToneB.png",
             "Drone_ToneC.png"
+        ],
+        "pitches": [
+            "Drum Set",
+            "Shout",
+            "Drum Set"
         ],
         "drone": true
     }

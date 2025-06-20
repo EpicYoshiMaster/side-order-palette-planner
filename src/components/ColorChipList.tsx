@@ -173,10 +173,6 @@ const ToneRow = styled.div`
     gap: 6px;
 
     --color-chip-drop-shadow: #ffffff;
-
-    @media (max-width: 1350px) {
-        --label-size: 0.9rem;
-    }
 `;
 
 const ChipWrapper = styled.div`

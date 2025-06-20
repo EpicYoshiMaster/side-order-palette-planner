@@ -14,6 +14,7 @@
 	],
 	"DisplayValueUnit": "Percent",
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false,
 	"FetchDisplayValueFromParam": false
   },
@@ -37,6 +38,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 9,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "BlastSizeUp": {
@@ -55,6 +57,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "BulletCorePaintUp": {
@@ -111,6 +114,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "BulletSizeUp": {
@@ -129,6 +133,7 @@
 	"DisplayValueOverwriteArray": [],
 	"DisplayValueUnit": "Percent",
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false,
 	"FetchDisplayValueFromParam": false
   },
@@ -148,6 +153,7 @@
 	"DisplayValueUnit": "Second",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "ChargeTimeSave": {
@@ -216,6 +222,7 @@
 	"DisplayValueUnit": "Second",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "ComboGraceTimeUp": {
@@ -234,6 +241,7 @@
 	"DisplayValueUnit": "Second",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "ComboItemDropUp": {
@@ -252,6 +260,7 @@
 	"DisplayValueUnit": "None",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DefeatEnemyBlastFreqUp": {
@@ -270,6 +279,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DefeatEnemyInkRecover": {
@@ -288,6 +298,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DefeatEnemyItemDropArmor": {
@@ -306,6 +317,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DefeatEnemyItemDropDroneActiveUp": {
@@ -324,6 +336,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DefeatEnemyItemDropInkUp": {
@@ -342,6 +355,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DefeatEnemyItemDropSpecialUp": {
@@ -360,6 +374,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DefeatEnemyItemStunBomb": {
@@ -378,6 +393,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DirectAttackBrushAwayUp": {
@@ -396,6 +412,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DirectAttackUp": {
@@ -418,6 +435,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 9,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DisableCanopyShot": {
@@ -432,6 +450,7 @@
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 1,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DroneActionBombQuick": {
@@ -450,6 +469,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "DroneActionBombQuickTip",
 	"IsDroneAction": true
   },
   "DroneActionBombSplash": {
@@ -468,6 +488,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": true
   },
   "DroneActionItemDrop": {
@@ -486,6 +507,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "DroneActionItemDropTip",
 	"IsDroneAction": true
   },
   "DroneActionSprinkler": {
@@ -504,6 +526,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "DroneActionSprinklerTip",
 	"IsDroneAction": true
   },
   "DroneActionSuperLaser": {
@@ -522,6 +545,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": true
   },
   "DroneActionTornado": {
@@ -540,6 +564,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "DroneActionTornadoTip",
 	"IsDroneAction": true
   },
   "DroneActionTrap": {
@@ -558,6 +583,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "DroneActionTrapTip",
 	"IsDroneAction": true
   },
   "DroneCadenceDefeatEnemyUp": {
@@ -576,6 +602,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "DroneCadenceDefeatEnemyTip",
 	"IsDroneAction": false
   },
   "DroneCadenceMoveUp": {
@@ -594,6 +621,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "DroneCadencePaintUp": {
@@ -612,6 +640,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "DroneCadencePaintTip",
 	"IsDroneAction": false
   },
   "DroneCadenceTimeUp": {
@@ -630,6 +659,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "EnemySinkUp": {
@@ -648,6 +678,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "FarDamageRatioUp": {
@@ -666,6 +697,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "HomingShot": {
@@ -684,6 +716,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "HumanMoveUp": {
@@ -702,6 +735,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "InkRecoveryUp": {
@@ -720,6 +754,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "KnockBackUp": {
@@ -738,6 +773,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "LoadingBulletUp": {
@@ -757,6 +793,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "MainInkSave": {
@@ -775,6 +812,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "MainPaintUp": {
@@ -903,6 +941,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "MainShotRangeUp": {
@@ -1043,6 +1082,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "MainShotRateUp": {
@@ -1135,6 +1175,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "ManeuverSlideAttack": {
@@ -1149,6 +1190,7 @@
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 1,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "ManeuverSlideUp": {
@@ -1167,6 +1209,7 @@
 	"DisplayValueUnit": "None",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "MoveInkRecoverUp": {
@@ -1185,6 +1228,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "MoveSpecialIncreaseUp": {
@@ -1203,6 +1247,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "NearDamageRatioUp": {
@@ -1221,6 +1266,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "PaintCombo": {
@@ -1239,6 +1285,7 @@
 	"DisplayValueUnit": "Point",
 	"FetchDisplayValueFromParam": true,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "PenetrateNumUp": {
@@ -1257,6 +1304,7 @@
 	"DisplayValueUnit": "None",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "PoisonInk": {
@@ -1275,6 +1323,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "Recharge": {
@@ -1289,6 +1338,7 @@
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 1,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "RollerDashUp": {
@@ -1307,6 +1357,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "SaberStepAttack": {
@@ -1321,6 +1372,7 @@
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 1,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "ShelterNakedTimeSave": {
@@ -1339,6 +1391,7 @@
 	"DisplayValueUnit": "Second",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "ShotBiasRatio": {
@@ -1357,6 +1410,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "ShotDamageUp": {
@@ -1379,6 +1433,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 9,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "SpecialIncreaseUp": {
@@ -1397,6 +1452,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "SquidMoveUp": {
@@ -1415,6 +1471,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "SquidSomersaultAttack": {
@@ -1429,6 +1486,7 @@
 	"DisplayValueUnit": "Bool",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 1,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "SubInkSave": {
@@ -1447,6 +1505,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "WaveDamageUp": {
@@ -1465,6 +1524,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "WeakSwingRateUp": {
@@ -1483,6 +1543,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   },
   "WeakenEnemyDamageRateUp": {
@@ -1501,6 +1562,7 @@
 	"DisplayValueUnit": "Percent",
 	"FetchDisplayValueFromParam": false,
 	"MaxNum": 5,
+	"Hack": "",
 	"IsDroneAction": false
   }
 }

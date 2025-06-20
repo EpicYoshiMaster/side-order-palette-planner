@@ -1,14 +1,23 @@
 :root {
   --text: #ffffff;
   --title-size: 3rem;
+  --header-size: 1.6rem;
   --text-size: 1.5rem;
   --color-group-size: 2rem;
   --label-size: 1.25rem;
+
   --disabled-text: #5a5a5a;
+  --hacks-disabled-text: #545c57;
+
+  --credits-link: #d1c086;
 
   /* Background */
   --background-gradient-start: #1d101d;
   --background-gradient-end: #381e2d;
+
+  /* Palette Details Backgrounds */
+  --hacks-gradient-start: #102c23;
+  --hacks-gradient-end: #2c5242;
 
   /* Color Chip Biases */
   --icon-none-bias: #a9a19f;
@@ -21,6 +30,7 @@
 
   /* Main Glow Effect */
   --text-glow: #ad5431;
+  --hacks-text-glow: #517963;
   
   /* Buttons, Selects */
   --button-background: rgba(0, 0, 0, 0.35);
@@ -31,6 +41,15 @@
   --button-disabled-background: rgba(22, 22, 22, 0.35);
   --button-disabled-highlight-background: #3a3332;
   --button-disabled-highlight-border: #988e85;
+
+  --hacks-button-background: rgba(0, 0, 0, 0.35);
+  --hacks-button-highlight-border: #75e5be;
+  --hacks-button-highlight-background: #344c3f;
+  --hacks-button-active-background: #18271f;
+
+  --hacks-button-disabled-background: rgba(22, 22, 22, 0.35);
+  --hacks-button-disabled-highlight-background: #23362c;
+  --hacks-button-disabled-highlight-border: #558675;
 
   /* Group Gradient */
   --color-group-gradient-start: #5e4242;
@@ -47,6 +66,13 @@
   --drone-ability-circle-overcap: #b83659;
   /* Upper background #312f2e */
   /* Ability background rgba(0,0,0,.8) */
+
+  /* Hack Bars */
+  --hack-bar-start: #d5d5d5;
+  --hack-bar-off: #565a59;
+  --hack-bar-partial: #2e554c;
+  --hack-bar-on: #51d0b3;
+
 
   /* Palette */
   --palette-background: #ffffff;

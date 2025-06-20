@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams, NavigateOptions } from "react-router-dom";
+import { convertShareCode, generateShareCode } from "./utils";
 
 export const useKeyDown = (callback: (event: KeyboardEvent) => void) => {
 	useEffect(() => {
@@ -57,4 +58,58 @@ export const useLocalStorage = <T>(key: string, defaultValue: T, onParseValue?: 
     }, [key, value]);
 
     return [value, setValue];
+}
+
+export const usePlacedChips = (key: string, defaultValue: number[], navigateOpts: NavigateOptions, onParseValue: (parsedValue: number[]) => void): [number[], (newValue: number[]) => void] => {
+	const [searchParams, setSearchParams] = useSearchParams();
+	const [value, setValue] = useState<number[]>(() => {
+		try {
+            const savedValue = localStorage.getItem(key);
+
+            if(savedValue !== null) {
+				const parsedValue = JSON.parse(savedValue);
+
+				onParseValue && onParseValue(parsedValue);
+                return parsedValue;
+            }
+
+            return defaultValue;
+        }
+        catch {
+            return defaultValue;
+        }
+	});
+
+	useEffect(() => {
+		if(searchParams.has(key)) {
+			const valueShareCode = generateShareCode(value);
+
+			const paramShareCode = searchParams.get(key);
+
+			if(paramShareCode && valueShareCode !== paramShareCode) {
+
+				const paramValue = convertShareCode(paramShareCode);
+
+				setValue(paramValue);
+
+				localStorage.setItem(key, JSON.stringify(paramValue));
+
+				onParseValue && onParseValue(paramValue);
+			}
+		}
+	}, [key, value, searchParams, onParseValue]);
+
+	const updateValue = useCallback((newValue: number[]) => {
+		setSearchParams((prevParams) => {
+			prevParams.set(key, generateShareCode(newValue));
+
+			return prevParams;
+		}, navigateOpts);
+
+		localStorage.setItem(key, JSON.stringify(newValue));
+
+		setValue(newValue);
+	}, [key, setValue, setSearchParams, navigateOpts]);
+
+	return [value, updateValue];
 }
