@@ -141,6 +141,7 @@ const Details = styled.div`
 	gap: 10px;
 	overflow: auto;
 	height: 100vh;
+	height: 100dvh;
 	padding: 10px 5px;
 
 	& > div {

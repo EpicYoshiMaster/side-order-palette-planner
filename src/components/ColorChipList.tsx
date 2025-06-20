@@ -105,6 +105,7 @@ export const ColorChipList: React.FC<ColorChipListProps> = ({ onClickChip, selec
 
 const StyledColorChipList = styled.div`
     height: 100vh;
+    height: 100dvh;
     width: 100%;
     position: relative;
     display: grid;

@@ -636,7 +636,9 @@ const Main = styled.div`
 	display: flex;
 	flex-direction: row;
 	gap: 20px;
+	
 	height: 100vh;
+	height: 100dvh;
 
 	overflow: auto;
 	
