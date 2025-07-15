@@ -127,8 +127,6 @@ If you press the left and right arrow keys, or use the arrow buttons which appea
 
 On the right side, you can see more detailed information about the particular color chip you have marked and the palette as a whole.
 
-This includes things like which palettes are compatible with the color chip, which tones match the associated sound type
-
 This includes:
 
 - For color chips, the palettes this chip is compatible with
